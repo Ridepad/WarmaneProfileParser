@@ -11,5 +11,5 @@ XButton1::
     Send {Shift UP}
     Send ^a^c{Escape}
     Sleep 100
-    script := "pyqt.pyw"
+    script := "main.pyw"
     Run %script% "%clipboard%" %X% %Y%
