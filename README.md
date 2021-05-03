@@ -20,4 +20,5 @@
 > Use AHK as alternative to run main.exe, example in repository
 
 # TODO
+- Add support for other servers besides Lordaeron.
 - Add support for equipped tier 9/10 sets.
