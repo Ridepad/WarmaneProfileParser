@@ -1,3 +1,5 @@
+ ![](https://github.com/Ridepad/WarmaneProfileParser/blob/master/showcase.gif)
+
 # WarmaneProfileParser
 
 - Parses character profile from serverside site. All items, gems, enchants.
