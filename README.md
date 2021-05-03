@@ -13,7 +13,7 @@
 - Press Ctrl+F1 to open main window with gear
 - Press Ctrl+F2 to exit
 
-` Use AHK as alternative to run main.exe, example in repository
+- Use AHK as alternative to run main.exe, example in repository
 
 # TODO
 - Add support for equipped tier 9/10 sets.
