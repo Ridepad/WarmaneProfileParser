@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import ProfileParser
 import ItemParser
@@ -8,7 +7,6 @@ import os
 import sys
 import json
 import webbrowser
-# from datetime 
 import datetime
 
 if not os.path.exists('Icons_cache'):
@@ -48,8 +46,6 @@ class UpdateStats(QtCore.QThread):
         for stat, value in self.new_stats:
             if stat in main_window.FULL_STATS:
                 main_window.FULL_STATS[stat] += value
-            # else:
-            #     print('MISSING STAT?', stat, value)
         stats_txt = '\n'.join(f'{value:>5} {stat}' for stat, value in main_window.FULL_STATS.items() if value > 30)
         stats_txt = stats_txt.replace(" rating", "").title()
         _txt = f'{main_window.MAIN_TEXT}\nStats:\n{stats_txt}'
@@ -108,10 +104,7 @@ class MainWindow(QtWidgets.QMainWindow):
             font=QtGui.QFont("Lucida Console", 12))
         self.date_label.setGeometry(ICON*1.5, ICON*15//2, stats_size-ICON, ICON//2)
 
-        # profile = [{'51290': {'ench': '3820', 'gems': ['3621', '3520', '0'], 'transmog': '22718'}, '50724': {'gems': ['3520', '0', '0']}, '51292': {'ench': '3810', 'gems': ['3520', '0', '0']}, '54583': {'ench': '3859', 'gems': ['3520', '0', '0'], 'transmog': '20579'}, '51294': {'ench': '3832', 'gems': ['3520', '3560', '0']}, '52019': {'gems': ['0', '0', '0']}, '31778': {'gems': ['0', '0', '0']}, '54584': {'ench': '3758', 'gems': ['3563', '0', '0']}, '51291': {'ench': '3604', 'gems': ['3520', '0', '0']}, '50613': {'gems': ['3520', '3520', '3520']}, '50694': {'ench': '3719', 'gems': ['3520', '3545', '3560']}, '50699': {'ench': '3606', 'gems': ['3545', '3520', '0']}, '50664': {'gems': ['3520', '0', '0']}, '50398': {'gems': ['3560', '0', '0']}, '50365': {'gems': ['0', '0', '0']}, '54588': {'gems': ['0', '0', '0']}, '50734': {'ench': '3834', 'gems': ['3520', '0', '0'], 'transmog': '32500'}, '50719': {'transmog': '39199', 'gems': ['0', '0', '0']}, '50457': {'gems': ['0', '0', '0']}}, ['51290', '50724', '51292', '54583', '51294', '52019', '31778', '54584', '51291', '50613', '50694', '50699', '50664', '50398', '50365', '54588', '50734', '50719', '50457'], 'Illusion', 'Balance         58/0/13\nRestoration     18/0/53\n\nEngineering         450\nLeatherworking      450\n\nCooking             450\n']
         profile = ProfileParser.main(char_name, server)
-        # print(profile)
-        
   
         if not profile:
             show_error_message("Character with this name doesn't exist")
@@ -129,14 +122,14 @@ class MainWindow(QtWidgets.QMainWindow):
             if v == profile:
                 self.date_label.setText(k)
         self.current_set_index = -1
+        
         self.got_gear(profile)
     
     def nulify_stats(self):
         self.FULL_STATS = {x: 0 for x in ItemParser.STATS_DICT.values()}
 
     def change_set(self):
-        print(self.sender().text)
-        cur = -1 if self.sender().text == '<' else 1
+        cur = -1 if self.sender().text() == '<' else 1
         self.current_set_index = (self.current_set_index + cur) % len(self.char_data)
         k = list(self.char_data.keys())[self.current_set_index]
         self.date_label.setText(k)
@@ -166,6 +159,7 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 label.removeEventFilter(self)
                 label.setObjectName('')
+                label.setPixmap(QtGui.QPixmap())
     
     def update_stats(self, stats):
         _Thread = UpdateStats(stats)
