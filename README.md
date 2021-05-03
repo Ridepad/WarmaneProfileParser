@@ -5,6 +5,7 @@
 - Uses http://armory.warmane.com to get character gear.
 - Uses https://wotlk.evowow.com to get each item info and icon.
 - Caches downloaded item info and icon.
+- Caches previous equipped gear.
 
 # How to use:
 - Run start.exe
