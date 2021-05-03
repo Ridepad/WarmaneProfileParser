@@ -1,7 +1,6 @@
 import re
 import json
 import requests
-# import threading
 import enchparse
 import time
 from PyQt5 import QtCore, QtGui
@@ -311,7 +310,7 @@ class Item(QtCore.QThread):
             line = enchant_name.title().replace('And', 'and')
             tt.append(format_line(line, '11DD11'))
             self.tt_len(enchant_name)
-            # self.TOTAL_STATS.extend(enchant['stats'])
+            self.TOTAL_STATS.extend(enchant['stats'])
         elif self.ITEM["slot"] in ENCHANTABLE:
             tt.append('')
             tt.append(format_line('Missing Enchant', 'FF0000'))
