@@ -5,7 +5,7 @@ run_()
 {
     Sleep 50
     if clipboard
-        Run "main.pyw" "%clipboard%"
+        Run "main.exe" "%clipboard%"
 }
 
 !XButton1::
