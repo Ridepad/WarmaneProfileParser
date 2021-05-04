@@ -24,37 +24,30 @@ def get_gear(profile):
             gearIDs.append('')
     return [gearData, gearIDs]
 
-#rewrite this
-def get_SpecsProfs(profile):
-    SpecsProfs = {
-        'Specialization': [],
-        'Player vs Player': None,
-        'Professions': [],
-        'Secondary Skills': []
-    }
-    stats = profile.find(id='character-profile').find(class_="information-right")
-    for _string in stats.stripped_strings:
-        if _string == 'Recent Activity':
-            break
-        if _string in SpecsProfs:
-            _cat_list = SpecsProfs[_string]
-            _sub_list = []
-        elif _cat_list is not None:
-            _sub_list.append(_string)
-            if '/' in _string:
-                _cat_list.append(_sub_list)
-                _sub_list = []
+def format_line(name, value):
+    value = value.replace(' ','')
+    if value.count('/') == 1:
+        value = value.split('/')[0]
+    return f'{name:<14}{value:>9}'
 
-    list_of_specs_profs = []
-    category_lists = [cat for cat in SpecsProfs.values() if cat]
-    for category_list in category_lists:
-        for name, value in sorted(category_list):
-            if name in ('First Aid', 'Fishing'):
-                continue
-            value = value.split()
-            value = ''.join(value) if len(value) > 3 else value[0]
-            list_of_specs_profs.append(f'{name:<14} {value:>8}')
-        list_of_specs_profs.append('')
+def get_SpecsProfs(profile):
+    stats = profile.find(id='character-profile').find(class_="information-right")
+    stats = list(stats.stripped_strings)
+    stats.remove('Specialization')
+    if 'PvP Teams' in stats:
+        stats = stats[:stats.index('PvP Teams')]
+    else:
+        stats = stats[:stats.index('Recent Activity')]
+    if 'Professions' in stats:
+        stats[stats.index('Player vs Player'):stats.index('Professions')+1] = ['','']
+    else:
+        del stats[stats.index('Player vs Player'):]
+    if 'Secondary Skills' in stats:
+        stats.remove('Secondary Skills')
+    if 'Cooking' not in stats:
+        stats.append('Cooking')
+        stats.append('0')
+    list_of_specs_profs=[format_line(name, value) for name, value in zip(stats[::2],stats[1::2]) if name not in ('First Aid', 'Fishing')]
     return '\n'.join(list_of_specs_profs)
 
 def get_profile(char_name, server):
@@ -66,14 +59,20 @@ def get_profile(char_name, server):
 
 def main(char_name, server='Lordaeron'):
     profile_raw = get_profile(char_name, server)
-    if "guild-name" in profile_raw:
-        profile_raw = BeautifulSoup(profile_raw, 'html.parser')
-        guild = profile_raw.find(class_="guild-name").text
-        specsProfs = get_SpecsProfs(profile_raw)
-        profile = get_gear(profile_raw)
-        profile.append(guild)
-        profile.append(specsProfs)
-        return profile
+    if "guild-name" not in profile_raw:
+        return []
+    profile_raw = BeautifulSoup(profile_raw, 'html.parser')
+    guild = profile_raw.find(class_="guild-name").text
+    level_race_class = profile_raw.find(class_="level-race-class").text.strip()
+    level_race_class = level_race_class.replace(',','')
+    level_race_class = level_race_class.split(' ')[1:-1]
+    level_race_class = ' '.join(level_race_class)
+    specsProfs = get_SpecsProfs(profile_raw)
+    profile = get_gear(profile_raw)
+    profile.append(guild)
+    profile.append(specsProfs)
+    profile.append(level_race_class)
+    return profile
 
 if __name__ == "__main__":
     char_name = "Nomadra"
