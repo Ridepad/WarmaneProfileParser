@@ -2,19 +2,19 @@ import re
 import json
 import requests
 import enchparse
-import time
 from PyQt5 import QtCore, QtGui
 
 try:
     with open('ench_cache.txt','r') as f:
-        ENCHANCEMENTS_DATA = json.loads(f.read())
+        ENCHANCEMENTS_DATA = json.load(f)
 except FileNotFoundError:
     ENCHANCEMENTS_DATA = {}
 
 TTS = {}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
-ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
 QUALITY_COLOR = ['FFFFFF', 'FFFFFF', '1EFF0B', '0560DD', 'A32AB9', 'FF8011', 'FFFFFF',  'ACBD80']
+# add rings if enchanter
+ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
 GEMS = {
     'red': {
         'socket': (1, 0, 0),
@@ -118,7 +118,7 @@ def get_stats(q):
     stats = get_prim_stats(q)
     stats.extend(get_add_stats(q))
     stats.extend(get_armor(q))
-    return [(STATS_DICT[int(x)], int(y)) for x, y in stats]
+    return [(STATS_DICT[int(x)], int(y)) for x, y in stats if int(x) in STATS_DICT]
 
 def get_sockets(q):
     colors = re.findall("socket-([a-z]{3,6})", q)
@@ -131,7 +131,8 @@ def get_raw_stats(q):
 def get_additional_text(q):
     def format(line):
         line = re.sub("<[^>]+>", "", line)
-        line = re.sub("\(.+\)", "", line)
+        if '%' in line:
+            line = re.sub("\(.+?\)", "", line)
         return line.replace("&nbsp;", "")
     additional_text = re.findall("(Equip: [^IR].+?)...span>", q, re.S)
     additional_text.extend(re.findall("(Use: .+?)...span>", q, re.S))
@@ -145,9 +146,11 @@ def get_socket_bonus(q):
 
 def get_missing_item_info(item_ID):
     item_raw = requests.get(f'https://wotlk.evowow.com/?item={item_ID}').text
-    item_re = re.search('g_items.*?(?P<core>{.+?})', item_raw)
-    item = json.loads(item_re['core'])
+    item = re.findall('g_items[^{]+({.+?})', item_raw)
+    item = json.loads(item[0])
+    # {'quality': 4, 'icon': 'inv_mace_115', 'name_enus': 'Royal Scepter of Terenas II'}
     item['name'] = item.pop('name_enus')
+    # {'quality': 4, 'icon': 'inv_mace_115', 'name': 'Royal Scepter of Terenas II'}
     try:
         item['ilvl'] = re.findall('Level: (\d{1,3})', item_raw)[0]
     except IndexError:
@@ -157,7 +160,10 @@ def get_missing_item_info(item_ID):
 
     item['heroic'] = 'Heroic' in raw_stats
 
-    item['slot'] = re.findall('td>([A-z -]+?)<', raw_stats)[0]
+    slot = re.findall('td>([A-z -]+?)<', raw_stats)[0]
+    if slot == 'Head':
+        item['meta'] = 'socket-meta' in raw_stats
+    item['slot'] = slot
 
     armor_type = re.findall('-asc\d-->([^<]+)', raw_stats)
     if armor_type:
@@ -196,8 +202,9 @@ def gem_color(gem_name):
 
 def write_to_file(data, path, mode):
     '''Creates cache'''
-    with open(path, mode) as f:
-        f.write(data)
+    if len(data) > 50:
+        with open(path, mode) as f:
+            f.write(data)
 
 class Item(QtCore.QThread):
     item_loaded = QtCore.pyqtSignal(list)
@@ -226,12 +233,11 @@ class Item(QtCore.QThread):
         item_path = f'Items_cache/{self.item_ID}.txt'
         try:
             with open(item_path, 'r') as f:
-                return json.loads(f.read())
+                return json.load(f)
         except FileNotFoundError:
             item = get_missing_item_info(self.item_ID)
             data = json.dumps(item)
             write_to_file(data, item_path, 'w')
-            # threading.Thread(target=write_to_file, args=(data, item_path, 'w')).start()
             return item
 
     def get_icon(self):
@@ -245,13 +251,12 @@ class Item(QtCore.QThread):
             iconUrl = f'https://wotlk.evowow.com/static/images/wow/icons/large/{icon_name}.jpg'
             icon = requests.get(iconUrl).content
             write_to_file(icon, icon_path, 'wb')
-            # threading.Thread(target=write_to_file, args=(icon, icon_path, 'wb')).start()
         _Pixmap = QtGui.QPixmap()
         _Pixmap.loadFromData(icon)
         return _Pixmap
 
     def gem_data(self, socket_amount):
-        if self.ITEM["slot"] in ('Waist', 'Head'):
+        if self.ITEM["slot"] == 'Waist' or self.ITEM["slot"] == 'Head' and self.ITEM['meta']:
             socket_amount += 1
         item_gems = []
         socket_bonus = True
@@ -262,7 +267,6 @@ class Item(QtCore.QThread):
                 socket_bonus = False
                 continue
             gem = get_ench(gem_ID)
-            # rewrite
             self.TOTAL_STATS.extend(gem['stats'])
             gem_stat, gem_name = gem['names']
             gem_name = gem_name.replace('perfect ', '')
@@ -276,7 +280,7 @@ class Item(QtCore.QThread):
             stat, value = self.ITEM["socket bonus"]
             item_sockets = self.ITEM.get("sockets")
             if check_socket_bonus(item_gems, item_sockets):
-                self.TOTAL_STATS.append([stat.lower(), value])
+                self.TOTAL_STATS.append((stat.lower(), value))
                 _color = '11DD11'
             yield f'+{value} {stat}', _color
 
@@ -360,3 +364,9 @@ class Item(QtCore.QThread):
         _toolTip = f'<font face=\"Lucida Console\" size=4>{_toolTip}</font>'
         _toolTip = _toolTip.replace(" Rating", "")
         return _toolTip
+
+if __name__ == "__main__":
+    id = 50734
+    item = get_missing_item_info(id)
+    print(item.get('add_text'))
+    
