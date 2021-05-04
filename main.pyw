@@ -9,20 +9,12 @@ import json
 import webbrowser
 import datetime
 
-if not os.path.exists('Icons_cache'):
-    os.makedirs('Icons_cache')
-if not os.path.exists('Items_cache'):
-    os.makedirs('Items_cache')
-if not os.path.exists('Char_cache'):
-    os.makedirs('Char_cache')
+for folder_name in ('Icons_cache', 'Items_cache', 'Char_cache'):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
 
 ICON = 56
 toolTip_show = QtWidgets.QToolTip.showText
-    
-def stats_format(q):
-    stat, value = q
-    stat = ItemParser.STATS_DICT.get(stat, stat)
-    return stat, value
 
 def show_error_message(msg):
     wndw = QtWidgets.QMessageBox(
@@ -37,6 +29,18 @@ def show_error_message(msg):
     sys.exit()
 
 
+class GetProfile(QtCore.QThread):
+    profile_loaded = QtCore.pyqtSignal(list)
+    def __init__(self, char_name, server="Lordaeron"):
+        super().__init__()
+        self.char_name = char_name
+        self.server = server
+    
+    def run(self):
+        profile = ProfileParser.main(self.char_name, self.server)
+        self.profile_loaded.emit(profile)
+
+
 class UpdateStats(QtCore.QThread):
     def __init__(self, new_stats):
         super().__init__()
@@ -46,7 +50,8 @@ class UpdateStats(QtCore.QThread):
         for stat, value in self.new_stats:
             if stat in main_window.FULL_STATS:
                 main_window.FULL_STATS[stat] += value
-        stats_txt = '\n'.join(f'{value:>5} {stat}' for stat, value in main_window.FULL_STATS.items() if value > 30)
+        current_stats = main_window.FULL_STATS.items()
+        stats_txt = '\n'.join(f'{value:>5} {stat}' for stat, value in current_stats if value > 30)
         stats_txt = stats_txt.replace(" rating", "").title()
         _txt = f'{main_window.MAIN_TEXT}\nStats:\n{stats_txt}'
         main_window.STATS_LABEL.setText(_txt)
@@ -55,123 +60,140 @@ class UpdateStats(QtCore.QThread):
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, char_name, server="Lordaeron"):
         super().__init__()
+
+        self.profile_getter = GetProfile(char_name, server)
+        self.profile_getter.start()
+        self.profile_getter.profile_loaded.connect(self.got_profile)
+
+        self.name = char_name
         self.setWindowTitle(char_name)
         self.setWindowIcon(QtGui.QIcon('logo.ico'))
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.WindowCloseButtonHint)
         self.setStyleSheet("QMainWindow {background-color: black} QToolTip {background-color: black; color: white; border: 1px solid white; }")
-        self.centralwidget = QtWidgets.QWidget(self)
-        self.setCentralWidget(self.centralwidget)
 
         self.labels = []
         self.item_parsers = []
         X, Y = 100, 100
         if len(sys.argv) > 3:
             X, Y = int(sys.argv[2]), int(sys.argv[3])
-        stats_size = 230
-        W = ICON * 2 + stats_size
-        H = ICON * 9
-        self.setGeometry(X, Y, W, H)
+        self.stats_size = 230
+        self.W = ICON * 2 + self.stats_size
+        self.H = ICON * 9
+        self.setGeometry(X, Y, self.W, self.H)
         self.setFixedSize(self.size())
-        
-        self.second_column = W - ICON
-        for x in (0, 1):
-            for y in range(8):
-                self.add_icon(x*self.second_column, y*ICON)
-        bottom_row = (ICON, (W-ICON)//2, self.second_column-ICON)
-        for x in bottom_row:
-            self.add_icon(x, 8 * ICON)
+
+        for col in (0, 1):
+            for row in range(8):
+                self.add_icon((self.W-ICON)*col, ICON*row)
+        for col_x in (ICON, (self.W-ICON)//2, self.W-ICON*2):
+            self.add_icon(col_x, ICON*8)
         
         self.STATS_LABEL = QtWidgets.QLabel(
             self,
             styleSheet="color: white",
             font=QtGui.QFont("Lucida Console", 12),
             alignment=QtCore.Qt.AlignTop)
-        self.STATS_LABEL.setGeometry(ICON, 10, stats_size, ICON*6)
-
+        self.STATS_LABEL.setGeometry(ICON, 1, self.stats_size, ICON*15//2)
         
-        self.forward_button = QtWidgets.QPushButton(self)
-        self.forward_button.clicked.connect(self.change_set)
-        self.forward_button.setGeometry(self.second_column - ICON//2, ICON*15//2, ICON//2, ICON//2)
-        self.forward_button.setText('>')
+        self.add_set_change_row()
+    
+    def add_set_change_row(self):
         self.back_button = QtWidgets.QPushButton(self)
         self.back_button.clicked.connect(self.change_set)
         self.back_button.setGeometry(ICON, ICON*15//2, ICON//2, ICON//2)
         self.back_button.setText('<')
-
+        
         self.date_label = QtWidgets.QLabel(
             self,
             styleSheet="color: white",
             font=QtGui.QFont("Lucida Console", 12))
-        self.date_label.setGeometry(ICON*1.5, ICON*15//2, stats_size-ICON, ICON//2)
+        self.date_label.setGeometry(ICON*3//2, ICON*15//2, self.stats_size-ICON, ICON//2)
+        
+        self.forward_button = QtWidgets.QPushButton(self)
+        self.forward_button.clicked.connect(self.change_set)
+        self.forward_button.setGeometry(self.W-ICON*3//2, ICON*15//2, ICON//2, ICON//2)
+        self.forward_button.setText('>')
 
-        profile = ProfileParser.main(char_name, server)
-  
+    def got_profile(self, profile):
         if not profile:
             show_error_message("Character with this name doesn't exist")
         try:
-            with open(f'Char_cache/{char_name}.txt', 'r') as f:
-                self.char_data = json.loads(f.read())
+            with open(f'Char_cache/{self.name}.txt', 'r') as f:
+                self.char_data = json.load(f)
         except FileNotFoundError:
             self.char_data = {}
         if profile not in self.char_data.values():
             tm = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
             self.char_data[tm] = profile
-            with open(f'Char_cache/{char_name}.txt', 'w') as f:
-                f.write(json.dumps(self.char_data))
-        for k, v in self.char_data.items():
-            if v == profile:
-                self.date_label.setText(k)
-        self.current_set_index = -1
-        
-        self.got_gear(profile)
+            with open(f'Char_cache/{self.name}.txt', 'w') as f:
+                json.dump(self.char_data, f)
+        for date, gear in self.char_data.items():
+            if gear == profile:
+                self.date_label.setText(date)
+        # self.current_set_index = -1
+        self.dates = list(self.char_data.keys())
+        self.set_gear(profile)
     
-    def nulify_stats(self):
+    def nullify_stats(self):
         self.FULL_STATS = {x: 0 for x in ItemParser.STATS_DICT.values()}
 
     def change_set(self):
-        cur = -1 if self.sender().text() == '<' else 1
-        self.current_set_index = (self.current_set_index + cur) % len(self.char_data)
-        k = list(self.char_data.keys())[self.current_set_index]
-        self.date_label.setText(k)
-        self.got_gear(self.char_data[k])
+        if len(self.dates) > 1:
+            direction = -1 if self.sender().text() == '<' else 1
+            current_date = self.date_label.text()
+            date_index = self.dates.index(current_date)
+            new_index = (date_index + direction) % len(self.char_data)
+            # self.current_set_index = (self.current_set_index + cur) % len(self.char_data)
+            # date = self.dates[self.current_set_index]
+            date = self.dates[new_index]
+            self.date_label.setText(date)
+            self.set_gear(self.char_data[date])
 
     def add_icon(self, x, y):
         _Label = QtWidgets.QLabel(self)
         _Label.setGeometry(x, y, ICON, ICON)
         self.labels.append(_Label)
     
-    def got_gear(self, profile):
-        self.nulify_stats()
-        gearData, gearIDs, guild, specsProfs = profile
-        _gear = GS.main(gearIDs)
-        total_gs = GS.total_gs(_gear)
-        self.MAIN_TEXT = f'GearScore: {total_gs}\n{guild}\n\n{specsProfs}'
+    def set_gear(self, profile):
+        self.nullify_stats()
+        gearData, gearIDs, guild, specs_profs, level_race_class = profile
+        _gs = ''
+        if int(level_race_class[:2]) == 80:
+            _gear = GS.main(gearIDs)
+            total_gs = GS.total_gs(_gear)
+            _gs = f'GearScore: {total_gs}'
+        self.MAIN_TEXT = f'{_gs}\n{level_race_class}\n{guild}\n\n{specs_profs}\n'
         self.STATS_LABEL.setText(self.MAIN_TEXT)
         
         for label, item_ID in zip(self.labels, gearIDs):
             if item_ID:
-                label.setObjectName(item_ID)
-                label.installEventFilter(self)
-                _Thread = ItemParser.Item(label, item_ID, gearData[item_ID])
-                _Thread.item_loaded.connect(self.update_stats)
-                _Thread.start()
-                self.item_parsers.append(_Thread)
+                self.make_item_slot(label, item_ID, gearData[item_ID])
             else:
                 label.removeEventFilter(self)
                 label.setObjectName('')
                 label.setPixmap(QtGui.QPixmap())
     
+    def make_item_slot(self, label, item_ID, data):
+        label.setObjectName(item_ID)
+        label.installEventFilter(self)
+        _Thread = ItemParser.Item(label, item_ID, data)
+        _Thread.item_loaded.connect(self.update_stats)
+        _Thread.start()
+        self.item_parsers.append(_Thread)
+
     def update_stats(self, stats):
         _Thread = UpdateStats(stats)
         _Thread.start()
         self.item_parsers.append(_Thread)
         
     def eventFilter(self, object, event):
+        #Mouse hover
         if event.type() == 10:
             p = self.geometry()
             p = p.bottomRight() if self.x() > 1350 else p.bottomLeft()
             tool_tip_text = ItemParser.TTS.get(object, '')
             toolTip_show(p, tool_tip_text, self)
+        #Mouse click, left
         elif event.type() == 2 and event.button() == 1:
             item_ID = object.objectName()
             webbrowser.open(f'https://wotlk.evowow.com/?item={item_ID}')
@@ -185,11 +207,16 @@ if __name__ == "__main__":
         char_name = char_name.lower().capitalize()
     except: #default value if none provided
         char_name = "Nomadra"
-    old_ench = dict(ItemParser.ENCHANCEMENTS_DATA)
+    # old_ench = dict(ItemParser.ENCHANCEMENTS_DATA)
     app = QtWidgets.QApplication(sys.argv)
     main_window = MainWindow(char_name)
     main_window.show()
     app.exec_()
+    try:
+        with open('ench_cache.txt','r') as f:
+            old_ench = json.load(f)
+    except FileNotFoundError:
+        old_ench = {}
     if old_ench != ItemParser.ENCHANCEMENTS_DATA:
         with open('ench_cache.txt', 'w') as f:
-            f.write(json.dumps(ItemParser.ENCHANCEMENTS_DATA))
+            json.dump(ItemParser.ENCHANCEMENTS_DATA, f)
