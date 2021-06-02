@@ -12,6 +12,9 @@
 - Uses https://wotlk.evowow.com to get each item info and icon.
 
 # How to use:
+- [Download](https://github.com/Ridepad/WarmaneProfileParser/releases) last release
+- Extract folder wherever you want
+- Open extracted WarmaneProfileParser folder
 - Run start.exe
 - Copy any character's name
 - Press Ctrl+F1 to open main window with gear
