@@ -2,7 +2,8 @@
 
 # WarmaneProfileParser
 
-- UI with almost full gear info and summarized stats.
+- Standalone UI with almost full gear info and summarized stats.
+- Doesn't require game to run.
 - Parses character profile from serverside site. All items, gems, enchants.
 - Can open multiple windows to compare.
 - Click on item to open it's database entry in browser.
