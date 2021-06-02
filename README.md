@@ -21,7 +21,7 @@
 - Press Ctrl+F1 to open main window with gear
 - Press Ctrl+F2 to exit
 
-> Use AHK as alternative to run main.exe, example in repository
+> Use AHK ([AutoHotkey](https://www.autohotkey.com/)) as alternative to run main.exe, example in repository
 
 # TODO
 - Add support for other servers besides Lordaeron.
