@@ -1,5 +1,7 @@
  ![](https://github.com/Ridepad/WarmaneProfileParser/blob/master/showcase.gif)
 
+# IMPORTANT: IT'S NOT AN ADDON - STANDALONE EXECUTABLE
+
 # WarmaneProfileParser
 
 - Standalone UI with almost full gear info and summarized stats.
@@ -9,11 +11,11 @@
 - Click on item to open it's database entry in browser.
 - Caches downloaded item info and icon.
 - Caches previous equipped gear.
-- Uses http://armory.warmane.com to get character gear.
-- Uses https://wotlk.evowow.com to get each item info and icon.
+- Uses [armory.warmane.com](http://armory.warmane.com/) to get character gear.
+- Uses [wotlk.evowow.com](https://wotlk.evowow.com/) to get each item info and icon.
 
 # How to use:
-- [Download](https://github.com/Ridepad/WarmaneProfileParser/releases) last release
+- [Download](https://github.com/Ridepad/WarmaneProfileParser/releases/latest)
 - Extract folder wherever you want
 - Open extracted WarmaneProfileParser folder
 - Run start.exe
