@@ -1,13 +1,15 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-import ProfileParser
-import ItemParser
-import GS
-import re
-import os
-import sys
-import json
-import webbrowser
 import datetime
+import json
+import os
+import re
+import sys
+import webbrowser
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+import GS
+import ItemParser
+import ProfileParser
 
 for folder_name in ('Icons_cache', 'Items_cache', 'Char_cache'):
     if not os.path.exists(folder_name):
@@ -31,7 +33,7 @@ def show_error_message(msg):
 
 class GetProfile(QtCore.QThread):
     profile_loaded = QtCore.pyqtSignal(list)
-    def __init__(self, char_name, server="Lordaeron"):
+    def __init__(self, char_name, server):
         super().__init__()
         self.char_name = char_name
         self.server = server
@@ -205,9 +207,8 @@ if __name__ == "__main__":
         char_name = sys.argv[1]
         char_name = re.findall('[^A-z\(]?([A-z]{2,12})', char_name, re.S)[-1]
         char_name = char_name.lower().capitalize()
-    except: #default value if none provided
+    except IndexError: #default value if none provided
         char_name = "Nomadra"
-    # old_ench = dict(ItemParser.ENCHANCEMENTS_DATA)
     app = QtWidgets.QApplication(sys.argv)
     main_window = MainWindow(char_name)
     main_window.show()
