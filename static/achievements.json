@@ -1,0 +1,165 @@
+{
+    "ICC10": {
+        "4602": "Glory of the Icecrown Raider",
+        "4636": "Heroic: Fall of the Lich King",
+        "4583": "Bane of the Fallen King",
+        "4628": "Heroic: Storming the Citadel",
+        "4629": "Heroic: The Plagueworks",
+        "4630": "Heroic: The Crimson Hall",
+        "4631": "Heroic: The Frostwing Halls",
+        "4532": "Fall of the Lich King",
+        "4530": "The Frozen Throne",
+        "4531": "Storming the Citadel",
+        "4528": "The Plagueworks",
+        "4529": "The Crimson Hall",
+        "4527": "The Frostwing Halls",
+        "4535": "Full House",
+        "4578": "Nausea, Heartburn, Indigestion...",
+        "4580": "All You Can Eat",
+        "4601": "Been Waiting a Long Time for This",
+        "4581": "Neck-Deep in Vile"
+    },
+    "ICC25": {
+        "4603": "Glory of the Icecrown Raider",
+        "4637": "Heroic: Fall of the Lich King",
+        "4584": "The Light of Dawn",
+        "4632": "Heroic: Storming the Citadel",
+        "4633": "Heroic: The Plagueworks",
+        "4634": "Heroic: The Crimson Hall",
+        "4635": "Heroic: The Frostwing Halls",
+        "4608": "Fall of the Lich King",
+        "4597": "The Frozen Throne",
+        "4604": "Storming the Citadel",
+        "4605": "The Plagueworks",
+        "4606": "The Crimson Hall",
+        "4607": "The Frostwing Halls",
+        "4611": "Full House",
+        "4616": "Nausea, Heartburn, Indigestion...",
+        "4620": "All You Can Eat",
+        "4621": "Been Waiting a Long Time for This",
+        "4622": "Neck-Deep in Vile"
+    },
+    "ULD10": {
+        "2957": "Glory of the Ulduar Raider",
+        "2903": "Champion of Ulduar",
+        "3316": "Herald of the Titans",
+        "2894": "The Secrets of Ulduar",
+        "2886": "The Siege of Ulduar",
+        "2888": "The Antechamber of Ulduar",
+        "2890": "The Keepers of Ulduar",
+        "2892": "The Descent into Madness",
+        "3036": "Observed",
+        "3159": "Alone in the Darkness",
+        "3180": "Firefighter",
+        "2955": "If Looks Could Kill",
+        "2996": "Shadowdodger",
+        "3179": "Knock, Knock, Knock on Wood",
+        "3097": "Dwarfageddon",
+        "2923": "Iron Dwarf, Medium Rare",
+        "3076": "Nine Lives",
+        "3006": "Crazy Cat Lady",
+        "2985": "Deforestation",
+        "2953": "Disarmed",
+        "3004": "He Feeds On Your Tears",
+        "3181": "I Love the Smell of Saronite in the Morning"
+    },
+    "ULD25": {
+        "2958": "Glory of the Ulduar Raider",
+        "2904": "Conqueror of Ulduar",
+        "2895": "The Secrets of Ulduar",
+        "2887": "The Siege of Ulduar",
+        "2889": "The Antechamber of Ulduar",
+        "2891": "The Keepers of Ulduar",
+        "2893": "The Descent into Madness",
+        "3037": "Observed",
+        "3164": "Alone in the Darkness",
+        "3189": "Firefighter",
+        "2956": "If Looks Could Kill",
+        "2997": "Shadowdodger",
+        "3187": "Knock, Knock, Knock on Wood",
+        "3098": "Dwarfageddon",
+        "2924": "Iron Dwarf, Medium Rare",
+        "3007": "Crazy Cat Lady",
+        "3077": "Nine Lives",
+        "2984": "Deforestation",
+        "2954": "Disarmed",
+        "3005": "He Feeds On Your Tears",
+        "3188": "I Love the Smell of Saronite in the Morning"
+    },
+    "NAX10": {
+        "2187": "The Undying",
+        "576": "The Fall of Naxxramas",
+        "562": "The Arachnid Quarter",
+        "564": "The Construct Quarter",
+        "566": "The Plague Quarter",
+        "568": "The Military Quarter",
+        "572": "Sapphiron's Demise",
+        "574": "Kel'Thuzad's Defeat"
+    },
+    "NAX25": {
+        "2186": "The Immortal",
+        "577": "The Fall of Naxxramas",
+        "563": "The Arachnid Quarter",
+        "565": "The Construct Quarter",
+        "567": "The Plague Quarter",
+        "569": "The Military Quarter",
+        "573": "Sapphiron's Demise",
+        "575": "Kel'Thuzad's Defeat"
+    },
+    "RS10": {
+        "4818": "Heroic: The Twilight Destroyer",
+        "4817": "The Twilight Destroyer"
+    },
+    "RS25": {
+        "4816": "Heroic: The Twilight Destroyer",
+        "4815": "The Twilight Destroyer"
+    },
+    "OS10": {
+        "2051": "The Twilight Zone",
+        "1876": "Besting the Black Dragonflight"
+    },
+    "OS25": {
+        "2054": "The Twilight Zone",
+        "625": "Besting the Black Dragonflight"
+    },
+    "Ony10": {
+        "4403": "Many Whelps! Handle It!",
+        "4396": "Onyxia's Lair"
+    },
+    "Ony25": {
+        "4406": "Many Whelps! Handle It!",
+        "4397": "Onyxia's Lair"
+    },
+    "EoE10": {
+        "1874": "You Don't Have An Eternity",
+        "622": "The Spellweaver's Downfall"
+    },
+    "EoE25": {
+        "1875": "You Don't Have An Eternity",
+        "623": "The Spellweaver's Downfall"
+    },
+    "VOA10": {
+        "4016": "Earth, Wind & Fire",
+        "4585": "Toravon the Ice Watcher"
+    },
+    "VOA25": {
+        "4017": "Earth, Wind & Fire",
+        "4586": "Toravon the Ice Watcher"
+    },
+    "ToC10": {
+        "4080": "A Tribute to Dedicated Insanity",
+        "3810": "A Tribute to Insanity",
+        "3809": "A Tribute to Mad Skill",
+        "3808": "A Tribute to Skill",
+        "3918": "Call of the Grand Crusade",
+        "3917": "Call of the Crusade"
+    },
+    "ToC25": {
+        "4079": "A Tribute to Immortality",
+        "3819": "A Tribute to Insanity",
+        "3818": "A Tribute to Mad Skill",
+        "3817": "A Tribute to Skill",
+        "3812": "Call of the Grand Crusade",
+        "3916": "Call of the Crusade"
+    }
+}

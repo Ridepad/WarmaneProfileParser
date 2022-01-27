@@ -1,0 +1,66 @@
+{
+    "ICC": {
+        "10": {
+            "cats": [168, 15041],
+            "sep": {
+                "ICC10": "10 man Icecrown Citadel"
+            }
+        },
+        "25": {
+            "cats": [168, 15042],
+            "sep": {
+                "ICC25": "25 man Icecrown Citadel"
+            }
+        }
+    },
+    "Ulduar": {
+        "10": {
+            "cats": [168, 14961],
+            "sep": {
+                "ULD10": "10 man Ulduar"
+            }
+        },
+        "25": {
+            "cats": [168, 14962],
+            "sep": {
+                "ULD25": "25 man Ulduar"
+            }
+        }
+    },
+    "Naxx": {
+        "10": {
+            "cats": [168, 14922],
+            "sep": {
+                "NAX10": "10 man Naxxramas"
+            }
+        },
+        "25": {
+            "cats": [168, 14923],
+            "sep": {
+                "NAX25": "25 man Naxxramas"
+            }
+        }
+    },
+    "Other": {
+        "10": {
+            "cats": [168, 14901, 14922, 15001],
+            "sep": {
+                "RS10": "10 man The Ruby Sanctum",
+                "ToC10": "10 man Trial of Crusader",
+                "VOA10": "10 man Vault of Archavon",
+                "EoE10": "10 man The Eye of Eternity",
+                "Ony10": "10 man Onyxia's Lair"
+            }
+        },
+        "25": {
+            "cats": [168, 14901, 14923, 15002, 81],
+            "sep": {
+                "RS25": "25 man The Ruby Sanctum",
+                "ToC25": "25 man Trial of Crusader",
+                "VOA25": "25 man Vault of Archavon",
+                "EoE25": "25 man The Eye of Eternity",
+                "Ony25": "25 man Onyxia's Lair"
+            }
+        }
+    }
+}
