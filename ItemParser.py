@@ -1,20 +1,17 @@
-import re
 import json
+import re
+
 import requests
-import enchparse
 from PyQt5 import QtCore, QtGui
 
-try:
-    with open('ench_cache.txt','r') as f:
-        ENCHANCEMENTS_DATA = json.load(f)
-except FileNotFoundError:
-    ENCHANCEMENTS_DATA = {}
+import EnchParser
 
-TTS = {}
+ICONS: dict[str, QtGui.QPixmap] = {}
+TOOLTIPS = {}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 QUALITY_COLOR = ['FFFFFF', 'FFFFFF', '1EFF0B', '0560DD', 'A32AB9', 'FF8011', 'FFFFFF',  'ACBD80']
-# add rings if enchanter
 ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
+
 GEMS = {
     'red': {
         'socket': (1, 0, 0),
@@ -53,7 +50,9 @@ GEMS = {
             'barbed', 'dazzling', 'effulgent', 'enduring', 'energized', 'forceful', 'intricate', 'jagged', 'lambent', 'misty',
             'notched', 'opaque', 'polished', 'radiant', 'rune', "seer's", 'shattered', 'shining', 'steady', 'sundered', 'tense',
             'timeless', 'turbid', 'unstable', 'vivid'}}}
+
 STATS_DICT = {
+    0: "armor",
     35: "resilience rating",
     45: "spell power",
     38: "attack power",
@@ -73,7 +72,7 @@ STATS_DICT = {
     4: "strength",
     5: "intellect",
     6: "spirit",
-    0: "armor",}
+}
 
 def format_line(body, color='', size=''):
     if color or size:
@@ -146,8 +145,8 @@ def get_socket_bonus(q):
 
 def get_missing_item_info(item_ID):
     item_raw = requests.get(f'https://wotlk.evowow.com/?item={item_ID}').text
-    item = re.findall('g_items[^{]+({.+?})', item_raw)
-    item = json.loads(item[0])
+    item_stats = re.findall('g_items[^{]+({.+?})', item_raw)
+    item: dict = json.loads(item_stats[0])
     # {'quality': 4, 'icon': 'inv_mace_115', 'name_enus': 'Royal Scepter of Terenas II'}
     item['name'] = item.pop('name_enus')
     # {'quality': 4, 'icon': 'inv_mace_115', 'name': 'Royal Scepter of Terenas II'}
@@ -179,25 +178,17 @@ def get_missing_item_info(item_ID):
         item['add_text'] = additional_text
     return item
 
-def get_ench(ench_ID):
-    if ench_ID in ENCHANCEMENTS_DATA:
-        return ENCHANCEMENTS_DATA[ench_ID]
-    ench_raw = enchparse.get_ench_raw(ench_ID)
-    ench = enchparse.get_ench(ench_raw)
-    ENCHANCEMENTS_DATA[ench_ID] = ench
-    return ench
-
 def gem_color(gem_name):
     name, type_ = gem_name
     if 'diamond' in type_:
         return '6666FF'
     if 'tear' in type_:
         return 'A335EE'
-    for color in GEMS:
-        if name in GEMS[color]['names']:
-            return GEMS[color]['color_hex']
+    for g in GEMS.values():
+        if name in g['names']:
+            return g['color_hex']
     #shouldnt reach here
-    print('WARNING: UNUSUAL GEM:', name, '|', type_)
+    open(f'Errors/{name} {type_}', 'w').close()
     return 'FFFFFF'
 
 def write_to_file(data, path, mode):
@@ -206,14 +197,16 @@ def write_to_file(data, path, mode):
         with open(path, mode) as f:
             f.write(data)
 
+
 class Item(QtCore.QThread):
     item_loaded = QtCore.pyqtSignal(list)
     
-    def __init__(self, label, item_ID, item_data):
+    def __init__(self, item_data: dict[str, str], item_icon, is_enchanter: bool):
         super().__init__()
         self.toolTip_width = 0
-        self.label = label
-        self.item_ID = item_ID
+        self.item_icon = item_icon
+        self.is_enchanter = is_enchanter
+        self.item_ID = item_data['item']
         self.GEMS = item_data.get('gems')
         self.ENCHANT_ID = item_data.get('ench')
         self.stats_funcs = (
@@ -223,14 +216,19 @@ class Item(QtCore.QThread):
             self.get_self_add)
             
     def run(self):
-        self.ITEM = self.get_item()
-        self.TOTAL_STATS = self.ITEM['stats']
-        self.label.setPixmap(self.get_icon())
-        TTS[self.label] = self.make_toolTip()
-        self.item_loaded.emit(self.TOTAL_STATS)
+        try:
+            self.ITEM: dict = self.get_item()
+            slot = self.ITEM["slot"]
+            self.ENCHANTABLE = slot in ENCHANTABLE or slot == 'Finger' and self.is_enchanter
+            self.TOTAL_STATS: list = self.ITEM['stats']
+            self.item_icon.setPixmap(self.get_icon())
+            TOOLTIPS[self.item_icon] = self.make_toolTip()
+            self.item_loaded.emit(self.TOTAL_STATS)
+        except RuntimeError:
+            return
 
     def get_item(self):
-        item_path = f'Items_cache/{self.item_ID}.txt'
+        item_path = f'Item_cache/{self.item_ID}.json'
         try:
             with open(item_path, 'r') as f:
                 return json.load(f)
@@ -243,7 +241,10 @@ class Item(QtCore.QThread):
     def get_icon(self):
         '''Gets icon from cache if available, otherwise downloads and saves'''
         icon_name = self.ITEM['icon']
-        icon_path = f'Icons_cache/{icon_name}.jpg'
+        if icon_name in ICONS:
+            return ICONS[icon_name]
+    
+        icon_path = f'Icon_cache/{icon_name}.jpg'
         try:
             with open(icon_path,'rb') as img:
                 icon = img.read()
@@ -251,8 +252,10 @@ class Item(QtCore.QThread):
             iconUrl = f'https://wotlk.evowow.com/static/images/wow/icons/large/{icon_name}.jpg'
             icon = requests.get(iconUrl).content
             write_to_file(icon, icon_path, 'wb')
+    
         _Pixmap = QtGui.QPixmap()
         _Pixmap.loadFromData(icon)
+        ICONS[icon_name] = _Pixmap
         return _Pixmap
 
     def gem_data(self, socket_amount):
@@ -266,10 +269,10 @@ class Item(QtCore.QThread):
                 yield 'Missing gem', 'FF0000'
                 socket_bonus = False
                 continue
-            gem = get_ench(gem_ID)
+            gem = EnchParser.main(gem_ID)
             self.TOTAL_STATS.extend(gem['stats'])
             gem_stat, gem_name = gem['names']
-            gem_name = gem_name.replace('perfect ', '')
+            gem_name: str = gem_name.lower().replace('perfect ', '')
             gem_name = gem_name.split(' ', 1)
             item_gems.append(gem_name)
             _color = gem_color(gem_name)
@@ -309,13 +312,13 @@ class Item(QtCore.QThread):
         tt = []
         if self.ENCHANT_ID:
             tt.append('')
-            enchant = get_ench(self.ENCHANT_ID)
+            enchant = EnchParser.main(self.ENCHANT_ID)
             enchant_name = enchant['names'][0]
             line = enchant_name.title().replace('And', 'and')
             tt.append(format_line(line, '11DD11'))
             self.tt_len(enchant_name)
             self.TOTAL_STATS.extend(enchant['stats'])
-        elif self.ITEM["slot"] in ENCHANTABLE:
+        elif self.ENCHANTABLE:
             tt.append('')
             tt.append(format_line('Missing Enchant', 'FF0000'))
         return tt
@@ -357,16 +360,8 @@ class Item(QtCore.QThread):
             self.ITEM.get('armor type', '')]
         for f in self.stats_funcs:
             _toolTip.extend(f())
-
-        tt_width = max(300, self.toolTip_width * 7, len(item_name) * 11) + 10
+        tt_width = max(300, (self.toolTip_width+1) * 8, (len(item_name)+1) * 11)
         _toolTip = '</td></tr><tr><td>'.join(_toolTip)
         _toolTip = f'<table width={tt_width}><tr><td>{_toolTip}</td></tr></table>'
-        _toolTip = f'<font face=\"Lucida Console\" size=4>{_toolTip}</font>'
-        _toolTip = _toolTip.replace(" Rating", "")
+        _toolTip = f'<font face="Lucida Console" size=4>{_toolTip}</font>'
         return _toolTip
-
-if __name__ == "__main__":
-    id = 50734
-    item = get_missing_item_info(id)
-    print(item.get('add_text'))
-    
