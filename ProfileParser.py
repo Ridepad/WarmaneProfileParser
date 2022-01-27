@@ -1,80 +1,96 @@
 import requests
 from bs4 import BeautifulSoup
+from bs4.element import Tag
 
-def get_gear(profile):
-    gearIDs = []
-    gearData = {}
-    equipment = profile.find(class_="item-model").find_all('a')
-    for slot in equipment:
+HEADERS = {'User-Agent': "WarmaneProfileParser"}
+
+def get_character(char_name: str, server: str):
+    url = f'http://armory.warmane.com/character/{char_name}/{server}'
+    for _ in range(3):
         try:
-            item_stats = slot.get('rel')[0]
-            # item_stats = item=51290&ench=3820&gems=3621:3520:0&transmog=22718
-            item_stats = item_stats.split('&')
-            # item_stats = ['item=51290', 'ench=3820', 'gems=3621:3520:0', 'transmog=22718']
-            item_stats = [stat.split('=') for stat in item_stats]
-            # item_stats = [['item', '51290'], ['ench', '3820'], ['gems', '3621:3520:0'], ['transmog', '22718']]
-            item_ID = item_stats.pop(0)[1]
-            gearIDs.append(item_ID)
-            # item_stats = [['ench', '3820'], ['gems', '3621:3520:0'], ['transmog', '22718']]
-            item_stats = dict(item_stats)
-            # item_stats = {'ench': '3820', 'gems': '3621:3520:0', 'transmog': '22718'}
-            item_stats['gems'] = item_stats['gems'].split(':') if 'gems' in item_stats else ["0"] * 3
-            gearData[item_ID] = item_stats
-        except TypeError: #Empty slot
-            gearIDs.append('')
-    return [gearData, gearIDs]
+            page = requests.get(url, headers=HEADERS, timeout=1, allow_redirects=False)
+            if page.status_code == 200:
+                return page.text
+        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
+            pass
 
-def format_line(name, value):
-    value = value.replace(' ','')
-    if value.count('/') == 1:
-        value = value.split('/')[0]
-    return f'{name:<14}{value:>9}'
+def parse_slot(slot: Tag):
+    if not slot.get('rel'): # Empty slot
+        return {}
+    # rel="item=51290&ench=3820&gems=3621:3520:0&transmog=22718"
+    item_properties_list = slot['rel'][0].split('&')
+    # item_properties = ['item=51290', 'ench=3820', 'gems=3621:3520:0', 'transmog=22718']
+    item_properties = dict(property.split('=') for property in item_properties_list)
+    # item_properties = {'item': '51290', 'ench': '3820', 'gems': '3621:3520:0', 'transmog': '22718'}
+    item_properties['gems'] = item_properties.get('gems', '0:0:0').split(':')
+    # item_properties = {'item': '51290', 'ench': '3820', 'gems': ['3621','3520','0'], 'transmog': '22718'}
+    return item_properties
 
-def get_SpecsProfs(profile):
-    stats = profile.find(id='character-profile').find(class_="information-right")
-    stats = list(stats.stripped_strings)
-    stats.remove('Specialization')
-    if 'PvP Teams' in stats:
-        stats = stats[:stats.index('PvP Teams')]
-    else:
-        stats = stats[:stats.index('Recent Activity')]
-    if 'Professions' in stats:
-        stats[stats.index('Player vs Player'):stats.index('Professions')+1] = ['','']
-    else:
-        del stats[stats.index('Player vs Player'):]
-    if 'Secondary Skills' in stats:
-        stats.remove('Secondary Skills')
-    if 'Cooking' not in stats:
-        stats.append('Cooking')
-        stats.append('0')
-    list_of_specs_profs=[format_line(name, value) for name, value in zip(stats[::2],stats[1::2]) if name not in ('First Aid', 'Fishing')]
-    return '\n'.join(list_of_specs_profs)
+def get_gear(profile: BeautifulSoup):
+    equipment = profile.find(class_="item-model").find_all('a')
+    return [parse_slot(slot) for slot in equipment]
 
-def get_profile(char_name, server):
-    try:
-        profile_url = f'http://armory.warmane.com/character/{char_name}/{server}'
-        return requests.get(profile_url, timeout=5).text
-    except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
-        return ""
+def get_data(stats: Tag, c: str):
+    text: Tag
+    for tag in stats.find_all(class_=c):
+        for text in tag.find_all(class_='text'):
+            try:
+                specname, value = text.stripped_strings
+                yield specname, value
+            except ValueError:
+                pass
 
-def main(char_name, server='Lordaeron'):
-    profile_raw = get_profile(char_name, server)
+def get_spec(stats: Tag):
+    return {
+        specname: value.replace(' ', '')
+        for specname, value in get_data(stats, "specialization")
+    }
+
+def get_profs(stats: Tag):
+    return {
+        specname: value.split()[0]
+        for specname, value in get_data(stats, "profskills")
+    }
+
+DOUBLE_RACES = ['Night', 'Blood']
+DOUBLE_CLASSES = ['Knight']
+def get_basic_info(profile: BeautifulSoup):
+    level_race_class = profile.find(class_="level-race-class").text.strip()
+    level_race_class = level_race_class.split(',')[0]
+    level_race_class = level_race_class.split(' ')[1:]
+    level = level_race_class[0]
+    race = level_race_class[1]
+    if race in DOUBLE_RACES:
+        race = ' '.join(level_race_class[1:3])
+    class_ = level_race_class[-1]
+    if class_ in DOUBLE_CLASSES:
+        class_ = ' '.join(level_race_class[-2:])
+
+    return level, race, class_
+
+def get_profile(char_name, server='Lordaeron'):
+    profile_raw = get_character(char_name, server)
     if "guild-name" not in profile_raw:
-        return []
+        return {}
     profile_raw = BeautifulSoup(profile_raw, 'html.parser')
-    guild = profile_raw.find(class_="guild-name").text
-    level_race_class = profile_raw.find(class_="level-race-class").text.strip()
-    level_race_class = level_race_class.replace(',','')
-    level_race_class = level_race_class.split(' ')[1:-1]
-    level_race_class = ' '.join(level_race_class)
-    specsProfs = get_SpecsProfs(profile_raw)
-    profile = get_gear(profile_raw)
-    profile.append(guild)
-    profile.append(specsProfs)
-    profile.append(level_race_class)
-    return profile
+    level, race, class_ = get_basic_info(profile_raw)
+    stats = profile_raw.find(id='character-profile').find(class_="information-right")
+    
+    return {
+        'level': level,
+        'race': race,
+        'class': class_,
+        "guild": profile_raw.find(class_="guild-name").text,
+        "specs": get_spec(stats),
+        "profs": get_profs(stats),
+        "gear_data": get_gear(profile_raw),
+    }
+
+
+def __test():
+    char_name = "Nomadra"
+    profile = get_profile(char_name)
+    print(profile)
 
 if __name__ == "__main__":
-    char_name = "Nomadra"
-    profile = main(char_name)
-    print(profile)
+    __test()
