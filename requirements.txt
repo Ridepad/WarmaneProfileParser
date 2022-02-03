@@ -1,0 +1,5 @@
+beautifulsoup4==4.10.0
+pynput==1.7.4
+PyQt5==5.15.5
+pywin32==302
+requests==2.26.0
