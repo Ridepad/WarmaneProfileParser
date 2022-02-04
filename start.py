@@ -23,10 +23,12 @@ def swap_to_english():
     def is_english_layout():
         thread_id = windll.kernel32.GetCurrentThreadId()
         kb_layout = windll.user32.GetKeyboardLayout(thread_id)
-        return kb_layout & (2**16 - 1) == 0x409
+        return kb_layout & 0x3ff == 9
     
-    while not is_english_layout():
-        windll.user32.ActivateKeyboardLayout(1, 0x40000000)
+    for _ in range(10):
+        if is_english_layout():
+            break
+        windll.user32.ActivateKeyboardLayout(1, 0x00000100)
     
 try:
     with open(HOTKEYS_FILE) as f:
@@ -56,10 +58,10 @@ def get_clipboard():
     try:
         cboard = win32clipboard.GetClipboardData()
         win32clipboard.EmptyClipboard()
-    except TypeError:
+    except Exception:
         cboard = ''
     win32clipboard.CloseClipboard()
-    re_find: list[str] = re.findall('([A-z]{2,12})', cboard, re.S)
+    re_find: list[str] = re.findall('([A-Za-z]{2,12})', cboard, re.S)
     if re_find:
         return re_find[-1].lower().capitalize()
 
