@@ -10,14 +10,34 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import main
 
-SERVER_FILE = "_server.cfg"
-HOTKEYS_FILE = "_hotkeys.cfg"
-MAIN_ICON = "static/logo.ico"
-SETTINGS_ICON = 'static/wrench.png'
-CLOSE_ALL_ICON = 'static/close.png'
-NEW_WINDOW_ICON = 'static/new-page.png'
-EXIT_ICON = 'static/turn-off.png'
-CHANGE_SERVER_ICON = 'static/server.png'
+real_path = os.path.realpath(__file__)
+DIR_PATH = os.path.dirname(real_path)
+
+SERVER_FILE = os.path.join(DIR_PATH, "_server.cfg")
+HOTKEYS_FILE = os.path.join(DIR_PATH, "_hotkeys.cfg")
+
+STATIC_DIR = os.path.join(DIR_PATH, "static")
+MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
+EXIT_ICON = os.path.join(STATIC_DIR, "turn-off.png")
+SETTINGS_ICON = os.path.join(STATIC_DIR, "wrench.png")
+CLOSE_ALL_ICON = os.path.join(STATIC_DIR, "close.png")
+NEW_WINDOW_ICON = os.path.join(STATIC_DIR, "new-page.png")
+CHANGE_SERVER_ICON = os.path.join(STATIC_DIR, "server.png")
+
+MODIFIERS = ['<ctrl>', '<alt>', '<shift>']
+HOTKEYS = {
+    "new_window": "<ctrl>+<alt>+c",
+    "close_all": "<ctrl>+<alt>+w",
+    "change_server": "<ctrl>+<alt>+<f1>",
+    "full_exit": "<ctrl>+<alt>+<f2>"
+}
+HOTKEYS_FUNC = {
+    "New window": "new_window",
+    "Close all": "close_all",
+    "Change server": "change_server",
+    "Full exit": "full_exit",
+}
+
 
 def swap_to_english():
     def is_english_layout():
@@ -29,25 +49,6 @@ def swap_to_english():
         if is_english_layout():
             break
         windll.user32.ActivateKeyboardLayout(1, 0x00000100)
-    
-try:
-    with open(HOTKEYS_FILE) as f:
-        HOTKEYS = json.load(f)
-except FileNotFoundError:
-    HOTKEYS = {
-        "new_window": "<ctrl>+<alt>+c",
-        "close_all": "<ctrl>+<alt>+w",
-        "change_server": "<ctrl>+<alt>+<f1>",
-        "full_exit": "<ctrl>+<alt>+<f2>"
-    }
-
-MODS = ['<ctrl>', '<alt>', '<shift>']
-HOTKEYS_FUNC = {
-    "New window": "new_window",
-    "Close all": "close_all",
-    "Change server": "change_server",
-    "Full exit": "full_exit",
-}
 
 def save_hotkeys():
     with open(HOTKEYS_FILE, 'w') as f:
@@ -67,7 +68,7 @@ def get_clipboard():
 
 def parse_key(k: str):
     *mods, key = k.split('+')
-    kb = [k in mods for k in MODS]
+    kb = [k in mods for k in MODIFIERS]
     kb.append(key)
     return kb
 
@@ -210,13 +211,13 @@ class KeybindsChangeWindow(QtWidgets.QMainWindow):
             if not keybind[-1]:
                 HOTKEYS[func] = ''
                 continue
-            k = [kv for kb, kv in zip(keybind, MODS) if kb]
+            k = [kv for kb, kv in zip(keybind, MODIFIERS) if kb]
             k.append(keybind[-1])
             HOTKEYS[func] = '+'.join(k)
         save_hotkeys()
         show_message(self)
 
-    def closeEvent(self, event: QtGui.QCloseEvent):
+    def closeEvent(self, event):
         self.keyboard_hook.listener.stop()
         self.closed.emit()
 
@@ -289,7 +290,8 @@ class MainWindowKeybinds(QtCore.QThread):
 
         with pynput.keyboard.GlobalHotKeys(_keys) as self.listener:
             self.listener.join()
-    
+
+
 class MainWindow(QtWidgets.QMainWindow):
     char_windows: list[main.CharWindow] = []
     
@@ -431,8 +433,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.hide()
             self.show_tray_msg("Running in background")
         
-    def systemIcon(self, reason):
-        if reason == QtWidgets.QSystemTrayIcon.DoubleClick:
+    def systemIcon(self, action):
+        if action == QtWidgets.QSystemTrayIcon.DoubleClick:
             self.show()
 
     def full_exit(self):
@@ -440,12 +442,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == "__main__":
-    caches = ['Char_cache', 'Ench_cache', 'Icon_cache', 'Item_cache']
-    servers = ["Lordaeron", "Icecrown", "Frostmourne", "Blackrock"]
-    servers_cache = [f"Char_cache/{x}" for x in servers]
-    for folder_name in caches+servers_cache:
-        if not os.path.exists(folder_name):
-            os.makedirs(folder_name, exist_ok=True)
+    try:
+        with open(HOTKEYS_FILE) as f:
+            HOTKEYS = json.load(f)
+    except FileNotFoundError:
+        pass
 
     app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)

@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 import requests
@@ -11,6 +12,20 @@ TOOLTIPS = {}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 QUALITY_COLOR = ['FFFFFF', 'FFFFFF', '1EFF0B', '0560DD', 'A32AB9', 'FF8011', 'FFFFFF',  'ACBD80']
 ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
+
+real_path = os.path.realpath(__file__)
+DIR_PATH = os.path.dirname(real_path)
+CACHE = os.path.join(DIR_PATH, 'cache')
+ICON_CACHE = os.path.join(CACHE, 'icons')
+ITEM_CACHE = os.path.join(CACHE, 'items')
+ERRORS_DIR = os.path.join(DIR_PATH, 'errors')
+
+UNIQUE_GEMS = {
+    "of the Sea": {
+        'socket': (0, 0, 1),
+        'color_hex': '4444ff',
+    },
+}
 
 GEMS = {
     'red': {
@@ -83,18 +98,19 @@ def format_line(body, color='', size=''):
         return f'<font{size}{color}>{body}</font>'
     return body
 
-def check_socket_bonus(item_gems, item_sockets):
+def socket_bonus_matched(item_gems, item_sockets):
     for name, type_ in item_gems:
-        if 'diamond' in type_:
-            continue
-        if name == 'nightmare':
+        if type_ in ['tear', 'sphere', 'pearl']:
             item_sockets = [x-1 for x in item_sockets]
-            continue
-        for color in GEMS:
-            if name in GEMS[color]['names']:
-                socket_matches = GEMS[color]['socket']
-                item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
-                break
+        elif type_ in UNIQUE_GEMS:
+            socket_matches = UNIQUE_GEMS[type_]['socket']
+            item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
+        elif type_ != 'diamond':
+            for color in GEMS:
+                if name in GEMS[color]['names']:
+                    socket_matches = GEMS[color]['socket']
+                    item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
+                    break
     return all(x <= 0 for x in item_sockets)
 
 def get_prim_stats(q):
@@ -182,13 +198,20 @@ def gem_color(gem_name):
     name, type_ = gem_name
     if 'diamond' in type_:
         return '6666FF'
-    if 'tear' in type_:
+    if type_ in ['tear', 'sphere', 'pearl']:
         return 'A335EE'
+    if type_ in UNIQUE_GEMS:
+        return UNIQUE_GEMS[type_]['color_hex']
     for g in GEMS.values():
         if name in g['names']:
             return g['color_hex']
+
     #shouldnt reach here
-    open(f'Errors/{name} {type_}', 'w').close()
+    print(gem_name)
+    print(name)
+    print(type_)
+    _new_error = os.path.join(ERRORS_DIR, f"{name} {type_}")
+    open(_new_error, 'w').close()
     return 'FFFFFF'
 
 def write_to_file(data, path, mode):
@@ -196,7 +219,6 @@ def write_to_file(data, path, mode):
     if len(data) > 50:
         with open(path, mode) as f:
             f.write(data)
-
 
 class Item(QtCore.QThread):
     item_loaded = QtCore.pyqtSignal(list)
@@ -222,13 +244,13 @@ class Item(QtCore.QThread):
             self.ENCHANTABLE = slot in ENCHANTABLE or slot == 'Finger' and self.is_enchanter
             self.TOTAL_STATS: list = self.ITEM['stats']
             self.item_icon.setPixmap(self.get_icon())
-            TOOLTIPS[self.item_icon] = self.make_toolTip()
+            TOOLTIPS[self.item_icon] = self.make_tool_tip()
             self.item_loaded.emit(self.TOTAL_STATS)
         except RuntimeError:
             return
 
     def get_item(self):
-        item_path = f'Item_cache/{self.item_ID}.json'
+        item_path = f'{ITEM_CACHE}/{self.item_ID}.json'
         try:
             with open(item_path, 'r') as f:
                 return json.load(f)
@@ -244,7 +266,7 @@ class Item(QtCore.QThread):
         if icon_name in ICONS:
             return ICONS[icon_name]
     
-        icon_path = f'Icon_cache/{icon_name}.jpg'
+        icon_path = f'{ICON_CACHE}/{icon_name}.jpg'
         try:
             with open(icon_path,'rb') as img:
                 icon = img.read()
@@ -262,30 +284,30 @@ class Item(QtCore.QThread):
         if self.ITEM["slot"] == 'Waist' or self.ITEM["slot"] == 'Head' and self.ITEM['meta']:
             socket_amount += 1
         item_gems = []
-        socket_bonus = True
+        no_missing_gems = True
+
         for n in range(socket_amount):
             gem_ID = self.GEMS[n]
             if gem_ID == '0':
                 yield 'Missing gem', 'FF0000'
-                socket_bonus = False
+                no_missing_gems = False
                 continue
             gem = EnchParser.main(gem_ID)
             self.TOTAL_STATS.extend(gem['stats'])
             gem_stat, gem_name = gem['names']
-            gem_name: str = gem_name.lower().replace('perfect ', '')
+            gem_name = gem_name.lower().replace('perfect ', '')
             gem_name = gem_name.split(' ', 1)
             item_gems.append(gem_name)
             _color = gem_color(gem_name)
             yield gem_stat, _color
 
-        if socket_bonus:
-            _color = '777777'
-            stat, value = self.ITEM["socket bonus"]
-            item_sockets = self.ITEM.get("sockets")
-            if check_socket_bonus(item_gems, item_sockets):
-                self.TOTAL_STATS.append((stat.lower(), value))
-                _color = '11DD11'
-            yield f'+{value} {stat}', _color
+        _color = '777777'
+        stat, value = self.ITEM["socket bonus"]
+        item_sockets = self.ITEM.get("sockets")
+        if no_missing_gems and socket_bonus_matched(item_gems, item_sockets):
+            self.TOTAL_STATS.append((stat.lower(), value))
+            _color = '11DD11'
+        yield f'+{value} {stat}', _color
 
     def tt_len(self, line):
         '''Updates tooltip width'''
@@ -293,56 +315,51 @@ class Item(QtCore.QThread):
         if line_len > self.toolTip_width:
             self.toolTip_width = line_len
 
+    def format_enchant(self, enchant_name: str, color):
+        self.tt_len(enchant_name)
+        enchant_name = enchant_name.title().replace('And', 'and')
+        return format_line(enchant_name, color)
+
     def get_self_stats(self):
         '''Stats of the item - base, additional stats and armor separated by blank line'''
+        if not self.TOTAL_STATS:
+            return
+        
         tt = []
-        if self.TOTAL_STATS:
-            tt.append('')
-            _add_separator = True
-            for stat, value in self.TOTAL_STATS:
-                if _add_separator and stat not in BASE_STATS or stat == 'armor':
-                    tt.append('')
-                    _add_separator = False
-                line = f'+{value:>3} {stat}'.title()
-                tt.append(line)
-                self.tt_len(line)
+        for stat, value in self.TOTAL_STATS:
+            if stat not in BASE_STATS and '' not in tt or stat == 'armor':
+                tt.append('')
+            line = f'+{value:>3} {stat}'.title()
+            tt.append(line)
+            self.tt_len(line)
         return tt
 
     def get_self_enchant(self):
-        tt = []
         if self.ENCHANT_ID:
-            tt.append('')
             enchant = EnchParser.main(self.ENCHANT_ID)
-            enchant_name = enchant['names'][0]
-            line = enchant_name.title().replace('And', 'and')
-            tt.append(format_line(line, '11DD11'))
-            self.tt_len(enchant_name)
             self.TOTAL_STATS.extend(enchant['stats'])
+            enchant_name = enchant['names'][0]
+            return [self.format_enchant(enchant_name, '11DD11')]
         elif self.ENCHANTABLE:
-            tt.append('')
-            tt.append(format_line('Missing Enchant', 'FF0000'))
-        return tt
+            return [format_line('Missing Enchant', 'FF0000')]
 
     def get_self_sockets(self):
-        tt = []
         socket_amount = sum(self.ITEM.get("sockets", []))
-        if socket_amount:
-            tt.append('')
-            for line, color in self.gem_data(socket_amount):
-                self.tt_len(line)
-                line = line.title().replace('And', 'and')
-                tt.append(format_line(line, color))
-        return tt
+        if not socket_amount:
+            return
+
+        return [
+            self.format_enchant(gem_name, color)
+            for gem_name, color in self.gem_data(socket_amount)
+        ]
     
     def get_self_add(self):
         '''Additional text - On equip / on use'''
-        tt = []
         additional_text = self.ITEM.get('add_text')
-        if additional_text:
-            tt.append('')
-            for text in additional_text:
-                tt.append(format_line(text, '11DD11'))
-        return tt
+        if not additional_text:
+            return
+        
+        return [format_line(text, '11DD11') for text in additional_text]
 
     def get_ilvl(self):
         _ilvl = self.ITEM["ilvl"]
@@ -350,7 +367,7 @@ class Item(QtCore.QThread):
             _ilvl = format_line(_ilvl, '11DD11')
         return _ilvl
     
-    def make_toolTip(self):
+    def make_tool_tip(self):
         item_name = self.ITEM["name"]
         item_name_color = QUALITY_COLOR[self.ITEM['quality']]
         _toolTip = [
@@ -358,8 +375,13 @@ class Item(QtCore.QThread):
             self.get_ilvl(),
             self.ITEM["slot"],
             self.ITEM.get('armor type', '')]
+        
         for f in self.stats_funcs:
-            _toolTip.extend(f())
+            new_lines = f()
+            if new_lines:
+                _toolTip.append('')
+                _toolTip.extend(new_lines)
+        
         tt_width = max(300, (self.toolTip_width+1) * 8, (len(item_name)+1) * 11)
         _toolTip = '</td></tr><tr><td>'.join(_toolTip)
         _toolTip = f'<table width={tt_width}><tr><td>{_toolTip}</td></tr></table>'

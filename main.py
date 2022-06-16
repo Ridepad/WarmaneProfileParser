@@ -1,24 +1,44 @@
 import json
+import os
 import sys
 import webbrowser
 from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import achiparse
+import AchiParser
 import GS
 import ItemParser
 import ProfileParser
 
 
+def new_folder_path(root, name):
+    new_folder = os.path.join(root, name)
+    if not os.path.exists(new_folder):
+        os.makedirs(new_folder, exist_ok=True)
+    return new_folder
+
+real_path = os.path.realpath(__file__)
+DIR_PATH = os.path.dirname(real_path)
+
+CACHE_DIR = new_folder_path(DIR_PATH, "cache")
+STATIC_DIR = new_folder_path(DIR_PATH, "static")
+ERRORS_DIR = new_folder_path(DIR_PATH, "errors")
+
+SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
+MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
+
+CACHES = {"enchants", "icons", "items"}
+for cache_name in CACHES:
+    new_folder_path(CACHE_DIR, cache_name)
+CHAR_CACHE = new_folder_path(CACHE_DIR, "characters")
+
 ICON = 56
-SIZE_FILE = "_achi_size.cfg"
-MAIN_ICON = "static/logo.ico"
 ACHI_ICONS = {
-    'ICC': "static/icc.png",
-    'Naxx': "static/naxx.png",
-    'Ulduar': "static/ulduar.png",
-    'Other': "static/rs.png",
+    'ICC': os.path.join(STATIC_DIR, "icc.png"),
+    'Naxx': os.path.join(STATIC_DIR, "naxx.png"),
+    'Ulduar': os.path.join(STATIC_DIR, "ulduar.png"),
+    'Other': os.path.join(STATIC_DIR, "rs.png"),
 }
 
 STYLESHEET = """
@@ -103,7 +123,8 @@ class CharWindow(QtWidgets.QMainWindow):
         self.item_parsers: list[ItemParser.Item] = []
         self.dates: list[str] = []
         
-        self.char_cache = f'Char_cache/{server}/{char_name}.json'
+        server_cache = new_folder_path(CHAR_CACHE, server)
+        self.char_cache = os.path.join(server_cache, f"{char_name}.json")
         self.char_data: dict[str, dict] = open_json(self.char_cache)
 
         self.fetch_profile()
@@ -329,7 +350,7 @@ class AchiToolTip(QtCore.QThread):
         tts[size]['done'][self.source] = tooltip
 
     def run(self):
-        tooltip = achiparse.make_toolTip(**self.args)
+        tooltip = AchiParser.make_toolTip(**self.args)
         self.save_cache(tooltip)
         self.tt_loaded.emit(tooltip)
 
@@ -339,13 +360,17 @@ if __name__ == "__main__":
         char_name = sys.argv[1]
     except IndexError: # default value if none provided
         char_name = "Nomadra"
+    try:
+        server = sys.argv[2]
+    except IndexError: # default value if none provided
+        server = "Lordaeron"
 
     __x, __y = 100, 100
     if len(sys.argv) > 3:
         __x, __y = int(sys.argv[2]), int(sys.argv[3])
 
     app = QtWidgets.QApplication(sys.argv)
-    main_window = CharWindow(char_name, X=__x, Y=__y)
+    main_window = CharWindow(char_name, server=server, X=__x, Y=__y)
     main_window.show()
     app.exec_()
     

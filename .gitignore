@@ -1,0 +1,14 @@
+__*
+build/
+cache/
+errors/
+lib/
+PyQt5/
+zrelease/
+
+*.ahk
+*.cfg
+*.dll
+*.exe
+*.spec
+*.zip

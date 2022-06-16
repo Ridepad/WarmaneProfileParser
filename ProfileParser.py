@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-HEADERS = {'User-Agent': "WarmaneProfileParser"}
+HEADERS = {'User-Agent': "WarmaneProfileParser/1.0"}
 
 def get_character(char_name: str, server: str):
     url = f'http://armory.warmane.com/character/{char_name}/{server}'
@@ -70,7 +70,7 @@ def get_basic_info(profile: BeautifulSoup):
 
 def get_profile(char_name, server='Lordaeron'):
     profile_raw = get_character(char_name, server)
-    if "guild-name" not in profile_raw:
+    if profile_raw is None or "guild-name" not in profile_raw:
         return {}
     profile_raw = BeautifulSoup(profile_raw, 'html.parser')
     level, race, class_ = get_basic_info(profile_raw)

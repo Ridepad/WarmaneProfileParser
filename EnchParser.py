@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import threading
 
@@ -6,12 +7,15 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-HEADERS = {'User-Agent': "EnchParser"}
-ENCH_CACHE = 'Ench_cache'
+real_path = os.path.realpath(__file__)
+DIR_PATH = os.path.dirname(real_path)
+CACHE = os.path.join(DIR_PATH, 'cache')
+ENCH_CACHE = os.path.join(CACHE, 'enchants')
 
-CACHED: dict[str, dict] = {}
+CACHED: dict[str, dict[str, list[str, str]]] = {}
 LOADING: dict[str, threading.Thread] = {}
 
+HEADERS = {'User-Agent': "EnchParser/1.0"}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 SHORT_STATS = {
     'armorpenrtng': 'armor penetration rating',
@@ -44,7 +48,7 @@ def get_page(ench_ID):
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
             pass
 
-def get_names(soup: BeautifulSoup):
+def get_enchant_names(soup: BeautifulSoup):
     n0 = soup.find("title").text.split(' - ')[0]
     n1 = soup.find(id="topbar").find_next_sibling().text
     n1 = re.findall('name_enus":"([^"]+)', n1)[1]
@@ -85,11 +89,10 @@ def get_ench(ench_raw: str):
         for td in stats_table.find_all("td")
     ]
     stats = [x for x in stats if x]
-    names = get_names(soup)
+    names = get_enchant_names(soup)
     for x in names:
-        if "all stats" not in x.lower(): continue
-        for s in BASE_STATS:
-            stats.append((s, int(get_value(x))))
+        if "all stats" in x.lower():
+            stats.extend((s, int(get_value(x))) for s in BASE_STATS)
     return {
         "names": names,
         "stats": stats
