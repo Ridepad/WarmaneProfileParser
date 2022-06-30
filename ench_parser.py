@@ -17,7 +17,7 @@ LOGGER = logging.getLogger("errors_logger")
 CACHED: dict[str, dict[str, list[str, str]]] = {}
 LOADING: dict[str, threading.Thread] = {}
 
-HEADERS = {'User-Agent': "WarmaneProfileParser EnchParser/1.0"}
+HEADERS = {'User-Agent': "WarmaneProfileParser ench_parser/1.0"}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 SHORT_STATS = {
     'armorpenrtng': 'armor penetration rating',

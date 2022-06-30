@@ -8,7 +8,7 @@ from bs4.element import Tag
 TOOLTIPS = {}
 ACHI_CACHE = {}
 
-HEADERS = {'User-Agent': "WarmaneProfileParser AchiParser/1.0"}
+HEADERS = {'User-Agent': "WarmaneProfileParser achi_parser/1.0"}
 
 try:
     with open("static/achievements.json", 'r') as f:

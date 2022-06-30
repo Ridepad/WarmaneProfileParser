@@ -36,7 +36,7 @@
 
 ## Issues
 
-If you've encountered a problem, open issue on github with _error.log or message me on discord @ `Ridepad#7722`
+If you've encountered a problem, open issue on github with `_errors.log` or message me on discord @ `Ridepad#7722`
 
 ## TODO
 

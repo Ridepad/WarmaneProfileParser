@@ -20,7 +20,7 @@ TOOLTIPS = {}
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 QUALITY_COLOR = ['FFFFFF', 'FFFFFF', '1EFF0B', '0560DD', 'A32AB9', 'FF8011', 'FFFFFF',  'ACBD80']
 ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
-HEADERS = {'User-Agent': "WarmaneProfileParser ItemParser/1.0"}
+HEADERS = {'User-Agent': "WarmaneProfileParser item_parser/1.0"}
 
 UNIQUE_GEMS = {
     "of the Sea": {

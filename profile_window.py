@@ -1,8 +1,8 @@
 import json
+import logging
 import os
 import sys
 import webbrowser
-import logging
 from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -399,8 +399,6 @@ if __name__ == "__main__":
         char_name = sys.argv[1]
     except IndexError: # default value if none provided
         char_name = "Nomadra"
-        char_name = "Jenbrezul"
-        char_name = "Salami"
         char_name = "Deydraenna"
     try:
         server = sys.argv[2]
