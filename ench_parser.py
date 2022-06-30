@@ -80,7 +80,7 @@ def parse_each(td: Tag):
         stats = re.findall("\['([a-z]+)", stat_tag.text)
     
     value = get_value(value)
-    if value is not None and len(stat) > 0:
+    if value is not None and len(stats) > 0:
         stat = stats[0].lower().replace('increased', '').strip()
         return SHORT_STATS.get(stat, stat), int(value)
 
