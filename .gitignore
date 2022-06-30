@@ -1,5 +1,6 @@
-__*
+_*
 cache/
+certifi/
 lib/
 PyQt5/
 

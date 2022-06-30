@@ -8,7 +8,7 @@ import pynput
 import win32clipboard
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import main
+import profile_window
 
 real_path = os.path.realpath(__file__)
 DIR_PATH = os.path.dirname(real_path)
@@ -293,7 +293,7 @@ class MainWindowKeybinds(QtCore.QThread):
 
 
 class MainWindow(QtWidgets.QMainWindow):
-    char_windows: list[main.CharWindow] = []
+    char_windows: list[profile_window.CharWindow] = []
     
     def __init__(self):
         super().__init__()
@@ -406,7 +406,7 @@ class MainWindow(QtWidgets.QMainWindow):
         icon = tray.Critical if warning else tray.Information
         self.tray_icon.showMessage("WarmaneProfileParser", msg, icon)
 
-    def remove_error(self, window: main.CharWindow):
+    def remove_error(self, window: profile_window.CharWindow):
         self.char_windows.remove(window)
         self.show_tray_msg("Character with this name doesn't exist, maybe wrong server?", True)
 
@@ -415,7 +415,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if char_name is None:
             return
         
-        _window = main.CharWindow(char_name, self.server)
+        _window = profile_window.CharWindow(char_name, self.server)
         _window.is_terminated.connect(self.remove_error)
         self.char_windows.append(_window)
         _window.show()
