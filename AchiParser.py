@@ -8,7 +8,7 @@ from bs4.element import Tag
 TOOLTIPS = {}
 ACHI_CACHE = {}
 
-HEADERS = {'User-Agent': "WarmaneAchiParser/1.0"}
+HEADERS = {'User-Agent': "WarmaneProfileParser AchiParser/1.0"}
 
 try:
     with open("static/achievements.json", 'r') as f:
@@ -79,8 +79,8 @@ def make_toolTip(char_name, server, size, category_name):
     _cat = CATEGORIES[category_name][size]
     all_achi = {}
     for category_id in _cat['cats']:
-        all_achi.update(get_achievs(char_name, server, category_id))
-    
+        all_achi |= get_achievs(char_name, server, category_id)
+
     _toolTip = []
     for cat_id, cat_name in _cat['sep'].items():
         _toolTip.append(format_line(cat_name, 'FFFFFF', 5))

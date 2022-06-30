@@ -1,8 +1,5 @@
- ![](https://github.com/Ridepad/WarmaneProfileParser/blob/master/showcase.gif)
-
-# IMPORTANT: IT'S NOT AN ADDON - STANDALONE EXECUTABLE
-
 # WarmaneProfileParser
+> IMPORTANT: IT'S NOT AN ADDON - STANDALONE EXECUTABLE
 - Standalone UI with almost full gear info, summarized stats and achievements
 - Doesn't require game to run
 - Parses character profile from serverside site. All items, gems, enchants
@@ -13,6 +10,8 @@
 - Click on item to open it's database entry in browser
 - Uses [armory.warmane.com](http://armory.warmane.com/) to get character gear
 - Uses [wotlk.evowow.com](https://wotlk.evowow.com/) to get each item info and icon
+
+![](https://github.com/Ridepad/WarmaneProfileParser/blob/master/showcase.gif)
 
 # How to use:
 - [Download](https://github.com/Ridepad/WarmaneProfileParser/releases/latest)

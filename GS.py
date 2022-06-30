@@ -17,6 +17,8 @@ def item_gs(item_ID: str, categoryName: str):
     return 0 # not found/empty slot/tabard/shirt
 
 def get_weapon_GS(item_ID):
+    if not item_ID:
+        return 0, None
     item_type = 'Legendary'
     weapon_GS = LEGENDARY.get(item_ID)
     if not weapon_GS:

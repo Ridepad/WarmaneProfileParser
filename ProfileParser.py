@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-HEADERS = {'User-Agent': "WarmaneProfileParser/1.0"}
+HEADERS = {'User-Agent': "WarmaneProfileParser/1.3"}
 
 def get_character(char_name: str, server: str):
     url = f'http://armory.warmane.com/character/{char_name}/{server}'

@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import webbrowser
+import logging
 from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -23,15 +24,14 @@ DIR_PATH = os.path.dirname(real_path)
 
 CACHE_DIR = new_folder_path(DIR_PATH, "cache")
 STATIC_DIR = new_folder_path(DIR_PATH, "static")
-ERRORS_DIR = new_folder_path(DIR_PATH, "errors")
-
-SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
-MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
-
 CACHES = {"enchants", "icons", "items"}
 for cache_name in CACHES:
     new_folder_path(CACHE_DIR, cache_name)
 CHAR_CACHE = new_folder_path(CACHE_DIR, "characters")
+
+SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
+MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
+DL_ICON = os.path.join(STATIC_DIR, "download.png")
 
 ICON = 56
 ACHI_ICONS = {
@@ -61,6 +61,25 @@ QPushButton {
 }
 """
 
+LOGGING_FORMAT = "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s"
+
+def setup_logger(logger_name, log_file):
+    logger = logging.getLogger(logger_name)
+    formatter = logging.Formatter(LOGGING_FORMAT)
+    fileHandler = logging.FileHandler(log_file)
+    fileHandler.setFormatter(formatter)
+    streamHandler = logging.StreamHandler()
+    streamHandler.setFormatter(formatter)
+
+    logger.setLevel(logging.INFO)
+    logger.addHandler(fileHandler)
+    logger.addHandler(streamHandler)
+    return logger
+
+LOGFILE = os.path.join(DIR_PATH,'_errors.log')
+LOGGER = setup_logger("errors_logger", LOGFILE)
+
+
 def open_json(filename) -> dict:
     try:
         with open(filename, 'r') as f:
@@ -85,6 +104,26 @@ def format_specs(profile: dict):
             t.append('')
         specs_profs.extend(t)
     return '\n'.join(specs_profs)
+
+def generate_main_info(profile):
+    if profile['level'] == "80":
+        gear_IDs = [item_data.get('item') for item_data in profile['gear_data']]
+        gear_GS = GS.main(gear_IDs)
+        _gs = f'GearScore: {sum(gear_GS)}'
+    else:
+        _gs = ''
+    
+    level_race_class = " ".join(profile[x] for x in ['level', 'class', 'race'])
+    specs_profs = format_specs(profile)
+    main_text = [
+        _gs,
+        level_race_class,
+        profile['guild'],
+        '',
+        specs_profs,
+        ''
+    ]
+    return '\n'.join(main_text)
 
 
 class GetProfile(QtCore.QThread):
@@ -206,7 +245,7 @@ class CharWindow(QtWidgets.QMainWindow):
         self.gear_refresh = QtWidgets.QPushButton(self)
         self.gear_refresh.setGeometry(self.W-ICON, ICON*8, 56, 56)
         self.gear_refresh.clicked.connect(self.fetch_profile)
-        self.gear_refresh.setIcon(QtGui.QIcon('static/download.png'))
+        self.gear_refresh.setIcon(QtGui.QIcon(DL_ICON))
         self.gear_refresh.setIconSize(QtCore.QSize(50, 50))
         self.gear_refresh.installEventFilter(self)
         self.gear_refresh.setObjectName('gear_refresh')
@@ -274,24 +313,24 @@ class CharWindow(QtWidgets.QMainWindow):
     
     def set_gear(self, profile):
         self.nullify_stats()
-        _gs = ''
-        if profile['level'] == "80":
-            gear_IDs = [item_data.get('item') for item_data in profile['gear_data']]
-            gear_GS = GS.main(gear_IDs)
-            _gs = f'GearScore: {sum(gear_GS)}'
-        level_race_class = " ".join(profile[x] for x in ['level', 'race', 'class'])
-        specs_profs = format_specs(profile)
-        self.MAIN_TEXT = f"{_gs}\n{level_race_class}\n{profile['guild']}\n\n{specs_profs}\n"
+        
         self.is_enchanter = 'Enchanting' in profile['profs']
+        
+        self.MAIN_TEXT = generate_main_info(profile)
         self.STATS_LABEL.setText(self.MAIN_TEXT)
 
         self.set_icons(profile)
         
     def showToolTip(self, tool_tip_text):
         pos = self.geometry()
-        pos = pos.bottomRight() if self.x() > 1350 else pos.bottomLeft()
+        if self.y() > 400:
+            pos = pos.topLeft() if self.x() > 1350 else pos.topRight()
+            print(pos)
+        else:
+            pos = pos.bottomRight() if self.x() > 1350 else pos.bottomLeft()
         if QtWidgets.QToolTip.text() == tool_tip_text:
-            tool_tip_text += " " # removes tooltip flickering
+            # removes tooltip flickering
+            tool_tip_text += " "
         QtWidgets.QToolTip.showText(pos, tool_tip_text, self)
 
     def get_tooltip(self, source: QtWidgets.QWidget):
@@ -360,10 +399,14 @@ if __name__ == "__main__":
         char_name = sys.argv[1]
     except IndexError: # default value if none provided
         char_name = "Nomadra"
+        char_name = "Jenbrezul"
+        char_name = "Salami"
+        char_name = "Deydraenna"
     try:
         server = sys.argv[2]
     except IndexError: # default value if none provided
         server = "Lordaeron"
+        server = "Icecrown"
 
     __x, __y = 100, 100
     if len(sys.argv) > 3:
