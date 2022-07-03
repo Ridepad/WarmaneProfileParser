@@ -1,0 +1,2262 @@
+{
+  "deathknight": {
+    "Darkruned Battlegear": {
+      "items": ["45340", "45341", "45342", "45343", "45344", "46111", "46113", "46115", "46116", "46117"],
+      "sets": [{
+          "id": -166,
+          "ilvl": 226,
+          "pieces": ["46115", "46117", "46116", "46113", "46111"]
+        }, {
+          "id": 834,
+          "ilvl": 219,
+          "pieces": ["45342", "45344", "45343", "45341", "45340"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of Death Coil and Frost Strike by 8%"], [4, "Increases the bonus damage done per disease by 20% on Blood Strike, Heart Strike, Obliterate, and Scourge Strike"]]
+    },
+    "Darkruned Plate": {
+      "items": ["45335", "45336", "45337", "45338", "45339", "46118", "46119", "46120", "46121", "46122"],
+      "sets": [{
+          "id": -167,
+          "ilvl": 226,
+          "pieces": ["46120", "46122", "46121", "46119", "46118"]
+        }, {
+          "id": 835,
+          "ilvl": 219,
+          "pieces": ["45336", "45339", "45338", "45337", "45335"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by Rune Strike by 10%"], [4, "Anti-magic shell also grants you 10% reduction to physical damage taken"]]
+    },
+    "Gladiator's Desecration": {
+      "items": ["40781", "40784", "40787", "40791", "40803", "40806", "40809", "40811", "40820", "40824", "40827", "40830", "40841", "40845", "40848", "40851", "40860", "40863", "40868", "40871", "51413", "51414", "51415", "51416", "51418"],
+      "sets": [{
+          "id": -71,
+          "ilvl": 270,
+          "pieces": ["51415", "51418", "51416", "51414", "51413"]
+        }, {
+          "id": -70,
+          "ilvl": 251,
+          "pieces": ["40830", "40871", "40851", "40811", "40791"]
+        }, {
+          "id": -69,
+          "ilvl": 232,
+          "pieces": ["40827", "40868", "40848", "40809", "40787"]
+        }, {
+          "id": -68,
+          "ilvl": 213,
+          "pieces": ["40824", "40863", "40845", "40806", "40784"]
+        }, {
+          "id": -67,
+          "ilvl": 200,
+          "pieces": ["40820", "40860", "40841", "40803", "40781"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["attack power", 50]], [4, "Whenever you are struck by a movement-impairing effect you will generate 15 runic power over 5 sec"], [4, ["attack power", 150]]]
+    },
+    "Koltira's Battlegear": {
+      "items": ["48491", "48492", "48493", "48494", "48495", "48496", "48497", "48498", "48499", "48500", "48501", "48502", "48503", "48504", "48505"],
+      "sets": [{
+          "id": -230,
+          "ilvl": 258,
+          "pieces": ["48493", "48495", "48494", "48492", "48491"]
+        }, {
+          "id": -229,
+          "ilvl": 245,
+          "pieces": ["48498", "48496", "48497", "48499", "48500"]
+        }, {
+          "id": 872,
+          "ilvl": 232,
+          "pieces": ["48503", "48505", "48504", "48502", "48501"]
+        }
+      ],
+      "set_bonus": [[2, "Your Blood Strike and Heart Strike abilities have a chance to grant you 180 additional strength for 15 sec"], [4, "Your Blood Plague ability now has a chance for its damage to be critical strikes"]]
+    },
+    "Koltira's Plate": {
+      "items": ["48548", "48549", "48550", "48551", "48552", "48553", "48554", "48555", "48556", "48557", "48558", "48559", "48560", "48561", "48562"],
+      "sets": [{
+          "id": -234,
+          "ilvl": 258,
+          "pieces": ["48550", "48552", "48551", "48549", "48548"]
+        }, {
+          "id": -233,
+          "ilvl": 245,
+          "pieces": ["48555", "48553", "48554", "48556", "48557"]
+        }, {
+          "id": 874,
+          "ilvl": 232,
+          "pieces": ["48560", "48562", "48561", "48559", "48558"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Dark Command ability by 2 sec and increases the damage done by your Blood Strike and Heart Strike abilities by 5%"], [4, "Decreases the cooldown on your Unbreakable Armor, Vampiric Blood, and Bone Shield abilities by 10 sec"]]
+    },
+    "Scourgeborne Battlegear": {
+      "items": ["39617", "39618", "39619", "39620", "39621", "40550", "40552", "40554", "40556", "40557"],
+      "sets": [{
+          "id": -138,
+          "ilvl": 213,
+          "pieces": ["40554", "40557", "40556", "40552", "40550"]
+        }, {
+          "id": 792,
+          "ilvl": 200,
+          "pieces": ["39619", "39621", "39620", "39618", "39617"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of your Obliterate, Scourge Strike, and Death Strike abilities by 5%"], [4, "Your Obliterate, Scourge Strike, and Death Strike generate an additional 5 Runic Power when used"]]
+    },
+    "Scourgeborne Plate": {
+      "items": ["39623", "39624", "39625", "39626", "39627", "40559", "40563", "40565", "40567", "40568"],
+      "sets": [{
+          "id": -139,
+          "ilvl": 213,
+          "pieces": ["40565", "40568", "40567", "40563", "40559"]
+        }, {
+          "id": 793,
+          "ilvl": 200,
+          "pieces": ["39625", "39627", "39626", "39624", "39623"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of your Plague Strike by 10%"], [4, "Increases the duration of your Icebound Fortitude by 3 seconds"]]
+    },
+    "Scourgelord's Battlegear": {
+      "items": ["50094", "50095", "50096", "50097", "50098", "51125", "51126", "51127", "51128", "51129", "51310", "51311", "51312", "51313", "51314"],
+      "sets": [{
+          "id": -276,
+          "ilvl": 277,
+          "pieces": ["51312", "51314", "51313", "51311", "51310"]
+        }, {
+          "id": -275,
+          "ilvl": 264,
+          "pieces": ["51127", "51125", "51126", "51128", "51129"]
+        }, {
+          "id": 897,
+          "ilvl": 251,
+          "pieces": ["50096", "50098", "50097", "50095", "50094"]
+        }
+      ],
+      "set_bonus": [[2, "Your Obliterate and Scourge Strike abilities deal 10% increased damage, and your Heart Strike ability deals 7% increased damage"], [4, "Whenever all your runes are on cooldown, you gain 3% increased damage done with weapons, spells, and abilities for the next 15 sec"]]
+    },
+    "Scourgelord's Plate": {
+      "items": ["50853", "50854", "50855", "50856", "50857", "51130", "51131", "51132", "51133", "51134", "51305", "51306", "51307", "51308", "51309"],
+      "sets": [{
+          "id": -278,
+          "ilvl": 277,
+          "pieces": ["51306", "51309", "51308", "51307", "51305"]
+        }, {
+          "id": -277,
+          "ilvl": 264,
+          "pieces": ["51133", "51130", "51131", "51132", "51134"]
+        }, {
+          "id": 898,
+          "ilvl": 251,
+          "pieces": ["50855", "50853", "50854", "50856", "50857"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Death and Decay ability by 20%"], [4, "When you activate Blood Tap, you gain 12% damage reduction from all attacks for 10 sec"]]
+    },
+    "Thassarian's Battlegear": {
+      "items": ["48472", "48474", "48476", "48478", "48480", "48481", "48482", "48483", "48484", "48485", "48486", "48487", "48488", "48489", "48490"],
+      "sets": [{
+          "id": -228,
+          "ilvl": 258,
+          "pieces": ["48488", "48486", "48487", "48489", "48490"]
+        }, {
+          "id": -227,
+          "ilvl": 245,
+          "pieces": ["48483", "48485", "48484", "48482", "48481"]
+        }, {
+          "id": 871,
+          "ilvl": 232,
+          "pieces": ["48472", "48478", "48476", "48480", "48474"]
+        }
+      ],
+      "set_bonus": [[2, "Your Blood Strike and Heart Strike abilities have a chance to grant you 180 additional strength for 15 sec"], [4, "Your Blood Plague ability now has a chance for its damage to be critical strikes"]]
+    },
+    "Thassarian's Plate": {
+      "items": ["48529", "48531", "48533", "48535", "48537", "48538", "48539", "48540", "48541", "48542", "48543", "48544", "48545", "48546", "48547"],
+      "sets": [{
+          "id": -232,
+          "ilvl": 258,
+          "pieces": ["48545", "48543", "48544", "48546", "48547"]
+        }, {
+          "id": -231,
+          "ilvl": 245,
+          "pieces": ["48540", "48542", "48541", "48539", "48538"]
+        }, {
+          "id": 873,
+          "ilvl": 232,
+          "pieces": ["48529", "48535", "48533", "48537", "48531"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Dark Command ability by 2 sec and increases the damage done by your Blood Strike and Heart Strike abilities by 5%"], [4, "Decreases the cooldown on your Unbreakable Armor, Vampiric Blood, and Bone Shield abilities by 10 sec"]]
+    }
+  },
+  "druid": {
+    "Dreamwalker Battlegear": {
+      "items": ["39553", "39554", "39555", "39556", "39557", "40471", "40472", "40473", "40493", "40494"],
+      "sets": [{
+          "id": -144,
+          "ilvl": 213,
+          "pieces": ["40473", "40494", "40493", "40472", "40471"]
+        }, {
+          "id": 798,
+          "ilvl": 200,
+          "pieces": ["39553", "39556", "39555", "39557", "39554"]
+        }
+      ],
+      "set_bonus": [[2, "Your Rip lasts for an additional 4 seconds, and your Lacerate deals an additional 5% damage"], [4, "Increases the duration of Barkskin by 3 seconds and decreases the cooldown of Tiger's Fury by 3 seconds"]]
+    },
+    "Dreamwalker Garb": {
+      "items": ["39544", "39545", "39546", "39547", "39548", "40466", "40467", "40468", "40469", "40470"],
+      "sets": [{
+          "id": -146,
+          "ilvl": 213,
+          "pieces": ["40467", "40470", "40468", "40466", "40469"]
+        }, {
+          "id": 800,
+          "ilvl": 200,
+          "pieces": ["39545", "39548", "39546", "39544", "39547"]
+        }
+      ],
+      "set_bonus": [[2, "Your Insect Swarm deals an additional 10% damage"], [4, "Your Wrath and Starfire spells gain an additional 5% critical strike chance"]]
+    },
+    "Dreamwalker Regalia": {
+      "items": ["39531", "39538", "39539", "39542", "39543", "40460", "40461", "40462", "40463", "40465"],
+      "sets": [{
+          "id": -145,
+          "ilvl": 213,
+          "pieces": ["40461", "40465", "40462", "40460", "40463"]
+        }, {
+          "id": 799,
+          "ilvl": 200,
+          "pieces": ["39531", "39542", "39539", "39543", "39538"]
+        }
+      ],
+      "set_bonus": [[2, "The cost of your Lifebloom is reduced by 5%"], [4, "Your Nourish heals an additional 5% for each of your heal over time effects present on the target"]]
+    },
+    "Gladiator's Refuge": {
+      "items": ["41273", "41274", "41275", "41276", "41284", "41286", "41287", "41288", "41296", "41297", "41298", "41299", "41308", "41309", "41310", "41311", "41319", "41320", "41321", "41322", "51419", "51420", "51421", "51422", "51424"],
+      "sets": [{
+          "id": -96,
+          "ilvl": 270,
+          "pieces": ["51421", "51424", "51422", "51420", "51419"]
+        }, {
+          "id": -95,
+          "ilvl": 251,
+          "pieces": ["41322", "41276", "41299", "41288", "41311"]
+        }, {
+          "id": -94,
+          "ilvl": 232,
+          "pieces": ["41321", "41275", "41298", "41287", "41310"]
+        }, {
+          "id": -93,
+          "ilvl": 213,
+          "pieces": ["41320", "41274", "41297", "41286", "41309"]
+        }, {
+          "id": -92,
+          "ilvl": 200,
+          "pieces": ["41319", "41273", "41296", "41284", "41308"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Reduces the cooldown of your Swiftmend ability by 2 sec"], [4, ["spell power", 88]]]
+    },
+    "Gladiator's Sanctuary": {
+      "items": ["41659", "41660", "41661", "41662", "41665", "41666", "41667", "41668", "41676", "41677", "41678", "41679", "41713", "41714", "41715", "41716", "41771", "41772", "41773", "41774", "51425", "51426", "51427", "51428", "51430"],
+      "sets": [{
+          "id": -106,
+          "ilvl": 270,
+          "pieces": ["51427", "51430", "51428", "51426", "51425"]
+        }, {
+          "id": -105,
+          "ilvl": 251,
+          "pieces": ["41679", "41716", "41668", "41774", "41662"]
+        }, {
+          "id": -104,
+          "ilvl": 232,
+          "pieces": ["41678", "41715", "41667", "41773", "41661"]
+        }, {
+          "id": -103,
+          "ilvl": 213,
+          "pieces": ["41677", "41714", "41666", "41772", "41660"]
+        }, {
+          "id": -102,
+          "ilvl": 200,
+          "pieces": ["41676", "41713", "41665", "41771", "41659"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["attack power", 50]], [4, "Increases your movement speed by 15% while in Bear Form, Cat Form, or Travel Form. Only active outdoors"], [4, ["attack power", 150]]]
+    },
+    "Gladiator's Wildhide": {
+      "items": ["41279", "41280", "41281", "41282", "41291", "41292", "41293", "41294", "41302", "41303", "41304", "41305", "41314", "41315", "41316", "41317", "41325", "41326", "41327", "41328", "51433", "51434", "51435", "51436", "51438"],
+      "sets": [{
+          "id": -101,
+          "ilvl": 270,
+          "pieces": ["51435", "51438", "51436", "51434", "51433"]
+        }, {
+          "id": -100,
+          "ilvl": 251,
+          "pieces": ["41328", "41282", "41305", "41294", "41317"]
+        }, {
+          "id": -99,
+          "ilvl": 232,
+          "pieces": ["41327", "41281", "41304", "41293", "41316"]
+        }, {
+          "id": -98,
+          "ilvl": 213,
+          "pieces": ["41326", "41280", "41303", "41292", "41315"]
+        }, {
+          "id": -97,
+          "ilvl": 200,
+          "pieces": ["41325", "41279", "41302", "41291", "41314"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Your Wrath casts have a chance to reduce the cast time on your next Starfire by 1.5 sec"], [4, ["spell power", 88]]]
+    },
+    "Lasherweave Battlegear": {
+      "items": ["50824", "50825", "50826", "50827", "50828", "51140", "51141", "51142", "51143", "51144", "51295", "51296", "51297", "51298", "51299"],
+      "sets": [{
+          "id": -260,
+          "ilvl": 277,
+          "pieces": ["51296", "51299", "51297", "51295", "51298"]
+        }, {
+          "id": -259,
+          "ilvl": 264,
+          "pieces": ["51143", "51140", "51142", "51144", "51141"]
+        }, {
+          "id": 889,
+          "ilvl": 251,
+          "pieces": ["50826", "50824", "50825", "50827", "50828"]
+        }
+      ],
+      "set_bonus": [[2, "Your Swipe (Bear) and Lacerate abilities deal 20% additional damage and the cost of your Rip ability is reduced by 10 energy"], [4, "Your Enrage ability no longer decreases your armor and instead decreases all damage taken by 12%, and the periodic damage done by your Rake ability can now be a critical strike"]]
+    },
+    "Lasherweave Garb": {
+      "items": ["50106", "50107", "50108", "50109", "50113", "51135", "51136", "51137", "51138", "51139", "51300", "51301", "51302", "51303", "51304"],
+      "sets": [{
+          "id": -256,
+          "ilvl": 277,
+          "pieces": ["51302", "51304", "51303", "51301", "51300"]
+        }, {
+          "id": -255,
+          "ilvl": 264,
+          "pieces": ["51137", "51135", "51136", "51138", "51139"]
+        }, {
+          "id": 887,
+          "ilvl": 251,
+          "pieces": ["50108", "50113", "50109", "50107", "50106"]
+        }
+      ],
+      "set_bonus": [[2, "The healing granted by your Wild Growth spell reduces 30% less over time"], [4, "Each time your Rejuvenation spell heals a target, it has a 2% chance to jump to a new target at full duration"]]
+    },
+    "Lasherweave Regalia": {
+      "items": ["50819", "50820", "50821", "50822", "50823", "51145", "51146", "51147", "51148", "51149", "51290", "51291", "51292", "51293", "51294"],
+      "sets": [{
+          "id": -258,
+          "ilvl": 277,
+          "pieces": ["51290", "51292", "51293", "51291", "51294"]
+        }, {
+          "id": -257,
+          "ilvl": 264,
+          "pieces": ["51149", "51147", "51146", "51148", "51145"]
+        }, {
+          "id": 888,
+          "ilvl": 251,
+          "pieces": ["50821", "50819", "50820", "50822", "50823"]
+        }
+      ],
+      "set_bonus": [[2, "When you gain Clearcasting from your Omen of Clarity talent, you deal 15% additional Nature and Arcane damage for 6 sec"], [4, "Your critical strikes from Starfire and Wrath cause the target to languish for an additional 7% of your spell's damage over 4 sec"]]
+    },
+    "Malfurion's Battlegear": {
+      "items": ["48203", "48204", "48205", "48206", "48207", "48208", "48209", "48210", "48211", "48212", "48213", "48214", "48215", "48216", "48217"],
+      "sets": [{
+          "id": -196,
+          "ilvl": 258,
+          "pieces": ["48204", "48207", "48205", "48203", "48206"]
+        }, {
+          "id": -195,
+          "ilvl": 245,
+          "pieces": ["48211", "48208", "48210", "48212", "48209"]
+        }, {
+          "id": 855,
+          "ilvl": 232,
+          "pieces": ["48214", "48217", "48215", "48213", "48216"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Growl ability by 2 sec, increases the periodic damage done by your Lacerate ability by 5%, and increases the duration of your Rake ability by 3 sec"], [4, "Reduces the cooldown on Barkskin by 12 sec and increases the critical strike chance of Rip and Ferocious Bite by 5%"]]
+    },
+    "Malfurion's Garb": {
+      "items": ["48102", "48129", "48130", "48131", "48132", "48133", "48134", "48135", "48136", "48137", "48138", "48139", "48140", "48141", "48142"],
+      "sets": [{
+          "id": -188,
+          "ilvl": 258,
+          "pieces": ["48141", "48138", "48140", "48142", "48139"]
+        }, {
+          "id": -187,
+          "ilvl": 245,
+          "pieces": ["48134", "48137", "48135", "48133", "48136"]
+        }, {
+          "id": 851,
+          "ilvl": 232,
+          "pieces": ["48102", "48131", "48130", "48132", "48129"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of your Nourish spell by 5%"], [4, "Your Rejuvenation ability now has a chance for its healing to be critical strikes"]]
+    },
+    "Malfurion's Regalia": {
+      "items": ["48158", "48159", "48160", "48161", "48162", "48163", "48164", "48165", "48166", "48167", "48168", "48169", "48170", "48171", "48172"],
+      "sets": [{
+          "id": -192,
+          "ilvl": 258,
+          "pieces": ["48171", "48168", "48170", "48172", "48169"]
+        }, {
+          "id": -191,
+          "ilvl": 245,
+          "pieces": ["48164", "48167", "48165", "48163", "48166"]
+        }, {
+          "id": 853,
+          "ilvl": 232,
+          "pieces": ["48158", "48161", "48160", "48162", "48159"]
+        }
+      ],
+      "set_bonus": [[2, "Your Moonfire ability now has a chance for its periodic damage to be critical strikes"], [4, "Increases the damage done by your Starfire and Wrath spells by 4%"]]
+    },
+    "Nightsong Battlegear": {
+      "items": ["45355", "45356", "45357", "45358", "45359", "46157", "46158", "46159", "46160", "46161"],
+      "sets": [{
+          "id": -159,
+          "ilvl": 226,
+          "pieces": ["46161", "46157", "46160", "46158", "46159"]
+        }, {
+          "id": 827,
+          "ilvl": 219,
+          "pieces": ["45356", "45359", "45357", "45355", "45358"]
+        }
+      ],
+      "set_bonus": [[2, "The periodic damage dealt by your Rake, Rip, and Lacerate abilities has a chance to cause you to enter a Clearcasting state"], [4, "Increases the duration of Savage Roar and Survival Instinct by 8 sec"]]
+    },
+    "Nightsong Garb": {
+      "items": ["45350", "45351", "45352", "45353", "45354", "46189", "46191", "46192", "46194", "46196"],
+      "sets": [{
+          "id": -160,
+          "ilvl": 226,
+          "pieces": ["46191", "46196", "46192", "46189", "46194"]
+        }, {
+          "id": 828,
+          "ilvl": 219,
+          "pieces": ["45350", "45352", "45353", "45351", "45354"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the bonus granted by Eclipse for Starfire and Wrath by 7%"], [4, "Each time your Insect Swarm deals damage, it has a chance to make your next Starfire cast within 10 sec instant"]]
+    },
+    "Nightsong Regalia": {
+      "items": ["45345", "45346", "45347", "45348", "45349", "46183", "46184", "46185", "46186", "46187"],
+      "sets": [{
+          "id": -161,
+          "ilvl": 226,
+          "pieces": ["46184", "46187", "46185", "46183", "46186"]
+        }, {
+          "id": 829,
+          "ilvl": 219,
+          "pieces": ["45346", "45349", "45347", "45345", "45348"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the healing done by your Swiftmend spell by 10%"], [4, "Your Rejuvenation spell also provides an instant heal for your target"]]
+    },
+    "Runetotem's Battlegear": {
+      "items": ["48188", "48189", "48190", "48191", "48192", "48193", "48194", "48195", "48196", "48197", "48198", "48199", "48200", "48201", "48202"],
+      "sets": [{
+          "id": -198,
+          "ilvl": 258,
+          "pieces": ["48201", "48198", "48200", "48202", "48199"]
+        }, {
+          "id": -197,
+          "ilvl": 245,
+          "pieces": ["48194", "48197", "48195", "48193", "48196"]
+        }, {
+          "id": 856,
+          "ilvl": 232,
+          "pieces": ["48188", "48191", "48190", "48192", "48189"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Growl ability by 2 sec, increases the periodic damage done by your Lacerate ability by 5%, and increases the duration of your Rake ability by 3 sec"], [4, "Reduces the cooldown on Barkskin by 12 sec and increases the critical strike chance of Rip and Ferocious Bite by 5%"]]
+    },
+    "Runetotem's Garb": {
+      "items": ["48143", "48144", "48145", "48146", "48147", "48148", "48149", "48150", "48151", "48152", "48153", "48154", "48155", "48156", "48157"],
+      "sets": [{
+          "id": -190,
+          "ilvl": 258,
+          "pieces": ["48144", "48147", "48145", "48143", "48146"]
+        }, {
+          "id": -189,
+          "ilvl": 245,
+          "pieces": ["48151", "48148", "48150", "48152", "48149"]
+        }, {
+          "id": 852,
+          "ilvl": 232,
+          "pieces": ["48154", "48157", "48155", "48153", "48156"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of your Nourish spell by 5%"], [4, "Your Rejuvenation ability now has a chance for its healing to be critical strikes"]]
+    },
+    "Runetotem's Regalia": {
+      "items": ["48173", "48174", "48175", "48176", "48177", "48178", "48179", "48180", "48181", "48182", "48183", "48184", "48185", "48186", "48187"],
+      "sets": [{
+          "id": -194,
+          "ilvl": 258,
+          "pieces": ["48174", "48177", "48175", "48173", "48176"]
+        }, {
+          "id": -193,
+          "ilvl": 245,
+          "pieces": ["48181", "48178", "48180", "48182", "48179"]
+        }, {
+          "id": 854,
+          "ilvl": 232,
+          "pieces": ["48184", "48187", "48185", "48183", "48186"]
+        }
+      ],
+      "set_bonus": [[2, "Your Moonfire ability now has a chance for its periodic damage to be critical strikes"], [4, "Increases the damage done by your Starfire and Wrath spells by 4%"]]
+    }
+  },
+  "hunter": {
+    "Ahn'Kahar Blood Hunter's Battlegear": {
+      "items": ["50114", "50115", "50116", "50117", "50118", "51150", "51151", "51152", "51153", "51154", "51285", "51286", "51287", "51288", "51289"],
+      "sets": [{
+          "id": -264,
+          "ilvl": 277,
+          "pieces": ["51286", "51288", "51287", "51285", "51289"]
+        }, {
+          "id": -263,
+          "ilvl": 264,
+          "pieces": ["51153", "51151", "51152", "51154", "51150"]
+        }, {
+          "id": 891,
+          "ilvl": 251,
+          "pieces": ["50115", "50117", "50116", "50114", "50118"]
+        }
+      ],
+      "set_bonus": [[2, "Your Auto Shots have a 5% chance to cause you and your pet to deal 15% additional damage for 10 sec"], [4, "When your Serpent Sting and Wyvern Sting abilities deal damage, you have a 5% chance to gain 20% attack power for 10 sec"]]
+    },
+    "Cryptstalker Battlegear": {
+      "items": ["39578", "39579", "39580", "39581", "39582", "40503", "40504", "40505", "40506", "40507"],
+      "sets": [{
+          "id": -140,
+          "ilvl": 213,
+          "pieces": ["40505", "40507", "40506", "40504", "40503"]
+        }, {
+          "id": 794,
+          "ilvl": 200,
+          "pieces": ["39578", "39581", "39580", "39582", "39579"]
+        }
+      ],
+      "set_bonus": [[2, "Your pet deals an additional 5% damage"], [4, "Your ranged attack speed is increased by 20% while Aspect of the Viper is active"]]
+    },
+    "Gladiator's Pursuit": {
+      "items": ["41085", "41086", "41087", "41088", "41141", "41142", "41143", "41144", "41155", "41156", "41157", "41158", "41203", "41204", "41205", "41206", "41215", "41216", "41217", "41218", "51458", "51459", "51460", "51461", "51462"],
+      "sets": [{
+          "id": -91,
+          "ilvl": 270,
+          "pieces": ["51460", "51462", "51461", "51459", "51458"]
+        }, {
+          "id": -90,
+          "ilvl": 251,
+          "pieces": ["41158", "41218", "41206", "41144", "41088"]
+        }, {
+          "id": -89,
+          "ilvl": 232,
+          "pieces": ["41157", "41217", "41205", "41143", "41087"]
+        }, {
+          "id": -88,
+          "ilvl": 213,
+          "pieces": ["41156", "41216", "41204", "41142", "41086"]
+        }, {
+          "id": -87,
+          "ilvl": 200,
+          "pieces": ["41155", "41215", "41203", "41141", "41085"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 50]], [2, ["resilience rating", 100]], [4, "Reduces the cooldown of your Traps by 2 seconds"], [4, ["attack power", 150]]]
+    },
+    "Scourgestalker Battlegear": {
+      "items": ["45360", "45361", "45362", "45363", "45364", "46141", "46142", "46143", "46144", "46145"],
+      "sets": [{
+          "id": -170,
+          "ilvl": 226,
+          "pieces": ["46143", "46145", "46144", "46142", "46141"]
+        }, {
+          "id": 838,
+          "ilvl": 219,
+          "pieces": ["45361", "45363", "45362", "45360", "45364"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Serpent Sting by 10%"], [4, "Your Steady Shot has a chance to grant you 600 attack power for 15 sec"]]
+    },
+    "Windrunner's Battlegear": {
+      "items": ["48250", "48251", "48252", "48253", "48254", "48255", "48256", "48257", "48258", "48259", "48260", "48261", "48262", "48263", "48264"],
+      "sets": [{
+          "id": -204,
+          "ilvl": 258,
+          "pieces": ["48262", "48260", "48261", "48263", "48264"]
+        }, {
+          "id": -203,
+          "ilvl": 245,
+          "pieces": ["48257", "48259", "48258", "48256", "48255"]
+        }, {
+          "id": 859,
+          "ilvl": 232,
+          "pieces": ["48250", "48253", "48252", "48254", "48251"]
+        }
+      ],
+      "set_bonus": [[2, "The damage done by your Serpent Sting ability can now be critical strikes"], [4, "Each time you hit with a ranged attack, you have a chance to grant your pet 600 attack power for 15 sec"]]
+    },
+    "Windrunner's Pursuit": {
+      "items": ["48265", "48266", "48267", "48268", "48269", "48270", "48271", "48272", "48273", "48274", "48275", "48276", "48277", "48278", "48279"],
+      "sets": [{
+          "id": -206,
+          "ilvl": 258,
+          "pieces": ["48267", "48269", "48268", "48266", "48265"]
+        }, {
+          "id": -205,
+          "ilvl": 245,
+          "pieces": ["48272", "48270", "48271", "48273", "48274"]
+        }, {
+          "id": 860,
+          "ilvl": 232,
+          "pieces": ["48277", "48279", "48278", "48276", "48275"]
+        }
+      ],
+      "set_bonus": [[2, "The damage done by your Serpent Sting ability can now be critical strikes"], [4, "Each time you hit with a ranged attack, you have a chance to grant your pet 600 attack power for 15 sec"]]
+    }
+  },
+  "items": {
+    "The Twin Blades of Azzinoth": {
+      "items": ["32837", "32838"],
+      "sets": [{
+          "id": 699,
+          "ilvl": 156,
+          "pieces": ["32837", "32838"]
+        }
+      ],
+      "set_bonus": [[2, "Your melee attacks have a chance to increase your haste rating by 450 for 10 sec"], [2, "Increases attack power by 200 when fighting Demons"]]
+    },
+    "Battlegear of Eternal Justice": {
+      "items": ["21395", "21396", "21397"],
+      "sets": [{
+          "id": 506,
+          "ilvl": 70,
+          "pieces": ["21396", "21397", "21395"]
+        }
+      ],
+      "set_bonus": [[3, "20% chance to regain 100 mana when you cast a Judgement"]]
+    },
+    "Battlegear of Unyielding Strength": {
+      "items": ["21392", "21393", "21394"],
+      "sets": [{
+          "id": 495,
+          "ilvl": 70,
+          "pieces": ["21393", "21394", "21392"]
+        }
+      ],
+      "set_bonus": [[3, "-2 rage cost to Intercept"]]
+    },
+    "Emblems of Veiled Shadows": {
+      "items": ["21404", "21405", "21406"],
+      "sets": [{
+          "id": 498,
+          "ilvl": 70,
+          "pieces": ["21405", "21406", "21404"]
+        }
+      ],
+      "set_bonus": [[3, "-10 energy cost for your Slice and Dice ability"]]
+    },
+    "Finery of Infinite Wisdom": {
+      "items": ["21410", "21411", "21412"],
+      "sets": [{
+          "id": 508,
+          "ilvl": 70,
+          "pieces": ["21411", "21412", "21410"]
+        }
+      ],
+      "set_bonus": [[3, "Increases the damage of your Shadow Word: Pain spell by 5%"]]
+    },
+    "Gift of the Gathering Storm": {
+      "items": ["21398", "21399", "21400"],
+      "sets": [{
+          "id": 502,
+          "ilvl": 70,
+          "pieces": ["21399", "21400", "21398"]
+        }
+      ],
+      "set_bonus": [[3, "Increases the chain target damage multiplier of your Chain Lightning spell by 5%"]]
+    },
+    "Implements of Unspoken Names": {
+      "items": ["21416", "21417", "21418"],
+      "sets": [{
+          "id": 500,
+          "ilvl": 70,
+          "pieces": ["21417", "21418", "21416"]
+        }
+      ],
+      "set_bonus": [[3, "5% increased damage from your summoned pets' melee attacks and damage spells"]]
+    },
+    "Primal Blessing": {
+      "items": ["19896", "19910"],
+      "sets": [{
+          "id": 463,
+          "ilvl": 65,
+          "pieces": ["19896", "19910"]
+        }
+      ],
+      "set_bonus": [[2, "Grants a small chance when ranged or melee damage is dealt to infuse the wielder with a blessing from the Primal Gods. Ranged and melee attack power increased by 300 for 12 seconds"]]
+    },
+    "Purified Shard of the Gods": {
+      "items": ["49310", "49463"],
+      "sets": [{
+          "id": 881,
+          "ilvl": 232,
+          "pieces": ["49463", "49310"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 222]], [2, "Your direct heals have a chance to cause Cauterizing Heal. Your direct damage spells have a chance to cause Searing Flame"]]
+    },
+    "Shard of the Gods": {
+      "items": ["17064", "17082"],
+      "sets": [{
+          "id": 241,
+          "ilvl": 74,
+          "pieces": ["17064", "17082"]
+        }
+      ],
+      "set_bonus": [[2, ["all resistances", 10]]]
+    },
+    "Shiny Shard of the Gods": {
+      "items": ["49464", "49488"],
+      "sets": [{
+          "id": 882,
+          "ilvl": 245,
+          "pieces": ["49488", "49464"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 250]], [2, "Your direct heals have a chance to cause Cauterizing Heal. Your direct damage spells have a chance to cause Searing Flame"]]
+    },
+    "Spirit of Eskhandar": {
+      "items": ["18202", "18203"],
+      "sets": [{
+          "id": 261,
+          "ilvl": 66,
+          "pieces": ["18203", "18202"]
+        }
+      ],
+      "set_bonus": [[2, "1% chance on a melee critical hit to call forth the spirit of Eskhandar to protect you in battle for 2 min"]]
+    },
+    "Symbols of Unending Life": {
+      "items": ["21407", "21408", "21409"],
+      "sets": [{
+          "id": 494,
+          "ilvl": 70,
+          "pieces": ["21408", "21409", "21407"]
+        }
+      ],
+      "set_bonus": [[3, "Your finishing moves now refund 30 energy on a Miss, Dodge, Block, or Parry"]]
+    },
+    "The Fists of Fury": {
+      "items": ["32945", "32946"],
+      "sets": [{
+          "id": 719,
+          "ilvl": 141,
+          "pieces": ["32946", "32945"]
+        }
+      ],
+      "set_bonus": [[2, "Chance to bathe your enemy in flame causing 100 to 150 Fire damage to your target"]]
+    },
+    "The Twin Blades of Hakkari": {
+      "items": ["19865", "19866"],
+      "sets": [{
+          "id": 461,
+          "ilvl": 68,
+          "pieces": ["19866", "19865"]
+        }
+      ],
+      "set_bonus": [[2, ["expertise rating", 14]]]
+    },
+    "The Twin Stars": {
+      "items": ["31338", "31339"],
+      "sets": [{
+          "id": 667,
+          "ilvl": 100,
+          "pieces": ["31338", "31339"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 15]]]
+    },
+    "Trappings of the Unseen Path": {
+      "items": ["21401", "21402", "21403"],
+      "sets": [{
+          "id": 510,
+          "ilvl": 70,
+          "pieces": ["21402", "21403", "21401"]
+        }
+      ],
+      "set_bonus": [[3, "Increases your pet's damage by 3%"]]
+    },
+    "Trappings of Vaulted Secrets": {
+      "items": ["21413", "21414", "21415"],
+      "sets": [{
+          "id": 504,
+          "ilvl": 70,
+          "pieces": ["21414", "21415", "21413"]
+        }
+      ],
+      "set_bonus": [[3, "15% increase to the total damage absorbed by Mana Shield"]]
+    },
+    "Dal'Rend's Arms": {
+      "items": ["12939", "12940"],
+      "sets": [{
+          "id": 41,
+          "ilvl": 63,
+          "pieces": ["12940", "12939"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 50]]]
+    },
+    "Latro's Flurry": {
+      "items": ["28189", "34703"],
+      "sets": [{
+          "id": 737,
+          "ilvl": 115,
+          "pieces": ["28189", "34703"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 30]]]
+    },
+    "Major Mojo Infusion": {
+      "items": ["19898", "19925"],
+      "sets": [{
+          "id": 466,
+          "ilvl": 68,
+          "pieces": ["19898", "19925"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 30]]]
+    },
+    "Overlord's Resolution": {
+      "items": ["19873", "19912"],
+      "sets": [{
+          "id": 464,
+          "ilvl": 71,
+          "pieces": ["19912", "19873"]
+        }
+      ],
+      "set_bonus": [[2, ["dodge rating", 12]]]
+    },
+    "Prayer of the Primal": {
+      "items": ["19863", "19920"],
+      "sets": [{
+          "id": 465,
+          "ilvl": 71,
+          "pieces": ["19920", "19863"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 18]]]
+    },
+    "Raine's Revenge": {
+      "items": ["37758", "37821"],
+      "sets": [{
+          "id": 759,
+          "ilvl": 158,
+          "pieces": ["37821", "37758"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 12]]]
+    },
+    "Spider's Kiss": {
+      "items": ["13183", "13218"],
+      "sets": [{
+          "id": 65,
+          "ilvl": 61,
+          "pieces": ["13183", "13218"]
+        }
+      ],
+      "set_bonus": [[2, "Chance on Hit: Immobilizes the target and lowers their armor by 100 for 10 sec"]]
+    },
+    "Zanzil's Concentration": {
+      "items": ["19893", "19905"],
+      "sets": [{
+          "id": 462,
+          "ilvl": 71,
+          "pieces": ["19905", "19893"]
+        }
+      ],
+      "set_bonus": [[2, ["hit rating", 8]], [2, ["spell power", 6]]]
+    }
+  },
+  "mage": {
+    "Bloodmage's Regalia": {
+      "items": ["50275", "50276", "50277", "50278", "50279", "51155", "51156", "51157", "51158", "51159", "51280", "51281", "51282", "51283", "51284"],
+      "sets": [{
+          "id": -248,
+          "ilvl": 277,
+          "pieces": ["51281", "51284", "51282", "51280", "51283"]
+        }, {
+          "id": -247,
+          "ilvl": 264,
+          "pieces": ["51158", "51155", "51157", "51159", "51156"]
+        }, {
+          "id": 883,
+          "ilvl": 251,
+          "pieces": ["50276", "50279", "50277", "50275", "50278"]
+        }
+      ],
+      "set_bonus": [[2, "Your Hot Streak, Missile Barrage, and Brain Freeze talents also grant you 12% haste for 5 sec when the effect of the talent is consumed"], [4, "Your Mirror Image ability also causes you to deal 18% additional damage for 30 sec"]]
+    },
+    "Frostfire Garb": {
+      "items": ["39491", "39492", "39493", "39494", "39495", "40415", "40416", "40417", "40418", "40419"],
+      "sets": [{
+          "id": -149,
+          "ilvl": 213,
+          "pieces": ["40416", "40419", "40417", "40415", "40418"]
+        }, {
+          "id": 803,
+          "ilvl": 200,
+          "pieces": ["39491", "39494", "39493", "39495", "39492"]
+        }
+      ],
+      "set_bonus": [[2, "You gain 25% more mana when you use a mana gem. In addition, using a mana gem grants you 225 spell power for 15 sec"], [4, "Your offensive spells gain an additional 5% increased critical strike bonus damage"]]
+    },
+    "Gladiator's Regalia": {
+      "items": ["41944", "41945", "41946", "41947", "41950", "41951", "41953", "41954", "41957", "41958", "41959", "41960", "41963", "41964", "41965", "41966", "41969", "41970", "41971", "41972", "51463", "51464", "51465", "51466", "51467"],
+      "sets": [{
+          "id": -126,
+          "ilvl": 270,
+          "pieces": ["51465", "51467", "51466", "51464", "51463"]
+        }, {
+          "id": -125,
+          "ilvl": 251,
+          "pieces": ["41947", "41966", "41960", "41972", "41954"]
+        }, {
+          "id": -124,
+          "ilvl": 232,
+          "pieces": ["41946", "41965", "41959", "41971", "41953"]
+        }, {
+          "id": -123,
+          "ilvl": 213,
+          "pieces": ["41945", "41964", "41958", "41970", "41951"]
+        }, {
+          "id": -122,
+          "ilvl": 200,
+          "pieces": ["41944", "41963", "41957", "41969", "41950"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Reduces the casting time of your Polymorph spell by 0.15 sec"], [4, ["spell power", 88]]]
+    },
+    "Khadgar's Regalia": {
+      "items": ["47748", "47749", "47750", "47751", "47752", "47753", "47754", "47755", "47756", "47757", "47758", "47759", "47760", "47761", "47762"],
+      "sets": [{
+          "id": -172,
+          "ilvl": 258,
+          "pieces": ["47761", "47758", "47760", "47762", "47759"]
+        }, {
+          "id": -171,
+          "ilvl": 245,
+          "pieces": ["47754", "47757", "47755", "47753", "47756"]
+        }, {
+          "id": 843,
+          "ilvl": 232,
+          "pieces": ["47748", "47751", "47750", "47752", "47749"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the armor you gain from Ice Armor by 20%, the mana regeneration you gain from Mage Armor by 10%, and adds an additional 15% of your Spirit in critical strike rating when Molten Armor is active"], [4, "Increases the critical strike chance of your Fireball, Frostbolt, Frostfire Bolt, Arcane Missiles, and Arcane Blast spells by 5%"]]
+    },
+    "Kirin Tor Garb": {
+      "items": ["45365", "45367", "45368", "45369", "46129", "46130", "46131", "46132", "46133", "46134"],
+      "sets": [{
+          "id": -168,
+          "ilvl": 226,
+          "pieces": ["46129", "46134", "46133", "46132", "46130"]
+        }, {
+          "id": 836,
+          "ilvl": 219,
+          "pieces": ["45365", "45369", "45367", "46131", "45368"]
+        }
+      ],
+      "set_bonus": [[2, "Your Arcane Blast, Frostbolt, Frostfire Bolt, and Fireball spells have a chance to grant you 350 spell power for 15 sec"], [4, "You have a chance for the effect of your Missile Barrage, Hot Streak, or Brain Freeze talent not to be consumed when you cast the spells which benefit"]]
+    },
+    "Sunstrider's Regalia": {
+      "items": ["47763", "47764", "47765", "47766", "47767", "47768", "47769", "47770", "47771", "47772", "47773", "47774", "47775", "47776", "47777"],
+      "sets": [{
+          "id": -174,
+          "ilvl": 258,
+          "pieces": ["47764", "47767", "47765", "47763", "47766"]
+        }, {
+          "id": -173,
+          "ilvl": 245,
+          "pieces": ["47771", "47768", "47770", "47772", "47769"]
+        }, {
+          "id": 844,
+          "ilvl": 232,
+          "pieces": ["47774", "47777", "47775", "47773", "47776"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the armor you gain from Ice Armor by 20%, the mana regeneration you gain from Mage Armor by 10%, and adds an additional 15% of your Spirit in critical strike rating when Molten Armor is active"], [4, "Increases the critical strike chance of your Fireball, Frostbolt, Frostfire Bolt, Arcane Missiles, and Arcane Blast spells by 5%"]]
+    }
+  },
+  "paladin": {
+    "Aegis Battlegear": {
+      "items": ["45375", "45376", "45377", "45379", "45380", "46152", "46153", "46154", "46155", "46156"],
+      "sets": [{
+          "id": -152,
+          "ilvl": 226,
+          "pieces": ["46156", "46152", "46153", "46155", "46154"]
+        }, {
+          "id": 820,
+          "ilvl": 219,
+          "pieces": ["45377", "45380", "45379", "45376", "45375"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Exorcism and Hammer of Wrath abilities by 10%"], [4, "Increases the critical strike chance of your Divine Storm and Crusader Strike abilities by 10%"]]
+    },
+    "Aegis Plate": {
+      "items": ["45381", "45382", "45383", "45384", "45385", "46173", "46174", "46175", "46176", "46177"],
+      "sets": [{
+          "id": -153,
+          "ilvl": 226,
+          "pieces": ["46175", "46177", "46176", "46174", "46173"]
+        }, {
+          "id": 821,
+          "ilvl": 219,
+          "pieces": ["45382", "45385", "45384", "45383", "45381"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Seals of Vengeance, Corruption, and Righteousness by 10%"], [4, "Shield of Righteousness now increases your shield block value by 225 for that attack and for 6 sec afterward"]]
+    },
+    "Aegis Regalia": {
+      "items": ["45370", "45371", "45372", "45373", "45374", "46178", "46179", "46180", "46181", "46182"],
+      "sets": [{
+          "id": -154,
+          "ilvl": 226,
+          "pieces": ["46180", "46182", "46181", "46179", "46178"]
+        }, {
+          "id": 822,
+          "ilvl": 219,
+          "pieces": ["45372", "45373", "45371", "45370", "45374"]
+        }
+      ],
+      "set_bonus": [[2, "Your Holy Shock critical heals now also place a periodic healing effect on the target, healing for 15% of the Holy Shock's heal amount over 9 sec"], [4, "Your Sacred Shield can now trigger its effect every 4 sec instead of every 6"]]
+    },
+    "Gladiator's Redemption": {
+      "items": ["40904", "40905", "40907", "40910", "40925", "40926", "40927", "40928", "40931", "40932", "40933", "40934", "40937", "40938", "40939", "40940", "40961", "40962", "40963", "40964", "51468", "51469", "51470", "51471", "51473"],
+      "sets": [{
+          "id": -66,
+          "ilvl": 270,
+          "pieces": ["51470", "51473", "51471", "51469", "51468"]
+        }, {
+          "id": -65,
+          "ilvl": 251,
+          "pieces": ["40934", "40964", "40940", "40928", "40910"]
+        }, {
+          "id": -64,
+          "ilvl": 232,
+          "pieces": ["40933", "40963", "40939", "40927", "40907"]
+        }, {
+          "id": -63,
+          "ilvl": 213,
+          "pieces": ["40932", "40962", "40938", "40926", "40905"]
+        }, {
+          "id": -62,
+          "ilvl": 200,
+          "pieces": ["40931", "40961", "40937", "40925", "40904"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 29]], [2, ["resilience rating", 100]], [4, "Increases the healing of your Holy Shock spell by 10%"], [4, ["spell power", 88]]]
+    },
+    "Gladiator's Vindication": {
+      "items": ["40782", "40785", "40788", "40792", "40802", "40805", "40808", "40812", "40821", "40825", "40828", "40831", "40842", "40846", "40849", "40852", "40861", "40864", "40869", "40872", "51474", "51475", "51476", "51477", "51479"],
+      "sets": [{
+          "id": -61,
+          "ilvl": 270,
+          "pieces": ["51476", "51479", "51477", "51475", "51474"]
+        }, {
+          "id": -60,
+          "ilvl": 251,
+          "pieces": ["40831", "40872", "40852", "40812", "40792"]
+        }, {
+          "id": -59,
+          "ilvl": 232,
+          "pieces": ["40828", "40869", "40849", "40808", "40788"]
+        }, {
+          "id": -58,
+          "ilvl": 213,
+          "pieces": ["40825", "40864", "40846", "40805", "40785"]
+        }, {
+          "id": -57,
+          "ilvl": 200,
+          "pieces": ["40821", "40861", "40842", "40802", "40782"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["attack power", 50]], [4, "Reduces the cooldown of your Judgements by 1 sec"], [4, ["attack power", 150]]]
+    },
+    "Liadrin's Battlegear": {
+      "items": ["48617", "48618", "48619", "48620", "48621", "48622", "48623", "48624", "48625", "48626", "48627", "48628", "48629", "48630", "48631"],
+      "sets": [{
+          "id": -242,
+          "ilvl": 258,
+          "pieces": ["48619", "48621", "48620", "48618", "48617"]
+        }, {
+          "id": -241,
+          "ilvl": 245,
+          "pieces": ["48624", "48622", "48623", "48625", "48626"]
+        }, {
+          "id": 878,
+          "ilvl": 232,
+          "pieces": ["48629", "48627", "48628", "48630", "48631"]
+        }
+      ],
+      "set_bonus": [[2, "Your Righteous Vengeance talent now has a chance for its damage to be critical strikes"], [4, "Increases the critical strike chance of your Judgements by 5%"]]
+    },
+    "Liadrin's Garb": {
+      "items": ["48585", "48586", "48587", "48588", "48589", "48590", "48591", "48592", "48593", "48594", "48595", "48596", "48597", "48598", "48599"],
+      "sets": [{
+          "id": -238,
+          "ilvl": 258,
+          "pieces": ["48587", "48585", "48586", "48588", "48589"]
+        }, {
+          "id": -237,
+          "ilvl": 245,
+          "pieces": ["48592", "48590", "48591", "48593", "48594"]
+        }, {
+          "id": 876,
+          "ilvl": 232,
+          "pieces": ["48597", "48595", "48596", "48598", "48599"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Judgements by 10 sec"], [4, "Increases the heal over time effect from Flash of Light in conjunction with Sacred Shield by 100%"]]
+    },
+    "Liadrin's Plate": {
+      "items": ["48647", "48648", "48649", "48650", "48651", "48652", "48653", "48654", "48655", "48656", "48657", "48658", "48659", "48660", "48661"],
+      "sets": [{
+          "id": -246,
+          "ilvl": 258,
+          "pieces": ["48649", "48647", "48648", "48650", "48651"]
+        }, {
+          "id": -245,
+          "ilvl": 245,
+          "pieces": ["48659", "48661", "48660", "48658", "48657"]
+        }, {
+          "id": 880,
+          "ilvl": 232,
+          "pieces": ["48654", "48656", "48655", "48653", "48652"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Hand of Reckoning ability by 2 sec and increases the damage done by your Hammer of the Righteous ability by 5%"], [4, "Decreases the cooldown on your Divine Protection ability and reduces the duration of Forbearance by 30 sec"]]
+    },
+    "Lightsworn Battlegear": {
+      "items": ["50324", "50325", "50326", "50327", "50328", "51160", "51161", "51162", "51163", "51164", "51275", "51276", "51277", "51278", "51279"],
+      "sets": [{
+          "id": -282,
+          "ilvl": 277,
+          "pieces": ["51277", "51279", "51278", "51276", "51275"]
+        }, {
+          "id": -281,
+          "ilvl": 264,
+          "pieces": ["51162", "51160", "51161", "51163", "51164"]
+        }, {
+          "id": 900,
+          "ilvl": 251,
+          "pieces": ["50326", "50324", "50325", "50327", "50328"]
+        }
+      ],
+      "set_bonus": [[2, "Your melee attacks have a 40% chance to reset the cooldown on your Divine Storm ability"], [4, "Your Seals and Judgements deal 10% additional damage"]]
+    },
+    "Lightsworn Garb": {
+      "items": ["50865", "50866", "50867", "50868", "50869", "51165", "51166", "51167", "51168", "51169", "51270", "51271", "51272", "51273", "51274"],
+      "sets": [{
+          "id": -280,
+          "ilvl": 277,
+          "pieces": ["51272", "51273", "51271", "51270", "51274"]
+        }, {
+          "id": -279,
+          "ilvl": 264,
+          "pieces": ["51167", "51166", "51168", "51169", "51165"]
+        }, {
+          "id": 899,
+          "ilvl": 251,
+          "pieces": ["50867", "50865", "50866", "50868", "50869"]
+        }
+      ],
+      "set_bonus": [[2, "While your Divine Illumination talent is active, your healing spells are 35% stronger"], [4, "Your Holy Shock spell causes the next Holy Light you cast within 10 sec to have 0.3 sec reduced cast time"]]
+    },
+    "Lightsworn Plate": {
+      "items": ["50860", "50861", "50862", "50863", "50864", "51170", "51171", "51172", "51173", "51174", "51265", "51266", "51267", "51268", "51269"],
+      "sets": [{
+          "id": -284,
+          "ilvl": 277,
+          "pieces": ["51266", "51269", "51268", "51267", "51265"]
+        }, {
+          "id": -283,
+          "ilvl": 264,
+          "pieces": ["51173", "51170", "51171", "51172", "51174"]
+        }, {
+          "id": 901,
+          "ilvl": 251,
+          "pieces": ["50862", "50860", "50861", "50863", "50864"]
+        }
+      ],
+      "set_bonus": [[2, "Your Hammer of the Righteous ability deals 20% increased damage"], [4, "When you activate Divine Plea, you gain 12% dodge for 10 sec"]]
+    },
+    "Redemption Battlegear": {
+      "items": ["39633", "39634", "39635", "39636", "39637", "40574", "40575", "40576", "40577", "40578"],
+      "sets": [{
+          "id": -135,
+          "ilvl": 213,
+          "pieces": ["40576", "40578", "40577", "40575", "40574"]
+        }, {
+          "id": 789,
+          "ilvl": 200,
+          "pieces": ["39635", "39637", "39636", "39634", "39633"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage dealt by your Divine Storm by 10%"], [4, "Reduces the cooldown of your Judgment of Light, Judgment of Wisdom, and Judgment of Justice by 1 second"]]
+    },
+    "Redemption Plate": {
+      "items": ["39638", "39639", "39640", "39641", "39642", "40579", "40580", "40581", "40583", "40584"],
+      "sets": [{
+          "id": -137,
+          "ilvl": 213,
+          "pieces": ["40581", "40584", "40583", "40580", "40579"]
+        }, {
+          "id": 791,
+          "ilvl": 200,
+          "pieces": ["39640", "39642", "39641", "39639", "39638"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage dealt by your Hammer of the Righteous by 10%"], [4, "Increases the duration of your Divine Shield and Divine Protection by 3 seconds"]]
+    },
+    "Redemption Regalia": {
+      "items": ["39628", "39629", "39630", "39631", "39632", "40569", "40570", "40571", "40572", "40573"],
+      "sets": [{
+          "id": -136,
+          "ilvl": 213,
+          "pieces": ["40571", "40573", "40572", "40570", "40569"]
+        }, {
+          "id": 790,
+          "ilvl": 200,
+          "pieces": ["39628", "39631", "39630", "39632", "39629"]
+        }
+      ],
+      "set_bonus": [[2, "Your Holy Shock gains an additional 10% chance to critically strike"], [4, "The cost of your Holy Light is reduced by 5%"]]
+    },
+    "Turalyon's Battlegear": {
+      "items": ["48602", "48603", "48604", "48605", "48606", "48607", "48608", "48609", "48610", "48611", "48612", "48613", "48614", "48615", "48616"],
+      "sets": [{
+          "id": -240,
+          "ilvl": 258,
+          "pieces": ["48614", "48612", "48613", "48615", "48616"]
+        }, {
+          "id": -239,
+          "ilvl": 245,
+          "pieces": ["48609", "48611", "48610", "48608", "48607"]
+        }, {
+          "id": 877,
+          "ilvl": 232,
+          "pieces": ["48604", "48606", "48605", "48603", "48602"]
+        }
+      ],
+      "set_bonus": [[2, "Your Righteous Vengeance talent now has a chance for its damage to be critical strikes"], [4, "Increases the critical strike chance of your Judgements by 5%"]]
+    },
+    "Turalyon's Garb": {
+      "items": ["48564", "48566", "48568", "48572", "48574", "48575", "48576", "48577", "48578", "48579", "48580", "48581", "48582", "48583", "48584"],
+      "sets": [{
+          "id": -236,
+          "ilvl": 258,
+          "pieces": ["48582", "48580", "48581", "48583", "48584"]
+        }, {
+          "id": -235,
+          "ilvl": 245,
+          "pieces": ["48577", "48579", "48578", "48576", "48575"]
+        }, {
+          "id": 875,
+          "ilvl": 232,
+          "pieces": ["48564", "48572", "48568", "48574", "48566"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Judgements by 10 sec"], [4, "Increases the heal over time effect from Flash of Light in conjunction with Sacred Shield by 100%"]]
+    },
+    "Turalyon's Plate": {
+      "items": ["48632", "48633", "48634", "48635", "48636", "48637", "48638", "48639", "48640", "48641", "48642", "48643", "48644", "48645", "48646"],
+      "sets": [{
+          "id": -244,
+          "ilvl": 258,
+          "pieces": ["48644", "48646", "48645", "48643", "48642"]
+        }, {
+          "id": -243,
+          "ilvl": 245,
+          "pieces": ["48639", "48637", "48638", "48640", "48641"]
+        }, {
+          "id": 879,
+          "ilvl": 232,
+          "pieces": ["48634", "48636", "48635", "48633", "48632"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Hand of Reckoning ability by 2 sec and increases the damage done by your Hammer of the Righteous ability by 5%"], [4, "Decreases the cooldown on your Divine Protection ability and reduces the duration of Forbearance by 30 sec"]]
+    }
+  },
+  "priest": {
+    "Crimson Acolyte's Raiment": {
+      "items": ["50765", "50766", "50767", "50768", "50769", "51175", "51176", "51177", "51178", "51179", "51260", "51261", "51262", "51263", "51264"],
+      "sets": [{
+          "id": -252,
+          "ilvl": 277,
+          "pieces": ["51261", "51264", "51262", "51260", "51263"]
+        }, {
+          "id": -251,
+          "ilvl": 264,
+          "pieces": ["51178", "51175", "51177", "51179", "51176"]
+        }, {
+          "id": 885,
+          "ilvl": 251,
+          "pieces": ["50765", "50767", "50769", "50766", "50768"]
+        }
+      ],
+      "set_bonus": [[2, "Your Flash Heal has a 33% chance to cause the target to heal for 33% of the healed amount over 9 sec"], [4, "Increases the effect of Power Word: Shield by 5% and Circle of Healing by 10%"]]
+    },
+    "Crimson Acolyte's Regalia": {
+      "items": ["50391", "50392", "50393", "50394", "50396", "51180", "51181", "51182", "51183", "51184", "51255", "51256", "51257", "51258", "51259"],
+      "sets": [{
+          "id": -254,
+          "ilvl": 277,
+          "pieces": ["51255", "51257", "51258", "51256", "51259"]
+        }, {
+          "id": -253,
+          "ilvl": 264,
+          "pieces": ["51184", "51182", "51181", "51183", "51180"]
+        }, {
+          "id": 886,
+          "ilvl": 251,
+          "pieces": ["50392", "50396", "50393", "50391", "50394"]
+        }
+      ],
+      "set_bonus": [[2, "The critical strike chance of your Shadow Word: Pain, Devouring Plague, and Vampiric Touch spells is increased by 5%"], [4, "Reduces the channel duration by 0.5 sec and period by 0.17 sec on your Mind Flay spell"]]
+    },
+    "Garb of Faith": {
+      "items": ["39521", "39523", "39528", "39529", "39530", "40454", "40456", "40457", "40458", "40459"],
+      "sets": [{
+          "id": -151,
+          "ilvl": 213,
+          "pieces": ["40456", "40459", "40457", "40454", "40458"]
+        }, {
+          "id": 805,
+          "ilvl": 200,
+          "pieces": ["39521", "39529", "39528", "39530", "39523"]
+        }
+      ],
+      "set_bonus": [[2, "The mana cost of your Mind Blast is reduced by 10%"], [4, "Your Shadow Word: Death has an additional 10% chance to critically strike"]]
+    },
+    "Gladiator's Investiture": {
+      "items": ["41852", "41853", "41854", "41855", "41857", "41858", "41859", "41860", "41862", "41863", "41864", "41865", "41867", "41868", "41869", "41870", "41872", "41873", "41874", "41875", "51482", "51483", "51484", "51485", "51486"],
+      "sets": [{
+          "id": -116,
+          "ilvl": 270,
+          "pieces": ["51484", "51486", "51485", "51483", "51482"]
+        }, {
+          "id": -115,
+          "ilvl": 251,
+          "pieces": ["41855", "41870", "41865", "41875", "41860"]
+        }, {
+          "id": -114,
+          "ilvl": 232,
+          "pieces": ["41854", "41869", "41864", "41874", "41859"]
+        }, {
+          "id": -113,
+          "ilvl": 213,
+          "pieces": ["41853", "41868", "41863", "41873", "41858"]
+        }, {
+          "id": -112,
+          "ilvl": 200,
+          "pieces": ["41852", "41867", "41862", "41872", "41857"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Reduces the duration of the Weakened Soul effect caused by your Power Word: Shield by 2 sec"], [4, ["spell power", 88]]]
+    },
+    "Gladiator's Raiment": {
+      "items": ["41913", "41914", "41915", "41916", "41919", "41920", "41921", "41922", "41925", "41926", "41927", "41928", "41931", "41933", "41934", "41935", "41938", "41939", "41940", "41941", "51487", "51488", "51489", "51490", "51491"],
+      "sets": [{
+          "id": -121,
+          "ilvl": 270,
+          "pieces": ["51489", "51491", "51490", "51488", "51487"]
+        }, {
+          "id": -120,
+          "ilvl": 251,
+          "pieces": ["41916", "41935", "41928", "41941", "41922"]
+        }, {
+          "id": -119,
+          "ilvl": 232,
+          "pieces": ["41915", "41934", "41927", "41940", "41921"]
+        }, {
+          "id": -118,
+          "ilvl": 213,
+          "pieces": ["41914", "41933", "41926", "41939", "41920"]
+        }, {
+          "id": -117,
+          "ilvl": 200,
+          "pieces": ["41913", "41931", "41925", "41938", "41919"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 29]], [2, ["resilience rating", 100]], [4, "Reduces the duration of the Weakened Soul effect caused by your Power Word: Shield by 2 sec"], [4, ["spell power", 88]]]
+    },
+    "Regalia of Faith": {
+      "items": ["39514", "39515", "39517", "39518", "39519", "40445", "40447", "40448", "40449", "40450"],
+      "sets": [{
+          "id": -150,
+          "ilvl": 213,
+          "pieces": ["40447", "40450", "40448", "40445", "40449"]
+        }, {
+          "id": 804,
+          "ilvl": 200,
+          "pieces": ["39514", "39518", "39517", "39519", "39515"]
+        }
+      ],
+      "set_bonus": [[2, "Your Prayer of Mending will jump an additional time"], [4, "The cost of your Greater Heal is reduced by 5%"]]
+    },
+    "Sanctification Garb": {
+      "items": ["45391", "45392", "45393", "45394", "45395", "46163", "46165", "46168", "46170", "46172"],
+      "sets": [{
+          "id": -164,
+          "ilvl": 226,
+          "pieces": ["46172", "46165", "46170", "46163", "46168"]
+        }, {
+          "id": 832,
+          "ilvl": 219,
+          "pieces": ["45391", "45393", "45394", "45392", "45395"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Devouring Plague by 15%"], [4, "Your Mind Blast also grants you 240 haste rating for 4 sec"]]
+    },
+    "Sanctification Regalia": {
+      "items": ["45386", "45387", "45388", "45389", "45390", "46188", "46190", "46193", "46195", "46197"],
+      "sets": [{
+          "id": -165,
+          "ilvl": 226,
+          "pieces": ["46197", "46190", "46195", "46188", "46193"]
+        }, {
+          "id": 833,
+          "ilvl": 219,
+          "pieces": ["45386", "45390", "45388", "45387", "45389"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical heal chance of your Prayer of Healing by 10%"], [4, "Casting Power Word: Shield also grants you 250 spell power for 5 sec"]]
+    },
+    "Velen's Raiment": {
+      "items": ["47914", "47936", "47980", "47981", "47982", "47983", "47984", "47985", "47986", "47987", "48029", "48031", "48033", "48035", "48037"],
+      "sets": [{
+          "id": -180,
+          "ilvl": 258,
+          "pieces": ["48035", "48029", "48033", "48037", "48031"]
+        }, {
+          "id": -179,
+          "ilvl": 245,
+          "pieces": ["47984", "47987", "47985", "47983", "47986"]
+        }, {
+          "id": 847,
+          "ilvl": 232,
+          "pieces": ["47914", "47981", "47980", "47982", "47936"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the healing done by your Prayer of Mending spell by 20%"], [4, "Increases the shield from your Divine Aegis and the instant healing from your Empowered Renew by 10%"]]
+    },
+    "Velen's Regalia": {
+      "items": ["48072", "48073", "48074", "48075", "48076", "48077", "48078", "48079", "48080", "48081", "48082", "48083", "48084", "48085", "48086"],
+      "sets": [{
+          "id": -184,
+          "ilvl": 258,
+          "pieces": ["48085", "48082", "48084", "48086", "48083"]
+        }, {
+          "id": -183,
+          "ilvl": 245,
+          "pieces": ["48078", "48081", "48079", "48077", "48080"]
+        }, {
+          "id": 849,
+          "ilvl": 232,
+          "pieces": ["48073", "48076", "48074", "48072", "48075"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Vampiric Touch spell by 6 sec"], [4, "Increases the critical strike chance of your Mind Flay spell by 5%"]]
+    },
+    "Zabra's Raiment": {
+      "items": ["48057", "48058", "48059", "48060", "48061", "48062", "48063", "48064", "48065", "48066", "48067", "48068", "48069", "48070", "48071"],
+      "sets": [{
+          "id": -182,
+          "ilvl": 258,
+          "pieces": ["48058", "48061", "48059", "48057", "48060"]
+        }, {
+          "id": -181,
+          "ilvl": 245,
+          "pieces": ["48065", "48062", "48064", "48066", "48063"]
+        }, {
+          "id": 848,
+          "ilvl": 232,
+          "pieces": ["48068", "48071", "48069", "48067", "48070"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the healing done by your Prayer of Mending spell by 20%"], [4, "Increases the shield from your Divine Aegis and the instant healing from your Empowered Renew by 10%"]]
+    },
+    "Zabra's Regalia": {
+      "items": ["48087", "48088", "48089", "48090", "48091", "48092", "48093", "48094", "48095", "48096", "48097", "48098", "48099", "48100", "48101"],
+      "sets": [{
+          "id": -186,
+          "ilvl": 258,
+          "pieces": ["48088", "48091", "48089", "48087", "48090"]
+        }, {
+          "id": -185,
+          "ilvl": 245,
+          "pieces": ["48095", "48092", "48094", "48096", "48093"]
+        }, {
+          "id": 850,
+          "ilvl": 232,
+          "pieces": ["48098", "48101", "48099", "48097", "48100"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Vampiric Touch spell by 6 sec"], [4, "Increases the critical strike chance of your Mind Flay spell by 5%"]]
+    }
+  },
+  "rogue": {
+    "Bonescythe Battlegear": {
+      "items": ["39558", "39560", "39561", "39564", "39565", "40495", "40496", "40499", "40500", "40502"],
+      "sets": [{
+          "id": -147,
+          "ilvl": 213,
+          "pieces": ["40499", "40502", "40500", "40496", "40495"]
+        }, {
+          "id": 801,
+          "ilvl": 200,
+          "pieces": ["39561", "39565", "39564", "39560", "39558"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage dealt by your Rupture by 10%"], [4, "Reduces the Energy cost of your Combo Moves by 5%"]]
+    },
+    "Garona's Battlegear": {
+      "items": ["48233", "48234", "48235", "48236", "48237", "48238", "48239", "48240", "48241", "48242", "48243", "48244", "48245", "48246", "48247"],
+      "sets": [{
+          "id": -202,
+          "ilvl": 258,
+          "pieces": ["48235", "48237", "48236", "48234", "48233"]
+        }, {
+          "id": -201,
+          "ilvl": 245,
+          "pieces": ["48240", "48238", "48239", "48241", "48242"]
+        }, {
+          "id": 858,
+          "ilvl": 232,
+          "pieces": ["48245", "48247", "48246", "48244", "48243"]
+        }
+      ],
+      "set_bonus": [[2, "Your Rupture ability has a chance each time it deals damage to reduce the cost of your next ability by 40 energy"], [4, "Increases the critical strike chance of your Hemorrhage, Sinister Strike, Backstab, and Mutilate abilities by 5%"]]
+    },
+    "Gladiator's Vestments": {
+      "items": ["41648", "41649", "41650", "41651", "41653", "41654", "41655", "41656", "41670", "41671", "41672", "41673", "41681", "41682", "41683", "41684", "41765", "41766", "41767", "41768", "51492", "51493", "51494", "51495", "51496"],
+      "sets": [{
+          "id": -111,
+          "ilvl": 270,
+          "pieces": ["51494", "51496", "51495", "51493", "51492"]
+        }, {
+          "id": -110,
+          "ilvl": 251,
+          "pieces": ["41673", "41684", "41656", "41768", "41651"]
+        }, {
+          "id": -109,
+          "ilvl": 232,
+          "pieces": ["41672", "41683", "41655", "41767", "41650"]
+        }, {
+          "id": -108,
+          "ilvl": 213,
+          "pieces": ["41671", "41682", "41654", "41766", "41649"]
+        }, {
+          "id": -107,
+          "ilvl": 200,
+          "pieces": ["41670", "41681", "41653", "41765", "41648"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 50]], [2, ["resilience rating", 100]], [4, "Increases your maximum Energy by 10"], [4, ["attack power", 150]]]
+    },
+    "Shadowblade's Battlegear": {
+      "items": ["50087", "50088", "50089", "50090", "50105", "51185", "51186", "51187", "51188", "51189", "51250", "51251", "51252", "51253", "51254"],
+      "sets": [{
+          "id": -262,
+          "ilvl": 277,
+          "pieces": ["51252", "51254", "51253", "51251", "51250"]
+        }, {
+          "id": -261,
+          "ilvl": 264,
+          "pieces": ["51187", "51185", "51186", "51188", "51189"]
+        }, {
+          "id": 890,
+          "ilvl": 251,
+          "pieces": ["50089", "50105", "50090", "50088", "50087"]
+        }
+      ],
+      "set_bonus": [[2, "Your Tricks of the Trade ability now grants you 15 energy instead of costing energy"], [4, "Gives your melee finishing moves a 13% chance to add 3 combo points to your target"]]
+    },
+    "Terrorblade Battlegear": {
+      "items": ["45396", "45397", "45398", "45399", "45400", "46123", "46124", "46125", "46126", "46127"],
+      "sets": [{
+          "id": -158,
+          "ilvl": 226,
+          "pieces": ["46125", "46127", "46126", "46124", "46123"]
+        }, {
+          "id": 826,
+          "ilvl": 219,
+          "pieces": ["45398", "45400", "45399", "45397", "45396"]
+        }
+      ],
+      "set_bonus": [[2, "Your Deadly Poison causes you to gain 1 energy each time it deals damage"], [4, "Increases the damage done by your Rupture by 20%"]]
+    },
+    "VanCleef's Battlegear": {
+      "items": ["48218", "48219", "48220", "48221", "48222", "48223", "48224", "48225", "48226", "48227", "48228", "48229", "48230", "48231", "48232"],
+      "sets": [{
+          "id": -200,
+          "ilvl": 258,
+          "pieces": ["48230", "48228", "48229", "48231", "48232"]
+        }, {
+          "id": -199,
+          "ilvl": 245,
+          "pieces": ["48225", "48227", "48226", "48224", "48223"]
+        }, {
+          "id": 857,
+          "ilvl": 232,
+          "pieces": ["48218", "48221", "48220", "48222", "48219"]
+        }
+      ],
+      "set_bonus": [[2, "Your Rupture ability has a chance each time it deals damage to reduce the cost of your next ability by 40 energy"], [4, "Increases the critical strike chance of your Hemorrhage, Sinister Strike, Backstab, and Mutilate abilities by 5%"]]
+    }
+  },
+  "shaman": {
+    "Earthshatter Battlegear": {
+      "items": ["39597", "39601", "39602", "39603", "39604", "40520", "40521", "40522", "40523", "40524"],
+      "sets": [{
+          "id": -141,
+          "ilvl": 213,
+          "pieces": ["40521", "40524", "40522", "40520", "40523"]
+        }, {
+          "id": 795,
+          "ilvl": 200,
+          "pieces": ["39602", "39604", "39603", "39601", "39597"]
+        }
+      ],
+      "set_bonus": [[2, "Your Lightning Shield damage is increased by 10%"], [4, "Your Flurry effect provides an additional 5% melee haste"]]
+    },
+    "Earthshatter Garb": {
+      "items": ["39592", "39593", "39594", "39595", "39596", "40514", "40515", "40516", "40517", "40518"],
+      "sets": [{
+          "id": -142,
+          "ilvl": 213,
+          "pieces": ["40516", "40518", "40517", "40515", "40514"]
+        }, {
+          "id": 796,
+          "ilvl": 200,
+          "pieces": ["39594", "39596", "39595", "39593", "39592"]
+        }
+      ],
+      "set_bonus": [[2, "Your Lightning Bolt costs 5% less mana"], [4, "The bonus critical strike damage of your Lava Burst is increased by 10%"]]
+    },
+    "Earthshatter Regalia": {
+      "items": ["39583", "39588", "39589", "39590", "39591", "40508", "40509", "40510", "40512", "40513"],
+      "sets": [{
+          "id": -143,
+          "ilvl": 213,
+          "pieces": ["40510", "40513", "40512", "40509", "40508"]
+        }, {
+          "id": 797,
+          "ilvl": 200,
+          "pieces": ["39583", "39590", "39589", "39591", "39588"]
+        }
+      ],
+      "set_bonus": [[2, "Your Water Shield is 10% stronger"], [4, "Increases the healing done by your Chain Heal and Healing Wave by 5%"]]
+    },
+    "Frost Witch's Battlegear": {
+      "items": ["50830", "50831", "50832", "50833", "50834", "51195", "51196", "51197", "51198", "51199", "51240", "51241", "51242", "51243", "51244"],
+      "sets": [{
+          "id": -270,
+          "ilvl": 277,
+          "pieces": ["51242", "51240", "51241", "51243", "51244"]
+        }, {
+          "id": -269,
+          "ilvl": 264,
+          "pieces": ["51197", "51199", "51198", "51196", "51195"]
+        }, {
+          "id": 894,
+          "ilvl": 251,
+          "pieces": ["50832", "50834", "50833", "50831", "50830"]
+        }
+      ],
+      "set_bonus": [[2, "When you activate your Shamanistic Rage ability you also deal 12% additional damage for 15 sec"], [4, "Each time the beneficial effect of your Maelstrom Weapon talent reaches 5 charges, you have a 15% chance to gain 20% attack power for 10 sec"]]
+    },
+    "Frost Witch's Garb": {
+      "items": ["50835", "50836", "50837", "50838", "50839", "51190", "51191", "51192", "51193", "51194", "51245", "51246", "51247", "51248", "51249"],
+      "sets": [{
+          "id": -266,
+          "ilvl": 277,
+          "pieces": ["51247", "51245", "51246", "51248", "51249"]
+        }, {
+          "id": -265,
+          "ilvl": 264,
+          "pieces": ["51192", "51194", "51193", "51191", "51190"]
+        }, {
+          "id": 892,
+          "ilvl": 251,
+          "pieces": ["50837", "50839", "50838", "50836", "50835"]
+        }
+      ],
+      "set_bonus": [[2, "Your Riptide spell grants 20% spell haste for your next spellcast within 10 sec"], [4, "Your Chain Heal critical strikes cause the target to heal for 25% of the healed amount over 9 sec"]]
+    },
+    "Frost Witch's Regalia": {
+      "items": ["50841", "50842", "50843", "50844", "50845", "51200", "51201", "51202", "51203", "51204", "51235", "51236", "51237", "51238", "51239"],
+      "sets": [{
+          "id": -268,
+          "ilvl": 277,
+          "pieces": ["51237", "51235", "51236", "51238", "51239"]
+        }, {
+          "id": -267,
+          "ilvl": 264,
+          "pieces": ["51202", "51204", "51203", "51201", "51200"]
+        }, {
+          "id": 893,
+          "ilvl": 251,
+          "pieces": ["50843", "50845", "50844", "50842", "50841"]
+        }
+      ],
+      "set_bonus": [[2, "Your Lightning Bolt and Chain Lightning spells reduce the remaining cooldown on your Elemental Mastery talent by 2 sec"], [4, "Your Lava Burst spell causes your Flame Shock effect on the target to deal at least two additional periodic damage ticks before expiring"]]
+    },
+    "Gladiator's Earthshaker": {
+      "items": ["41079", "41080", "41081", "41082", "41135", "41136", "41137", "41138", "41149", "41150", "41151", "41152", "41162", "41198", "41199", "41200", "41209", "41210", "41211", "41212", "51503", "51504", "51505", "51506", "51508"],
+      "sets": [{
+          "id": -81,
+          "ilvl": 270,
+          "pieces": ["51505", "51508", "51506", "51504", "51503"]
+        }, {
+          "id": -80,
+          "ilvl": 251,
+          "pieces": ["41152", "41212", "41200", "41138", "41082"]
+        }, {
+          "id": -79,
+          "ilvl": 232,
+          "pieces": ["41151", "41211", "41199", "41137", "41081"]
+        }, {
+          "id": -78,
+          "ilvl": 213,
+          "pieces": ["41150", "41210", "41198", "41136", "41080"]
+        }, {
+          "id": -77,
+          "ilvl": 200,
+          "pieces": ["41149", "41209", "41162", "41135", "41079"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["attack power", 50]], [4, "Reduces the cooldown of your Stormstrike ability by 2 sec"], [4, ["attack power", 150]]]
+    },
+    "Gladiator's Thunderfist": {
+      "items": ["40989", "40991", "40993", "40995", "41005", "41006", "41007", "41008", "41017", "41018", "41019", "41020", "41031", "41032", "41033", "41034", "41042", "41043", "41044", "41045", "51509", "51510", "51511", "51512", "51514"],
+      "sets": [{
+          "id": -76,
+          "ilvl": 270,
+          "pieces": ["51511", "51514", "51512", "51510", "51509"]
+        }, {
+          "id": -75,
+          "ilvl": 251,
+          "pieces": ["41020", "41045", "41034", "41008", "40995"]
+        }, {
+          "id": -74,
+          "ilvl": 232,
+          "pieces": ["41019", "41044", "41033", "41007", "40993"]
+        }, {
+          "id": -73,
+          "ilvl": 213,
+          "pieces": ["41018", "41043", "41032", "41006", "40991"]
+        }, {
+          "id": -72,
+          "ilvl": 200,
+          "pieces": ["41017", "41042", "41031", "41005", "40989"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Reduces the cooldown of your Grounding Totem ability by 1.5 sec"], [4, ["spell power", 88]]]
+    },
+    "Gladiator's Wartide": {
+      "items": ["40988", "40990", "40992", "40994", "40999", "41000", "41001", "41002", "41011", "41012", "41013", "41014", "41025", "41026", "41027", "41028", "41036", "41037", "41038", "41039", "51497", "51498", "51499", "51500", "51502"],
+      "sets": [{
+          "id": -86,
+          "ilvl": 270,
+          "pieces": ["51499", "51502", "51500", "51498", "51497"]
+        }, {
+          "id": -85,
+          "ilvl": 251,
+          "pieces": ["41014", "41039", "41028", "41002", "40994"]
+        }, {
+          "id": -84,
+          "ilvl": 232,
+          "pieces": ["41013", "41038", "41027", "41001", "40992"]
+        }, {
+          "id": -83,
+          "ilvl": 213,
+          "pieces": ["41012", "41037", "41026", "41000", "40990"]
+        }, {
+          "id": -82,
+          "ilvl": 200,
+          "pieces": ["41011", "41036", "41025", "40999", "40988"]
+        }
+      ],
+      "set_bonus": [[2, ["resilience rating", 100]], [2, ["spell power", 29]], [4, "Reduces the cooldown of your Grounding Totem ability by 1.5 sec"], [4, ["spell power", 88]]]
+    },
+    "Nobundo's Battlegear": {
+      "items": ["48341", "48342", "48343", "48344", "48345", "48346", "48347", "48348", "48349", "48350", "48351", "48352", "48353", "48354", "48355"],
+      "sets": [{
+          "id": -216,
+          "ilvl": 258,
+          "pieces": ["48353", "48351", "48352", "48354", "48355"]
+        }, {
+          "id": -215,
+          "ilvl": 245,
+          "pieces": ["48348", "48350", "48349", "48347", "48346"]
+        }, {
+          "id": 865,
+          "ilvl": 232,
+          "pieces": ["48343", "48345", "48344", "48342", "48341"]
+        }
+      ],
+      "set_bonus": [[2, "Adds an additional 3% chance to trigger your Static Shock talent"], [4, "Increases the damage done by your Earth Shock, Flame Shock, and Frost Shock spells by 25%"]]
+    },
+    "Nobundo's Garb": {
+      "items": ["48280", "48281", "48282", "48283", "48284", "48285", "48286", "48287", "48288", "48289", "48290", "48291", "48292", "48293", "48294"],
+      "sets": [{
+          "id": -208,
+          "ilvl": 258,
+          "pieces": ["48292", "48290", "48291", "48293", "48294"]
+        }, {
+          "id": -207,
+          "ilvl": 245,
+          "pieces": ["48287", "48289", "48288", "48286", "48285"]
+        }, {
+          "id": 861,
+          "ilvl": 232,
+          "pieces": ["48280", "48283", "48282", "48284", "48281"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the healing done by your Riptide spell by 20%"], [4, "Increases the critical strike chance of your Chain Heal spell by 5%"]]
+    },
+    "Nobundo's Regalia": {
+      "items": ["48310", "48312", "48313", "48314", "48315", "48316", "48317", "48318", "48319", "48320", "48321", "48322", "48323", "48324", "48325"],
+      "sets": [{
+          "id": -214,
+          "ilvl": 258,
+          "pieces": ["48323", "48321", "48322", "48324", "48325"]
+        }, {
+          "id": -213,
+          "ilvl": 245,
+          "pieces": ["48318", "48320", "48319", "48317", "48316"]
+        }, {
+          "id": 864,
+          "ilvl": 232,
+          "pieces": ["48313", "48315", "48314", "48312", "48310"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Flame Shock spell by 9 sec"], [4, "Your Lava Burst spell causes your target to burn for an additonal 10% of your spell's damage over 6 sec"]]
+    },
+    "Thrall's Battlegear": {
+      "items": ["48356", "48357", "48358", "48359", "48360", "48361", "48362", "48363", "48364", "48365", "48366", "48367", "48368", "48369", "48370"],
+      "sets": [{
+          "id": -218,
+          "ilvl": 258,
+          "pieces": ["48358", "48360", "48359", "48357", "48356"]
+        }, {
+          "id": -217,
+          "ilvl": 245,
+          "pieces": ["48363", "48361", "48362", "48364", "48365"]
+        }, {
+          "id": 866,
+          "ilvl": 232,
+          "pieces": ["48368", "48370", "48369", "48367", "48366"]
+        }
+      ],
+      "set_bonus": [[2, "Adds an additional 3% chance to trigger your Static Shock talent"], [4, "Increases the damage done by your Earth Shock, Flame Shock, and Frost Shock spells by 25%"]]
+    },
+    "Thrall's Garb": {
+      "items": ["48295", "48296", "48297", "48298", "48299", "48300", "48301", "48302", "48303", "48304", "48305", "48306", "48307", "48308", "48309"],
+      "sets": [{
+          "id": -210,
+          "ilvl": 258,
+          "pieces": ["48307", "48309", "48308", "48306", "48305"]
+        }, {
+          "id": -209,
+          "ilvl": 245,
+          "pieces": ["48302", "48304", "48303", "48301", "48300"]
+        }, {
+          "id": 862,
+          "ilvl": 232,
+          "pieces": ["48297", "48299", "48298", "48296", "48295"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the healing done by your Riptide spell by 20%"], [4, "Increases the critical strike chance of your Chain Heal spell by 5%"]]
+    },
+    "Thrall's Regalia": {
+      "items": ["48326", "48327", "48328", "48329", "48330", "48331", "48332", "48333", "48334", "48335", "48336", "48337", "48338", "48339", "48340"],
+      "sets": [{
+          "id": -212,
+          "ilvl": 258,
+          "pieces": ["48328", "48330", "48329", "48327", "48326"]
+        }, {
+          "id": -211,
+          "ilvl": 245,
+          "pieces": ["48333", "48331", "48332", "48334", "48335"]
+        }, {
+          "id": 863,
+          "ilvl": 232,
+          "pieces": ["48338", "48340", "48339", "48337", "48336"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the duration of your Flame Shock spell by 9 sec"], [4, "Your Lava Burst spell causes your target to burn for an additonal 10% of your spell's damage over 6 sec"]]
+    },
+    "Worldbreaker Battlegear": {
+      "items": ["45412", "45413", "45414", "45415", "45416", "46200", "46203", "46205", "46208", "46212"],
+      "sets": [{
+          "id": -155,
+          "ilvl": 226,
+          "pieces": ["46212", "46203", "46208", "46200", "46205"]
+        }, {
+          "id": 823,
+          "ilvl": 219,
+          "pieces": ["45412", "45415", "45416", "45414", "45413"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by Lava Lash and Stormstrike by 20%"], [4, "Increases the frequency of Maelstrom Weapon being triggered by your melee weapon attacks by 20%"]]
+    },
+    "Worldbreaker Garb": {
+      "items": ["45406", "45408", "45409", "45410", "45411", "46206", "46207", "46209", "46210", "46211"],
+      "sets": [{
+          "id": -156,
+          "ilvl": 226,
+          "pieces": ["46209", "46211", "46210", "46207", "46206"]
+        }, {
+          "id": 824,
+          "ilvl": 219,
+          "pieces": ["45408", "45410", "45409", "45406", "45411"]
+        }
+      ],
+      "set_bonus": [[2, "Increases periodic damage done by your Flame Shock ability by 20%"], [4, "Your critical strikes from Lightning Bolt cause the target to take nature damage equal to 8% of the Lightning Bolt's damage over 4 sec"]]
+    },
+    "Worldbreaker Regalia": {
+      "items": ["45401", "45402", "45403", "45404", "45405", "46198", "46199", "46201", "46202", "46204"],
+      "sets": [{
+          "id": -157,
+          "ilvl": 226,
+          "pieces": ["46201", "46204", "46202", "46199", "46198"]
+        }, {
+          "id": 825,
+          "ilvl": 219,
+          "pieces": ["45402", "45404", "45403", "45401", "45405"]
+        }
+      ],
+      "set_bonus": [[2, "Reduces the cooldown on Riptide by 1 sec"], [4, "Reduces the cast time of Chain Heal by 0.2 sec"]]
+    }
+  },
+  "warlock": {
+    "Dark Coven's Regalia": {
+      "items": ["50240", "50241", "50242", "50243", "50244", "51205", "51206", "51207", "51208", "51209", "51230", "51231", "51232", "51233", "51234"],
+      "sets": [{
+          "id": -250,
+          "ilvl": 277,
+          "pieces": ["51231", "51234", "51232", "51230", "51233"]
+        }, {
+          "id": -249,
+          "ilvl": 264,
+          "pieces": ["51208", "51205", "51207", "51209", "51206"]
+        }, {
+          "id": 884,
+          "ilvl": 251,
+          "pieces": ["50241", "50244", "50242", "50240", "50243"]
+        }
+      ],
+      "set_bonus": [[2, "The critical strike chance of your Shadowbolt, Incinerate, Soulfire, and Corruption spells is increased by 5%"], [4, "Each time your Immolate and Unstable Affliction spells deal periodic damage, you have a 15% chance to gain 10% damage done by you and your pet for 10 sec"]]
+    },
+    "Deathbringer Garb": {
+      "items": ["45417", "45419", "45420", "45421", "45422", "46135", "46136", "46137", "46139", "46140"],
+      "sets": [{
+          "id": -169,
+          "ilvl": 226,
+          "pieces": ["46140", "46136", "46139", "46135", "46137"]
+        }, {
+          "id": 837,
+          "ilvl": 219,
+          "pieces": ["45417", "45422", "45420", "45419", "45421"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage done by your Unstable Affliction by 20% and your Immolate by 10%"], [4, "Increases the critical strike chance of your Shadow Bolt and Incinerate spells by 5%"]]
+    },
+    "Gladiator's Felshroud": {
+      "items": ["41991", "41992", "41993", "41994", "41995", "41997", "41998", "41999", "42000", "42001", "42003", "42004", "42005", "42006", "42007", "42009", "42010", "42011", "42012", "42013", "42015", "42016", "42017", "42018", "42019", "51536", "51537", "51538", "51539", "51540"],
+      "sets": [{
+          "id": -132,
+          "ilvl": 270,
+          "pieces": ["51538", "51540", "51539", "51537", "51536"]
+        }, {
+          "id": -131,
+          "ilvl": 252,
+          "pieces": ["41995", "42013", "42007", "42019", "42000"]
+        }, {
+          "id": -130,
+          "ilvl": 251,
+          "pieces": ["41994", "42012", "42006", "42018", "41999"]
+        }, {
+          "id": -129,
+          "ilvl": 232,
+          "pieces": ["41993", "42011", "42005", "42017", "41998"]
+        }, {
+          "id": -128,
+          "ilvl": 213,
+          "pieces": ["41992", "42010", "42004", "42016", "41997"]
+        }, {
+          "id": -127,
+          "ilvl": 200,
+          "pieces": ["41991", "42009", "42003", "42015", "42001"]
+        }
+      ],
+      "set_bonus": [[2, ["spell power", 29]], [2, ["resilience rating", 100]], [4, "Reduces the casting time of your Fear spell by 0.2 sec"], [4, ["spell power", 88]]]
+    },
+    "Gul'dan's Regalia": {
+      "items": ["47793", "47794", "47795", "47796", "47797", "47798", "47799", "47800", "47801", "47802", "47803", "47804", "47805", "47806", "47807"],
+      "sets": [{
+          "id": -176,
+          "ilvl": 258,
+          "pieces": ["47796", "47793", "47795", "47797", "47794"]
+        }, {
+          "id": -175,
+          "ilvl": 245,
+          "pieces": ["47804", "47807", "47805", "47803", "47806"]
+        }, {
+          "id": 845,
+          "ilvl": 232,
+          "pieces": ["47801", "47798", "47800", "47802", "47799"]
+        }
+      ],
+      "set_bonus": [[2, "Increases your pet's critical strike chance with all its attacks by 10%"], [4, "Increases the damage done by your Immolate, Corruption, and Unstable Affliction spells by 10%"]]
+    },
+    "Kel'Thuzad's Regalia": {
+      "items": ["47778", "47779", "47780", "47781", "47782", "47783", "47784", "47785", "47786", "47787", "47788", "47789", "47790", "47791", "47792"],
+      "sets": [{
+          "id": -178,
+          "ilvl": 258,
+          "pieces": ["47789", "47792", "47790", "47788", "47791"]
+        }, {
+          "id": -177,
+          "ilvl": 245,
+          "pieces": ["47778", "47781", "47780", "47782", "47779"]
+        }, {
+          "id": 846,
+          "ilvl": 232,
+          "pieces": ["47784", "47787", "47785", "47783", "47786"]
+        }
+      ],
+      "set_bonus": [[2, "Increases your pet's critical strike chance with all its attacks by 10%"], [4, "Increases the damage done by your Immolate, Corruption, and Unstable Affliction spells by 10%"]]
+    },
+    "Plagueheart Garb": {
+      "items": ["39496", "39497", "39498", "39499", "39500", "40420", "40421", "40422", "40423", "40424"],
+      "sets": [{
+          "id": -148,
+          "ilvl": 213,
+          "pieces": ["40421", "40424", "40422", "40420", "40423"]
+        }, {
+          "id": 802,
+          "ilvl": 200,
+          "pieces": ["39496", "39499", "39498", "39500", "39497"]
+        }
+      ],
+      "set_bonus": [[2, "Your Corruption and Immolate periodic effects have a chance to increase the critical strike chance of your next Shadow Bolt or Incinerate by 10% for the next 10 sec"], [4, "Casting Life Tap grants you an additional 300 spirit for 10 seconds"]]
+    }
+  },
+  "warrior": {
+    "Dreadnaught Battlegear": {
+      "items": ["39605", "39606", "39607", "39608", "39609", "40525", "40527", "40528", "40529", "40530"],
+      "sets": [{
+          "id": -134,
+          "ilvl": 213,
+          "pieces": ["40528", "40530", "40529", "40527", "40525"]
+        }, {
+          "id": 788,
+          "ilvl": 200,
+          "pieces": ["39605", "39608", "39607", "39609", "39606"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage of your Slam by 10%"], [4, "Your Bleed periodic effects have a chance to make your next ability cost 5 less rage"]]
+    },
+    "Dreadnaught Plate": {
+      "items": ["39610", "39611", "39612", "39613", "39622", "40544", "40545", "40546", "40547", "40548"],
+      "sets": [{
+          "id": -133,
+          "ilvl": 213,
+          "pieces": ["40546", "40548", "40547", "40545", "40544"]
+        }, {
+          "id": 787,
+          "ilvl": 200,
+          "pieces": ["39610", "39613", "39612", "39622", "39611"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the damage of your Shield Slam by 10%"], [4, "Increases the duration of your Shield Wall by 3 seconds"]]
+    },
+    "Gladiator's Battlegear": {
+      "items": ["40783", "40786", "40789", "40790", "40801", "40804", "40807", "40810", "40819", "40823", "40826", "40829", "40840", "40844", "40847", "40850", "40859", "40862", "40866", "40870", "51541", "51542", "51543", "51544", "51545"],
+      "sets": [{
+          "id": -56,
+          "ilvl": 270,
+          "pieces": ["51543", "51545", "51544", "51542", "51541"]
+        }, {
+          "id": -55,
+          "ilvl": 251,
+          "pieces": ["40829", "40870", "40850", "40810", "40790"]
+        }, {
+          "id": -54,
+          "ilvl": 232,
+          "pieces": ["40826", "40866", "40847", "40807", "40789"]
+        }, {
+          "id": -53,
+          "ilvl": 213,
+          "pieces": ["40823", "40862", "40844", "40804", "40786"]
+        }, {
+          "id": -52,
+          "ilvl": 200,
+          "pieces": ["40819", "40859", "40840", "40801", "40783"]
+        }
+      ],
+      "set_bonus": [[2, ["attack power", 50]], [2, ["resilience rating", 100]], [4, "Reduces the cooldown of your Intercept ability by 5 sec"], [4, ["attack power", 150]]]
+    },
+    "Hellscream's Battlegear": {
+      "items": ["48386", "48387", "48388", "48389", "48390", "48391", "48392", "48393", "48394", "48395", "48396", "48397", "48398", "48399", "48400"],
+      "sets": [{
+          "id": -222,
+          "ilvl": 258,
+          "pieces": ["48398", "48400", "48399", "48397", "48396"]
+        }, {
+          "id": -221,
+          "ilvl": 245,
+          "pieces": ["48393", "48395", "48394", "48392", "48391"]
+        }, {
+          "id": 868,
+          "ilvl": 232,
+          "pieces": ["48388", "48390", "48389", "48387", "48386"]
+        }
+      ],
+      "set_bonus": [[2, "Berserker Stance grants an additional 2% critical strike chance, and Battle Stance grants an additional 6% armor penetration"], [4, "Increases the critical strike chance of your Slam and Heroic Strike abilities by 5%"]]
+    },
+    "Hellscream's Plate": {
+      "items": ["48456", "48457", "48458", "48459", "48460", "48461", "48462", "48463", "48464", "48465", "48466", "48467", "48468", "48469", "48470"],
+      "sets": [{
+          "id": -226,
+          "ilvl": 258,
+          "pieces": ["48468", "48470", "48469", "48467", "48466"]
+        }, {
+          "id": -225,
+          "ilvl": 245,
+          "pieces": ["48463", "48465", "48464", "48462", "48461"]
+        }, {
+          "id": 870,
+          "ilvl": 232,
+          "pieces": ["48458", "48460", "48459", "48457", "48456"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Taunt ability by 2 sec and increases the damage done by your Devastate ability by 5%"], [4, "Decreases the cooldown on your Shield Block ability by 10 sec"]]
+    },
+    "Siegebreaker Battlegear": {
+      "items": ["45429", "45430", "45431", "45432", "45433", "46146", "46148", "46149", "46150", "46151"],
+      "sets": [{
+          "id": -162,
+          "ilvl": 226,
+          "pieces": ["46151", "46149", "46150", "46148", "46146"]
+        }, {
+          "id": 830,
+          "ilvl": 219,
+          "pieces": ["45431", "45433", "45432", "45430", "45429"]
+        }
+      ],
+      "set_bonus": [[2, "Heroic Strike and Slam critical strikes have a chance to grant you 150 haste rating for 5 sec"], [4, "Increases the critical strike chance of Mortal Strike and Bloodthirst by 10%"]]
+    },
+    "Siegebreaker Plate": {
+      "items": ["45424", "45425", "45426", "45427", "45428", "46162", "46164", "46166", "46167", "46169"],
+      "sets": [{
+          "id": -163,
+          "ilvl": 226,
+          "pieces": ["46166", "46167", "46169", "46164", "46162"]
+        }, {
+          "id": 831,
+          "ilvl": 219,
+          "pieces": ["45425", "45428", "45427", "45426", "45424"]
+        }
+      ],
+      "set_bonus": [[2, "Increases the critical strike chance of your Devastate ability by 10%"], [4, "Shield Block also grants you 20% reduction to magical damage taken"]]
+    },
+    "Wrynn's Battlegear": {
+      "items": ["48371", "48372", "48373", "48374", "48375", "48376", "48377", "48378", "48379", "48380", "48381", "48382", "48383", "48384", "48385"],
+      "sets": [{
+          "id": -220,
+          "ilvl": 258,
+          "pieces": ["48383", "48381", "48382", "48384", "48385"]
+        }, {
+          "id": -219,
+          "ilvl": 245,
+          "pieces": ["48378", "48380", "48379", "48377", "48376"]
+        }, {
+          "id": 867,
+          "ilvl": 232,
+          "pieces": ["48371", "48374", "48373", "48375", "48372"]
+        }
+      ],
+      "set_bonus": [[2, "Berserker Stance grants an additional 2% critical strike chance, and Battle Stance grants an additional 6% armor penetration"], [4, "Increases the critical strike chance of your Slam and Heroic Strike abilities by 5%"]]
+    },
+    "Wrynn's Plate": {
+      "items": ["48429", "48430", "48433", "48436", "48445", "48446", "48447", "48448", "48449", "48450", "48451", "48452", "48453", "48454", "48455"],
+      "sets": [{
+          "id": -224,
+          "ilvl": 258,
+          "pieces": ["48433", "48455", "48447", "48453", "48451"]
+        }, {
+          "id": -223,
+          "ilvl": 245,
+          "pieces": ["48430", "48454", "48446", "48452", "48450"]
+        }, {
+          "id": 869,
+          "ilvl": 232,
+          "pieces": ["48429", "48448", "48445", "48449", "48436"]
+        }
+      ],
+      "set_bonus": [[2, "Decreases the cooldown on your Taunt ability by 2 sec and increases the damage done by your Devastate ability by 5%"], [4, "Decreases the cooldown on your Shield Block ability by 10 sec"]]
+    },
+    "Ymirjar Lord's Battlegear": {
+      "items": ["50078", "50079", "50080", "50081", "50082", "51210", "51211", "51212", "51213", "51214", "51225", "51226", "51227", "51228", "51229"],
+      "sets": [{
+          "id": -272,
+          "ilvl": 277,
+          "pieces": ["51227", "51229", "51228", "51226", "51225"]
+        }, {
+          "id": -271,
+          "ilvl": 264,
+          "pieces": ["51212", "51210", "51211", "51213", "51214"]
+        }, {
+          "id": 895,
+          "ilvl": 251,
+          "pieces": ["50080", "50082", "50081", "50079", "50078"]
+        }
+      ],
+      "set_bonus": [[2, "When your Deep Wounds ability deals damage you have a 3% chance to gain 16% attack power for 10 sec"], [4, "You have a 20% chance for your Bloodsurge and Sudden Death talents to grant 2 charges of their effect instead of 1, reduce the global cooldown on Execute or Slam by 0.5 sec, and for the duration of the effect to be increased by 100%"]]
+    },
+    "Ymirjar Lord's Plate": {
+      "items": ["50846", "50847", "50848", "50849", "50850", "51215", "51216", "51217", "51218", "51219", "51220", "51221", "51222", "51223", "51224"],
+      "sets": [{
+          "id": -274,
+          "ilvl": 277,
+          "pieces": ["51221", "51224", "51223", "51222", "51220"]
+        }, {
+          "id": -273,
+          "ilvl": 264,
+          "pieces": ["51218", "51215", "51216", "51217", "51219"]
+        }, {
+          "id": 896,
+          "ilvl": 251,
+          "pieces": ["50848", "50846", "50847", "50849", "50850"]
+        }
+      ],
+      "set_bonus": [[2, "Your Shield Slam and Shockwave abilities deal 20% increased damage"], [4, "Your Bloodrage ability no longer costs health to use, and now causes you to absorb damage equal to 20% of your maximum health. Lasts until cancelled"]]
+    }
+  }
+}

@@ -9,14 +9,13 @@ import win32clipboard
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import profile_window
+from constants import DIR_PATH, STATIC_DIR, json_write, json_read
 
-real_path = os.path.realpath(__file__)
-DIR_PATH = os.path.dirname(real_path)
+SERVER_NAMES = ["Lordaeron", "Icecrown", "Frostmourne", "Blackrock"]
 
 SERVER_FILE = os.path.join(DIR_PATH, "_server.cfg")
 HOTKEYS_FILE = os.path.join(DIR_PATH, "_hotkeys.cfg")
 
-STATIC_DIR = os.path.join(DIR_PATH, "static")
 MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
 EXIT_ICON = os.path.join(STATIC_DIR, "turn-off.png")
 SETTINGS_ICON = os.path.join(STATIC_DIR, "wrench.png")
@@ -25,7 +24,7 @@ NEW_WINDOW_ICON = os.path.join(STATIC_DIR, "new-page.png")
 CHANGE_SERVER_ICON = os.path.join(STATIC_DIR, "server.png")
 
 MODIFIERS = ['<ctrl>', '<alt>', '<shift>']
-HOTKEYS = {
+HOTKEYS = json_read(HOTKEYS_FILE) or {
     "new_window": "<ctrl>+<alt>+c",
     "close_all": "<ctrl>+<alt>+w",
     "change_server": "<ctrl>+<alt>+<f1>",
@@ -38,7 +37,6 @@ HOTKEYS_FUNC = {
     "Full exit": "full_exit",
 }
 
-
 def swap_to_english():
     def is_english_layout():
         thread_id = windll.kernel32.GetCurrentThreadId()
@@ -49,10 +47,6 @@ def swap_to_english():
         if is_english_layout():
             break
         windll.user32.ActivateKeyboardLayout(1, 0x00000100)
-
-def save_hotkeys():
-    with open(HOTKEYS_FILE, 'w') as f:
-        json.dump(HOTKEYS, f, indent=4)
 
 def get_clipboard():
     win32clipboard.OpenClipboard()
@@ -214,7 +208,7 @@ class KeybindsChangeWindow(QtWidgets.QMainWindow):
             k = [kv for kb, kv in zip(keybind, MODIFIERS) if kb]
             k.append(keybind[-1])
             HOTKEYS[func] = '+'.join(k)
-        save_hotkeys()
+        json_write(HOTKEYS_FILE, HOTKEYS, indent=2)
         show_message(self)
 
     def closeEvent(self, event):
@@ -251,10 +245,8 @@ class ServerChange(QtWidgets.QMainWindow):
         self.verticalLayout.addWidget(self.label)
 
         self.comboBox = QtWidgets.QComboBox()
-        self.comboBox.addItem("Lordaeron")
-        self.comboBox.addItem("Icecrown")
-        self.comboBox.addItem("Frostmourne")
-        self.comboBox.addItem("Blackrock")
+        for server_name in SERVER_NAMES:
+            self.comboBox.addItem(server_name)
         self.comboBox.setCurrentText(self.server)
         self.verticalLayout.addWidget(self.comboBox)
 

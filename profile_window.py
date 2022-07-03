@@ -1,5 +1,3 @@
-import json
-import logging
 import os
 import sys
 import webbrowser
@@ -11,23 +9,8 @@ import achi_parser
 import gear_score
 import item_parser
 import profile_parser
-
-
-def new_folder_path(root, name):
-    new_folder = os.path.join(root, name)
-    if not os.path.exists(new_folder):
-        os.makedirs(new_folder, exist_ok=True)
-    return new_folder
-
-real_path = os.path.realpath(__file__)
-DIR_PATH = os.path.dirname(real_path)
-
-CACHE_DIR = new_folder_path(DIR_PATH, "cache")
-STATIC_DIR = new_folder_path(DIR_PATH, "static")
-CACHES = {"enchants", "icons", "items"}
-for cache_name in CACHES:
-    new_folder_path(CACHE_DIR, cache_name)
-CHAR_CACHE = new_folder_path(CACHE_DIR, "characters")
+from constants import (CHAR_CACHE_DIR, DIR_PATH, STATIC_DIR, json_read, json_write,
+                       new_folder_path, SETS_DATA, SETS_ITEMS_IDS)
 
 SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
 MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
@@ -60,36 +43,6 @@ QPushButton {
     font: 12pt "Lucida Console";
 }
 """
-
-LOGGING_FORMAT = "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s"
-
-def setup_logger(logger_name, log_file):
-    logger = logging.getLogger(logger_name)
-    formatter = logging.Formatter(LOGGING_FORMAT)
-    fileHandler = logging.FileHandler(log_file)
-    fileHandler.setFormatter(formatter)
-    streamHandler = logging.StreamHandler()
-    streamHandler.setFormatter(formatter)
-
-    logger.setLevel(logging.INFO)
-    logger.addHandler(fileHandler)
-    logger.addHandler(streamHandler)
-    return logger
-
-LOGFILE = os.path.join(DIR_PATH,'_errors.log')
-LOGGER = setup_logger("errors_logger", LOGFILE)
-
-
-def open_json(filename) -> dict:
-    try:
-        with open(filename, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {}
-
-def save_json(filename, data):
-    with open(filename, 'w') as f:
-        json.dump(data, f)
 
 def format_specs(profile: dict):
     _filter = {'Fishing', 'First Aid'}
@@ -162,9 +115,9 @@ class CharWindow(QtWidgets.QMainWindow):
         self.item_parsers: list[item_parser.Item] = []
         self.dates: list[str] = []
         
-        server_cache = new_folder_path(CHAR_CACHE, server)
+        server_cache = new_folder_path(CHAR_CACHE_DIR, server)
         self.char_cache = os.path.join(server_cache, f"{char_name}.json")
-        self.char_data: dict[str, dict] = open_json(self.char_cache)
+        self.char_data: dict[str, dict] = json_read(self.char_cache)
 
         self.fetch_profile()
         self.add_gear_icons()
@@ -261,7 +214,7 @@ class CharWindow(QtWidgets.QMainWindow):
             date = datetime.now().strftime("%y-%m-%d %H:%M:%S")
             self.char_data[date] = profile
             self.date_label.setText(date)
-            save_json(self.char_cache, self.char_data)
+            json_write(self.char_cache, self.char_data)
         else:
             for date, data in self.char_data.items():
                 if data == profile:
@@ -292,8 +245,21 @@ class CharWindow(QtWidgets.QMainWindow):
         _txt = f'{self.MAIN_TEXT}\nStats:\n{stats_txt}'
         self.STATS_LABEL.setText(_txt)
     
-    def set_icons(self, profile):
+    def check_item_set(self, item_ID: str, player_class: str):
+        item_set: dict[str, dict[str, list]]
+        item_set = SETS_DATA[player_class]
+        if item_ID in SETS_ITEMS_IDS:
+            item_set = SETS_DATA["items"]
+        
+        for name, sets in item_set.items():
+            if item_ID in sets['items']:
+                return name, sets
+        return None
+
+    def set_items(self, profile):
         gear_data: list[dict[str, str]] = profile['gear_data']
+        player_class = profile['class'].lower().replace(' ', '')
+        gear_ids = {x['item'] for x in gear_data if 'item' in x}
         for item_icon, item_data in zip(self.item_icons, gear_data):
             if not item_data:
                 item_icon.setObjectName('')
@@ -301,9 +267,14 @@ class CharWindow(QtWidgets.QMainWindow):
                 item_icon.setPixmap(QtGui.QPixmap())
                 continue
             item_ID = item_data["item"]
+            _set = self.check_item_set(item_ID, player_class)
+
             item_icon.setObjectName(item_ID)
             item_icon.installEventFilter(self)
             _Thread = item_parser.Item(item_data, item_icon, self.is_enchanter)
+            if _set is not None:
+                set_name, set_data = _set
+                _Thread.set_item_set(gear_ids, set_name, set_data)
             _Thread.item_loaded.connect(self.update_stats)
             _Thread.start()
             self.item_parsers.append(_Thread)
@@ -319,18 +290,19 @@ class CharWindow(QtWidgets.QMainWindow):
         self.MAIN_TEXT = generate_main_info(profile)
         self.STATS_LABEL.setText(self.MAIN_TEXT)
 
-        self.set_icons(profile)
-        
+        self.set_items(profile)
+                
     def showToolTip(self, tool_tip_text):
-        pos = self.geometry()
-        if self.y() > 400:
-            pos = pos.topLeft() if self.x() > 1350 else pos.topRight()
-            print(pos)
-        else:
-            pos = pos.bottomRight() if self.x() > 1350 else pos.bottomLeft()
         if QtWidgets.QToolTip.text() == tool_tip_text:
             # removes tooltip flickering
             tool_tip_text += " "
+        
+        if self.x() > 1350:
+            w = self.x() - int(self.width()*1.5)
+            pos = QtCore.QPoint(w, self.y())
+        else:
+            pos = self.geometry().topRight()
+            
         QtWidgets.QToolTip.showText(pos, tool_tip_text, self)
 
     def get_tooltip(self, source: QtWidgets.QWidget):
@@ -362,6 +334,7 @@ class CharWindow(QtWidgets.QMainWindow):
                     webbrowser.open(f'https://wotlk.evowow.com/?item={item_ID}')
         
         elif event.type() == 10:
+            self.current_hover = source
             tool_tip_text = self.get_tooltip(source)
             if not tool_tip_text:
                 tool_tip_text = '<font size=5>Loading...</font>'
@@ -398,13 +371,13 @@ if __name__ == "__main__":
     try:
         char_name = sys.argv[1]
     except IndexError: # default value if none provided
-        char_name = "Nomadra"
         char_name = "Deydraenna"
+        char_name = "Nomadra"
     try:
         server = sys.argv[2]
     except IndexError: # default value if none provided
-        server = "Lordaeron"
         server = "Icecrown"
+        server = "Lordaeron"
 
     __x, __y = 100, 100
     if len(sys.argv) > 3:

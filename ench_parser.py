@@ -1,56 +1,15 @@
-import json
-import logging
 import os
 import re
 import threading
 
-import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-real_path = os.path.realpath(__file__)
-DIR_PATH = os.path.dirname(real_path)
-CACHE = os.path.join(DIR_PATH, 'cache')
-ENCH_CACHE = os.path.join(CACHE, 'enchants')
-LOGGER = logging.getLogger("errors_logger")
-
-CACHED: dict[str, dict[str, list[str, str]]] = {}
-LOADING: dict[str, threading.Thread] = {}
+from constants import LOGGER, ENCH_CACHE_DIR, BASE_STATS, SHORT_STATS, json_read, json_write, requests_get
 
 HEADERS = {'User-Agent': "WarmaneProfileParser ench_parser/1.0"}
-BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
-SHORT_STATS = {
-    'armorpenrtng': 'armor penetration rating',
-    'resirtng': 'resilience rating',
-    'hitrtng': 'hit rating',
-    'splpwr': 'spell power',
-    'atkpwr': 'attack power',
-    'hastertng': 'haste rating',
-    'critstrkrtng': 'critical strike rating',
-    'exprtng': 'expertise rating',
-    'defrtng': 'defense rating',
-    'dodgertng': 'dodge rating',
-    'parryrtng': 'parry rating',
-    'manargn': 'mp5',
-    'healthrgn': 'hp5',
-    'sta': 'stamina',
-    'int': 'intellect',
-    'spi': 'spirit',
-    'str': 'strength',
-    'agi': 'agility',
-}
-
-def get_page(ench_ID):
-    url = f"https://wotlk.evowow.com/?enchantment={ench_ID}"
-    for _ in range(3):
-        try:
-            page = requests.get(url, headers=HEADERS, timeout=2, allow_redirects=False)
-            if page.status_code == 200:
-                return page.text
-        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
-            pass
-    
-    return None
+CACHED: dict[str, dict[str, list[str, str]]] = {}
+LOADING: dict[str, threading.Thread] = {}
 
 def get_value(text: str):
     try:
@@ -114,24 +73,21 @@ class EnchGetter(threading.Thread):
     def __init__(self, ench_ID) -> None:
         super().__init__()
         self.ench_ID = ench_ID
-        self.file_name = os.path.join(ENCH_CACHE, f"{self.ench_ID}.json")
 
     def run(self) -> None:
+        ench_file_name = os.path.join(ENCH_CACHE_DIR, f"{self.ench_ID}.json")
+        ench = json_read(ench_file_name)
+        if ench:
+            CACHED[self.ench_ID] = ench
+            return
         try:
-            with open(self.file_name, 'r') as f:
-                CACHED[self.ench_ID] = json.load(f)
-        except FileNotFoundError:
-            try:
-                ench_raw = get_page(self.ench_ID)
-                ench = get_ench(ench_raw)
-                CACHED[self.ench_ID] = ench
-                self.save(ench)
-            except Exception:
-                LOGGER.exception('EnchParser run')
-
-    def save(self, data) -> None:
-        with open(self.file_name, 'w') as f:
-            json.dump(data, f, default=list)
+            url = f"https://wotlk.evowow.com/?enchantment={self.ench_ID}"
+            ench_raw = requests_get(url, HEADERS).text
+            ench = get_ench(ench_raw)
+            CACHED[self.ench_ID] = ench
+            json_write(ench_file_name, ench)
+        except Exception:
+            LOGGER.exception('EnchParser run')
 
 
 def main(ench_ID):

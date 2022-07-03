@@ -1,101 +1,19 @@
 import json
-import logging
 import os
 import re
 
-import requests
 from PyQt5 import QtCore, QtGui
 
 import ench_parser
+from constants import (BASE_STATS, GEMS, ICON_CACHE_DIR, ICON_URL,
+                       ITEM_CACHE_DIR, LOGGER, SETS_DATA, STATS_DICT,
+                       UNIQUE_GEMS, json_read, json_write, requests_get)
 
-real_path = os.path.realpath(__file__)
-DIR_PATH = os.path.dirname(real_path)
-CACHE = os.path.join(DIR_PATH, 'cache')
-ICON_CACHE = os.path.join(CACHE, 'icons')
-ITEM_CACHE = os.path.join(CACHE, 'items')
-LOGGER = logging.getLogger("errors_logger")
-
+QUALITY_COLOR = ["FFFFFF", "FFFFFF", "1EFF0B", "0560DD", "A32AB9", "FF8011", "FFFFFF",  "ACBD80"]
+ENCHANTABLE = {"Head", "Shoulder", "Chest", "Legs", "Hands", "Feet", "Wrist", "Back", "Main Hand", "Off Hand", "One-Hand", "Two-Hand"}
+HEADERS = {"User-Agent": "WarmaneProfileParser item_parser/1.0"}
 ICONS: dict[str, QtGui.QPixmap] = {}
 TOOLTIPS = {}
-BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
-QUALITY_COLOR = ['FFFFFF', 'FFFFFF', '1EFF0B', '0560DD', 'A32AB9', 'FF8011', 'FFFFFF',  'ACBD80']
-ENCHANTABLE = {'Head', 'Shoulder', 'Chest', 'Legs', 'Hands', 'Feet', 'Wrist', 'Back', 'Main Hand', 'Off Hand', 'One-Hand', 'Two-Hand'}
-HEADERS = {'User-Agent': "WarmaneProfileParser item_parser/1.0"}
-
-UNIQUE_GEMS = {
-    "of the Sea": {
-        'socket': (0, 0, 1),
-        'color_hex': '4444ff',
-    },
-}
-
-GEMS = {
-    'red': {
-        'socket': (1, 0, 0),
-        'color_hex': 'ff0000',
-        'names': {
-            'blood', 'bold', 'bright', 'crimson', 'delicate', 'don', 'flashing', 'fractured', "kailee's", 'mighty',
-            "omar's", 'precise', 'runed', 'scarlet', 'stark', 'subtle', 'teardrop'}},
-    'yellow': {
-        'socket': (0, 1, 0),
-        'color_hex': 'edc600',
-        'names': {
-            'blood', 'brilliant', 'facet', 'gleaming', 'great', "kharmaa's", 'mystic',
-            'quick', 'rigid', 'smooth', 'stone', 'sublime', 'thick'}},
-    'blue': {
-        'socket': (0, 0, 1),
-        'color_hex': '4444ff',
-        'names': {'azure', 'charmed', 'empyrean', 'falling', 'lustrous', 'majestic', 'sky', 'solid', 'sparkling', 'star', 'stormy'}},
-    'orange': {
-        'socket': (1, 1, 0),
-        'color_hex': 'ff8800',
-        'names': {
-            'accurate', "assassin's", 'beaming', "champion's", 'deadly', 'deft', 'durable', 'empowered', 'enscribed', 'etched',
-            'fierce', 'glimmering', 'glinting', 'glistening',  'infused', 'inscribed', 'iridescent', 'lucent', 'luminous',
-            'mysterious', 'nimble', 'potent', 'pristine', 'reckless', 'resolute', 'resplendent', 'shining', 'splendid', 'stalwart',
-            'stark', 'unstable', 'veiled', 'wicked'}},
-    'purple': {
-        'socket': (1, 0, 1),
-        'color_hex': '6600bb',
-        'names': {
-            'balanced', 'blessed', 'brutal', "defender's", 'fluorescent', 'glowing', "guardian's", 'imperial', 'infused',
-            'mysterious', 'puissant', 'pulsing', 'purified', 'regal', 'royal', 'shifting', 'soothing', 'sovereign', 'tenuous'}},
-    'green': {
-        'socket': (0, 1, 1),
-        'color_hex': '00aa55',
-        'names': {
-            'barbed', 'dazzling', 'effulgent', 'enduring', 'energized', 'forceful', 'intricate', 'jagged', 'lambent', 'misty',
-            'notched', 'opaque', 'polished', 'radiant', 'rune', "seer's", 'shattered', 'shining', 'steady', 'sundered', 'tense',
-            'timeless', 'turbid', 'unstable', 'vivid'}}}
-
-STATS_DICT = {
-    0: "armor",
-    35: "resilience rating",
-    45: "spell power",
-    38: "attack power",
-    36: "haste rating",
-    32: "critical strike rating",
-    31: "hit rating",
-    37: "expertise rating",
-    44: "armor penetration rating",
-    12: "defense rating",
-    13: "dodge rating",
-    14: "parry rating",
-    15: "shield block",
-    43: "mp5",
-    47: "spell penetration",
-    7: "stamina",
-    3: "agility",
-    4: "strength",
-    5: "intellect",
-    6: "spirit",
-}
-
-def write_to_file(data, path, mode):
-    '''Creates cache'''
-    if len(data) > 50:
-        with open(path, mode) as f:
-            f.write(data)
 
 def get_raw_stats(q: str):
     raw_stats = q[q.index("tooltip_enus"):]
@@ -145,7 +63,7 @@ def get_additional_text(q):
 
 def get_missing_item_info(item_ID):
     item_url = f'https://wotlk.evowow.com/?item={item_ID}'
-    item_raw = requests.get(item_url, headers=HEADERS).text
+    item_raw = requests_get(item_url, HEADERS).text
     item_stats = re.findall('g_items[^{]+({.+?})', item_raw)
     item: dict = json.loads(item_stats[0])
     # item = {'quality': 4, 'icon': 'inv_mace_115', 'name_enus': 'Royal Scepter of Terenas II'}
@@ -180,15 +98,12 @@ def get_missing_item_info(item_ID):
     return item
 
 def get_item(item_ID: str) -> dict:
-    item_path = f'{ITEM_CACHE}/{item_ID}.json'
-    try:
-        with open(item_path, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
+    item_path = os.path.join(ITEM_CACHE_DIR, f"{item_ID}.json")
+    item = json_read(item_path)
+    if not item:
         item = get_missing_item_info(item_ID)
-        data = json.dumps(item)
-        write_to_file(data, item_path, 'w')
-        return item
+        json_write(item_path, item)
+    return item
 
 def gem_color(gem_name: tuple[str, str]):
     hex: str
@@ -212,20 +127,26 @@ def gem_color(gem_name: tuple[str, str]):
     #shouldnt reach here
     LOGGER.info(f'Missing gem info: f"{name}--{type_}')
     return 'FFFFFF'
+
+def save_icon(icon_path, icon_data):
+    if len(icon_data) > 50:
+        with open(icon_path, 'wb') as f:
+            f.write(icon_data)
             
 def get_icon(icon_name):
     '''Gets icon from cache if available, otherwise downloads and saves'''
     if icon_name in ICONS:
         return ICONS[icon_name]
 
-    icon_path = f'{ICON_CACHE}/{icon_name}.jpg'
+    icon_path = os.path.join(ICON_CACHE_DIR, f"{icon_name}.jpg")
     try:
-        with open(icon_path,'rb') as img:
+        with open(icon_path, 'rb') as img:
             icon = img.read()
     except FileNotFoundError:
-        icon_url = f'https://wotlk.evowow.com/static/images/wow/icons/large/{icon_name}.jpg'
-        icon = requests.get(icon_url, headers=HEADERS).content
-        write_to_file(icon, icon_path, 'wb')
+        # icon_url = f'https://wotlk.evowow.com/static/images/wow/icons/large/{icon_name}.jpg'
+        icon_url = f"{ICON_URL}/{icon_name}.jpg"
+        icon = requests_get(icon_url, HEADERS).content
+        save_icon(icon_path, icon)
 
     _Pixmap = QtGui.QPixmap()
     _Pixmap.loadFromData(icon)
@@ -268,11 +189,34 @@ class Item(QtCore.QThread):
         self.item_ID = item_data['item']
         self.GEMS = item_data.get('gems')
         self.ENCHANT_ID = item_data.get('ench')
+        self.TOTAL_STATS = []
+        self.SET_BONUSES = []
         self.stats_funcs = (
             self.get_self_stats,
             self.get_self_enchant,
             self.get_self_sockets,
             self.get_self_add)
+
+    def set_item_set(self, gear_ids: set[str], set_name: str, set_data: dict[str, list]):
+        _set_ids = set(set_data["items"])
+        max_c = len(set_data['sets'][0]['pieces'])
+        c = len(gear_ids & _set_ids)
+        set_name_with_c = f"{set_name} ({c}/{max_c})"
+        self.SET_BONUSES.append(format_line(set_name_with_c, 'DBB402'))
+        for pieces, set_bonus in set_data['set_bonus']:
+            if pieces > c:
+                _color = '777777'
+            else:
+                _color = '11DD11'
+            
+            if type(set_bonus) == tuple:
+                value, stat = set_bonus
+                line = f'+{value:>3} {stat}'.title()
+                self.TOTAL_STATS.append((stat, value))
+            else:
+                line = set_bonus
+            line = f"{pieces}: {line}"
+            self.SET_BONUSES.append(format_line(line, _color))
             
     def run(self):
         self.ITEM = get_item(self.item_ID)
@@ -286,7 +230,7 @@ class Item(QtCore.QThread):
         
         slot = self.ITEM["slot"]
         self.ENCHANTABLE = slot in ENCHANTABLE or slot == 'Finger' and self.is_enchanter
-        self.TOTAL_STATS: list = self.ITEM['stats']
+        self.TOTAL_STATS.extend(self.ITEM['stats'])
         self.item_loaded.emit(self.TOTAL_STATS)
         TOOLTIPS[self.item_icon] = self.make_tool_tip()
 
@@ -372,6 +316,17 @@ class Item(QtCore.QThread):
     
     def get_self_add(self):
         '''Additional text - On equip / on use'''
+        additional_text = self.ITEM.get('add_text')
+        if not additional_text:
+            return
+        
+        return [format_line(text, '11DD11') for text in additional_text]
+    
+    def get_self_add(self):
+        '''Additional text - On equip / on use'''
+        if self.SET_BONUSES:
+            return self.SET_BONUSES
+        
         additional_text = self.ITEM.get('add_text')
         if not additional_text:
             return

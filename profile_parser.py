@@ -1,18 +1,11 @@
-import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-HEADERS = {'User-Agent': "WarmaneProfileParser/1.4"}
+from constants import requests_get
 
-def get_character(char_name: str, server: str):
-    url = f'http://armory.warmane.com/character/{char_name}/{server}'
-    for _ in range(3):
-        try:
-            page = requests.get(url, headers=HEADERS, timeout=1, allow_redirects=False)
-            if page.status_code == 200:
-                return page.text
-        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
-            pass
+HEADERS = {'User-Agent': "WarmaneProfileParser/1.4"}
+DOUBLE_RACES = ['Night', 'Blood']
+DOUBLE_CLASSES = ['Knight']
 
 def parse_slot(slot: Tag):
     if not slot.get('rel'): # Empty slot
@@ -52,8 +45,6 @@ def get_profs(stats: Tag):
         for specname, value in get_data(stats, "profskills")
     }
 
-DOUBLE_RACES = ['Night', 'Blood']
-DOUBLE_CLASSES = ['Knight']
 def get_basic_info(profile: BeautifulSoup):
     level_race_class = profile.find(class_="level-race-class").text.strip()
     level_race_class = level_race_class.split(',')[0]
@@ -69,7 +60,8 @@ def get_basic_info(profile: BeautifulSoup):
     return level, race, class_
 
 def get_profile(char_name, server='Lordaeron'):
-    profile_raw = get_character(char_name, server)
+    char_url = f"http://armory.warmane.com/character/{char_name}/{server}"
+    profile_raw = requests_get(char_url, HEADERS).text
     if profile_raw is None or "guild-name" not in profile_raw:
         return {}
     profile_raw = BeautifulSoup(profile_raw, 'html.parser')

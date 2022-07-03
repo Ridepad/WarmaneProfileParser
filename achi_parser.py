@@ -1,26 +1,13 @@
-import json
 import re
 
-import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-TOOLTIPS = {}
-ACHI_CACHE = {}
+from constants import CATEGORIES_DATA, ACHIEVEMENTS_DATA, requests_post
 
 HEADERS = {'User-Agent': "WarmaneProfileParser achi_parser/1.0"}
-
-try:
-    with open("static/achievements.json", 'r') as f:
-        ACHIEVS = json.load(f)
-except FileNotFoundError:
-    ACHIEVS = {}
-
-try:
-    with open("static/categories.json", 'r') as f:
-        CATEGORIES = json.load(f)
-except FileNotFoundError:
-    CATEGORIES = {}
+TOOLTIPS_CACHE = {}
+ACHI_CACHE = {}
 
 def parse_date(achi: Tag):
     _date = achi.find(class_="date")
@@ -46,21 +33,14 @@ def get_achievs(char_name: str, server: str, category_id: int):
     if category_id in _achs:
         return _achs[category_id]
 
-    def get_post(attempt=0):
-        if attempt > 2:
-            return
-        try:
-            return requests.post(url, data={"category": category_id}, headers=HEADERS, timeout=1)
-        except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout):
-            return get_post(attempt+1)
-    
-    response = get_post()
+    data = {"category": category_id}
+    response = requests_post(url, HEADERS, data=data)
     try:
         achievements = response.json()['content']
         _dates = get_achi_dates(achievements)
         _achs[category_id] = _dates
         return _dates
-    except json.decoder.JSONDecodeError:
+    except Exception: # json.decoder.JSONDecodeError, KeyError?
         return {}
 
 def format_line(body, color='', size=''):
@@ -73,10 +53,10 @@ def format_line(body, color='', size=''):
     return body
 
 def make_toolTip(char_name, server, size, category_name):
-    c = TOOLTIPS.setdefault(server, {}).setdefault(char_name, {}).setdefault(size, {})
+    c = TOOLTIPS_CACHE.setdefault(server, {}).setdefault(char_name, {}).setdefault(size, {})
     if category_name in c:
         return c[category_name]
-    _cat = CATEGORIES[category_name][size]
+    _cat = CATEGORIES_DATA[category_name][size]
     all_achi = {}
     for category_id in _cat['cats']:
         all_achi |= get_achievs(char_name, server, category_id)
@@ -84,7 +64,7 @@ def make_toolTip(char_name, server, size, category_name):
     _toolTip = []
     for cat_id, cat_name in _cat['sep'].items():
         _toolTip.append(format_line(cat_name, 'FFFFFF', 5))
-        for achi_id, achi_name in ACHIEVS[cat_id].items():
+        for achi_id, achi_name in ACHIEVEMENTS_DATA[cat_id].items():
             color = '00FF00' if all_achi.get(achi_id) else 'AAAAAA'
             _toolTip.append(format_line(achi_name, color))
     _toolTip = '</td></tr><tr><td>'.join(_toolTip)
