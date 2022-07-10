@@ -2,6 +2,29 @@
 
 > IMPORTANT: IT'S NOT AN ADDON - STANDALONE EXECUTABLE
 
+<details><summary><b>Changelog</b></summary>
+<details><summary>1.4.0</summary>
+
+    Added wotlk sets
+
+    Combined all caches into 1 folder
+
+    Removed unused files in release
+
+    Renamed modules
+
+    Fixed socket bonus missing if 0 gems socketed
+
+    Fixed tbc meta gems
+
+    Fixed tootlips
+
+    Fixed logging
+
+    Fixed user agent
+</details>
+</details>
+
 - Standalone UI with almost full gear info, summarized stats and achievements
 - Doesn't require game to run
 - Parses character profile - all items, gems, enchants
