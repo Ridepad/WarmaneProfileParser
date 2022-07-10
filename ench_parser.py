@@ -5,7 +5,7 @@ import threading
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-from constants import LOGGER, ENCH_CACHE_DIR, BASE_STATS, SHORT_STATS, json_read, json_write, requests_get
+from constants import BASE_STATS, ENCH_CACHE_DIR, LOGGER, SHORT_STATS, json_read, json_write, requests_get
 
 HEADERS = {'User-Agent': "WarmaneProfileParser ench_parser/1.0"}
 CACHED: dict[str, dict[str, list[str, str]]] = {}

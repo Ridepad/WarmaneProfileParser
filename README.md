@@ -4,11 +4,11 @@
 
 - Standalone UI with almost full gear info, summarized stats and achievements
 - Doesn't require game to run
-- Parses character profile from serverside site. All items, gems, enchants
+- Parses character profile - all items, gems, enchants
 - Parses character achievements on demand
 - Can open multiple windows to compare
 - Caches downloaded item info and icon
-- Caches previous equipped gear
+- Caches previously equipped gear
 - Click on item to open it's database entry in browser
 - Click left bottom button to swap between 10 and 25 man achievements
 - Click right bottom button to refresh gear from website
@@ -40,4 +40,4 @@ If you've encountered a problem, open issue on github with `_errors.log` or mess
 
 ## TODO
 
-- Add support for equipped tier 9/10 sets
+- ~~Add support for equipped tier 9/10 sets~~ Done

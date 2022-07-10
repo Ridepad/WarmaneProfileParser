@@ -61,8 +61,11 @@ def get_basic_info(profile: BeautifulSoup):
 
 def get_profile(char_name, server='Lordaeron'):
     char_url = f"http://armory.warmane.com/character/{char_name}/{server}"
-    profile_raw = requests_get(char_url, HEADERS).text
-    if profile_raw is None or "guild-name" not in profile_raw:
+    response = requests_get(char_url, HEADERS)
+    if response is None:
+        return {}
+    profile_raw = response.text
+    if "guild-name" not in profile_raw:
         return {}
     profile_raw = BeautifulSoup(profile_raw, 'html.parser')
     level, race, class_ = get_basic_info(profile_raw)

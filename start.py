@@ -6,10 +6,11 @@ from ctypes import windll
 
 import pynput
 import win32clipboard
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import profile_window
-from constants import DIR_PATH, STATIC_DIR, json_write, json_read
+from constants import DIR_PATH, STATIC_DIR, json_read, json_write
 
 SERVER_NAMES = ["Lordaeron", "Icecrown", "Frostmourne", "Blackrock"]
 
@@ -398,9 +399,12 @@ class MainWindow(QtWidgets.QMainWindow):
         icon = tray.Critical if warning else tray.Information
         self.tray_icon.showMessage("WarmaneProfileParser", msg, icon)
 
-    def remove_error(self, window: profile_window.CharWindow):
+    def profile_error(self, window: profile_window.CharWindow):
         self.char_windows.remove(window)
         self.show_tray_msg("Character with this name doesn't exist, maybe wrong server?", True)
+
+    def gear_error(self):
+        self.show_tray_msg("Parsing some gear failed, try to reload", True)
 
     def new_window(self):
         char_name = get_clipboard()
@@ -408,7 +412,8 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         
         _window = profile_window.CharWindow(char_name, self.server)
-        _window.is_terminated.connect(self.remove_error)
+        _window.profile_error.connect(self.profile_error)
+        _window.gear_error.connect(self.gear_error)
         self.char_windows.append(_window)
         _window.show()
 

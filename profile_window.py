@@ -9,8 +9,9 @@ import achi_parser
 import gear_score
 import item_parser
 import profile_parser
-from constants import (CHAR_CACHE_DIR, DIR_PATH, STATIC_DIR, json_read, json_write,
-                       new_folder_path, SETS_DATA, SETS_ITEMS_IDS)
+from constants import (
+    CHAR_CACHE_DIR, DIR_PATH, LOGGER, STATIC_DIR, STATS_DICT,
+    json_read, json_write, new_folder_path)
 
 SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
 MAIN_ICON = os.path.join(STATIC_DIR, "logo.ico")
@@ -92,9 +93,13 @@ class GetProfile(QtCore.QThread):
 
 
 class CharWindow(QtWidgets.QMainWindow):
-    is_terminated = QtCore.pyqtSignal(QtWidgets.QMainWindow)
+    profile_error = QtCore.pyqtSignal(QtWidgets.QMainWindow)
+    gear_error = QtCore.pyqtSignal()
+
     def __init__(self, char_name: str, server: str="Lordaeron", X: int=100, Y: int=100):
         super().__init__()
+        self.had_error = False
+        self.empty_pixmap = QtGui.QPixmap()
         self.stats_size = 230
         self.W = ICON * 2 + self.stats_size
         self.H = ICON * 9
@@ -207,7 +212,7 @@ class CharWindow(QtWidgets.QMainWindow):
         if not profile:
             self.close()
             self.deleteLater()
-            self.is_terminated.emit(self)
+            self.profile_error.emit(self)
             return
         
         if profile not in self.char_data.values():
@@ -244,68 +249,78 @@ class CharWindow(QtWidgets.QMainWindow):
         stats_txt = stats_txt.replace(" rating", "").title()
         _txt = f'{self.MAIN_TEXT}\nStats:\n{stats_txt}'
         self.STATS_LABEL.setText(_txt)
-    
-    def check_item_set(self, item_ID: str, player_class: str):
-        item_set: dict[str, dict[str, list]]
-        item_set = SETS_DATA[player_class]
-        if item_ID in SETS_ITEMS_IDS:
-            item_set = SETS_DATA["items"]
-        
-        for name, sets in item_set.items():
-            if item_ID in sets['items']:
-                return name, sets
-        return None
 
-    def set_items(self, profile):
-        gear_data: list[dict[str, str]] = profile['gear_data']
+    def add_set_stats(self, stats_data: dict):
+        set_name = stats_data['name']
+        if set_name in self.SET_STATS:
+            return
+        stats: list[tuple[str, int]] = stats_data['stats']
+        self.SET_STATS[set_name] = stats
+        for stat, value in stats:
+            if stat in self.FULL_STATS:
+                self.FULL_STATS[stat] += value
+
+    def nullify_stats(self):
+        self.SET_STATS = {}
+        self.FULL_STATS = {x: 0 for x in STATS_DICT.values()}
+    
+    def item_error(self):
+        if self.had_error:
+            return
+        self.had_error = True
+        self.gear_error.emit()
+
+    def set_gear(self, profile):
+        self.nullify_stats()
+        
+        self.MAIN_TEXT = generate_main_info(profile)
+        self.STATS_LABEL.setText(self.MAIN_TEXT)
+
         player_class = profile['class'].lower().replace(' ', '')
+        is_enchanter = 'Enchanting' in profile['profs']
+        gear_data: list[dict[str, str]] = profile['gear_data']
         gear_ids = {x['item'] for x in gear_data if 'item' in x}
         for item_icon, item_data in zip(self.item_icons, gear_data):
             if not item_data:
                 item_icon.setObjectName('')
                 item_icon.removeEventFilter(self)
-                item_icon.setPixmap(QtGui.QPixmap())
+                item_icon.setPixmap(self.empty_pixmap)
                 continue
-            item_ID = item_data["item"]
-            _set = self.check_item_set(item_ID, player_class)
 
+            item_ID = item_data["item"]
             item_icon.setObjectName(item_ID)
             item_icon.installEventFilter(self)
-            _Thread = item_parser.Item(item_data, item_icon, self.is_enchanter)
-            if _set is not None:
-                set_name, set_data = _set
-                _Thread.set_item_set(gear_ids, set_name, set_data)
+
+            _Thread = item_parser.Item(item_data, item_icon, gear_ids, player_class, is_enchanter)
+            _Thread.item_error.connect(self.item_error)
             _Thread.item_loaded.connect(self.update_stats)
+            _Thread.item_set_loaded.connect(self.add_set_stats)
             _Thread.start()
             self.item_parsers.append(_Thread)
-    
-    def nullify_stats(self):
-        self.FULL_STATS = {x: 0 for x in item_parser.STATS_DICT.values()}
-    
-    def set_gear(self, profile):
-        self.nullify_stats()
-        
-        self.is_enchanter = 'Enchanting' in profile['profs']
-        
-        self.MAIN_TEXT = generate_main_info(profile)
-        self.STATS_LABEL.setText(self.MAIN_TEXT)
 
-        self.set_items(profile)
-                
-    def showToolTip(self, tool_tip_text):
+    def get_tool_tip_width(self, tt: str):
+        try:
+            w_i = tt.index("width=")
+            t2 = tt[w_i+6:]
+            t2 = t2[:t2.index('>')]
+            return int(t2) + 18
+        except ValueError:
+            return int(self.width()*1.5)
+    
+    def show_tool_tip(self, tool_tip_text: str):
         if QtWidgets.QToolTip.text() == tool_tip_text:
             # removes tooltip flickering
             tool_tip_text += " "
         
         if self.x() > 1350:
-            w = self.x() - int(self.width()*1.5)
+            w = self.x() - self.get_tool_tip_width(tool_tip_text)
             pos = QtCore.QPoint(w, self.y())
         else:
             pos = self.geometry().topRight()
-            
+
         QtWidgets.QToolTip.showText(pos, tool_tip_text, self)
 
-    def get_tooltip(self, source: QtWidgets.QWidget):
+    def get_tool_tip(self, source: QtWidgets.QWidget):
         if type(source) == QtWidgets.QPushButton:
             button_name = source.objectName()
             if button_name == "gear_refresh":
@@ -322,7 +337,7 @@ class CharWindow(QtWidgets.QMainWindow):
                 return ts['done'][source]
             elif source not in ts['threads']:
                 t = AchiToolTip(self, source)
-                t.tt_loaded.connect(self.showToolTip)
+                t.tt_loaded.connect(self.show_tool_tip)
                 t.start()
                 ts['threads'][source] = t
 
@@ -334,11 +349,10 @@ class CharWindow(QtWidgets.QMainWindow):
                     webbrowser.open(f'https://wotlk.evowow.com/?item={item_ID}')
         
         elif event.type() == 10:
-            self.current_hover = source
-            tool_tip_text = self.get_tooltip(source)
+            tool_tip_text = self.get_tool_tip(source)
             if not tool_tip_text:
                 tool_tip_text = '<font size=5>Loading...</font>'
-            self.showToolTip(tool_tip_text)
+            self.show_tool_tip(tool_tip_text)
 
         return False
 
@@ -371,13 +385,20 @@ if __name__ == "__main__":
     try:
         char_name = sys.argv[1]
     except IndexError: # default value if none provided
-        char_name = "Deydraenna"
+        char_name = "Zahharian"
+        char_name = "Jimbo"
+        char_name = "Quarthon"
+        char_name = "Yarel"
+        char_name = "Dim"
         char_name = "Nomadra"
+        char_name = "Deydraenna"
+        char_name = "Zanzo"
     try:
         server = sys.argv[2]
     except IndexError: # default value if none provided
-        server = "Icecrown"
         server = "Lordaeron"
+        server = "Icecrown"
+        server = "Blackrock"
 
     __x, __y = 100, 100
     if len(sys.argv) > 3:

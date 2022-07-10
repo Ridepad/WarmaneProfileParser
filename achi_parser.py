@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-from constants import CATEGORIES_DATA, ACHIEVEMENTS_DATA, requests_post
+from constants import ACHIEVEMENTS_DATA, CATEGORIES_DATA, requests_post
 
 HEADERS = {'User-Agent': "WarmaneProfileParser achi_parser/1.0"}
 TOOLTIPS_CACHE = {}

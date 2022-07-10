@@ -1,6 +1,7 @@
-import os
 import json
 import logging
+import os
+from time import sleep
 
 import requests
 
@@ -23,7 +24,7 @@ def json_write(file_name, data, indent=None):
         json.dump(data, f, indent=indent, default=sorted)
 
 def setup_logger(logger_name, log_file):
-    LOGGING_FORMAT = "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s"
+    LOGGING_FORMAT = "[%(asctime)s] [%(levelname)s] %(filename)s:%(lineno)s:%(funcName)s() %(message)s"
     logger = logging.getLogger(logger_name)
     formatter = logging.Formatter(LOGGING_FORMAT)
     fileHandler = logging.FileHandler(log_file)
@@ -31,20 +32,20 @@ def setup_logger(logger_name, log_file):
     streamHandler = logging.StreamHandler()
     streamHandler.setFormatter(formatter)
 
-    logger.setLevel(logging.INFO)
     logger.addHandler(fileHandler)
     logger.addHandler(streamHandler)
     return logger
 
-def requests_get(page_url, headers, timeout=1, attempts=3):
+def requests_get(page_url, headers, timeout=2, attempts=3):
     for _ in range(attempts):
         try:
             page = requests.get(page_url, headers=headers, timeout=timeout, allow_redirects=False)
             if page.status_code == 200:
                 return page
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
-            pass
-    LOGGER.error("Failed to load page:", page_url)
+            sleep(3)
+    
+    LOGGER.error(f"Failed to load page: {page_url}")
     return None
 
 def requests_post(page_url, headers, data=None, timeout=1, attempts=3):
@@ -72,16 +73,11 @@ CATEGORIES_FILE = os.path.join(STATIC_DIR, 'categories.json')
 CATEGORIES_DATA = json_read(CATEGORIES_FILE)
 SETS_FILE = os.path.join(STATIC_DIR, 'sets.json')
 SETS_DATA = json_read(SETS_FILE)
-SETS_ITEMS_IDS = set()
-for x in SETS_DATA.get('items', {}).values():
-    SETS_ITEMS_IDS.update(x)
 
 SIZE_FILE = os.path.join(DIR_PATH, "_achi_size.cfg")
 
 LOGFILE = os.path.join(DIR_PATH,'_errors.log')
 LOGGER = setup_logger("errors_logger", LOGFILE)
-
-ICON_URL = "https://wotlk.evowow.com/static/images/wow/icons/large"
 
 BASE_STATS = {'stamina', 'intellect', 'spirit', 'strength', 'agility'}
 SHORT_STATS = {
@@ -105,51 +101,56 @@ SHORT_STATS = {
     'agi': 'agility',
 }
 
-UNIQUE_GEMS = {
-    "of the Sea": {
-        'socket': (0, 0, 1),
-        'color_hex': '4444ff',
-    },
-}
-
 GEMS = {
-    'red': {
-        'socket': (1, 0, 0),
-        'color_hex': 'ff0000',
-        'names': {
-            'blood', 'bold', 'bright', 'crimson', 'delicate', 'don', 'flashing', 'fractured', "kailee's", 'mighty',
-            "omar's", 'precise', 'runed', 'scarlet', 'stark', 'subtle', 'teardrop'}},
-    'yellow': {
-        'socket': (0, 1, 0),
-        'color_hex': 'edc600',
-        'names': {
-            'blood', 'brilliant', 'facet', 'gleaming', 'great', "kharmaa's", 'mystic',
-            'quick', 'rigid', 'smooth', 'stone', 'sublime', 'thick'}},
-    'blue': {
-        'socket': (0, 0, 1),
-        'color_hex': '4444ff',
-        'names': {'azure', 'charmed', 'empyrean', 'falling', 'lustrous', 'majestic', 'sky', 'solid', 'sparkling', 'star', 'stormy'}},
-    'orange': {
-        'socket': (1, 1, 0),
-        'color_hex': 'ff8800',
-        'names': {
-            'accurate', "assassin's", 'beaming', "champion's", 'deadly', 'deft', 'durable', 'empowered', 'enscribed', 'etched',
-            'fierce', 'glimmering', 'glinting', 'glistening',  'infused', 'inscribed', 'iridescent', 'lucent', 'luminous',
-            'mysterious', 'nimble', 'potent', 'pristine', 'reckless', 'resolute', 'resplendent', 'shining', 'splendid', 'stalwart',
-            'stark', 'unstable', 'veiled', 'wicked'}},
-    'purple': {
-        'socket': (1, 0, 1),
-        'color_hex': '6600bb',
-        'names': {
-            'balanced', 'blessed', 'brutal', "defender's", 'fluorescent', 'glowing', "guardian's", 'imperial', 'infused',
-            'mysterious', 'puissant', 'pulsing', 'purified', 'regal', 'royal', 'shifting', 'soothing', 'sovereign', 'tenuous'}},
-    'green': {
-        'socket': (0, 1, 1),
-        'color_hex': '00aa55',
-        'names': {
-            'barbed', 'dazzling', 'effulgent', 'enduring', 'energized', 'forceful', 'intricate', 'jagged', 'lambent', 'misty',
-            'notched', 'opaque', 'polished', 'radiant', 'rune', "seer's", 'shattered', 'shining', 'steady', 'sundered', 'tense',
-            'timeless', 'turbid', 'unstable', 'vivid'}}}
+    "red": {
+        "socket": (1, 0, 0),
+        "color_hex": "ff0000",
+        "unique": {"blood garnet", "bloodstone", "cardinal ruby", "kailee's rose", "living ruby", "scarlet ruby", "test living ruby"},
+        "prefix": {"bold", "bright", "crimson", "delicate", "don", "flashing", "fractured", "mighty", "precise", "runed", "stark", "subtle", "teardrop"}
+    },
+    "yellow": {
+        "socket": (0, 1, 0),
+        "color_hex": "edc600",
+        "unique": {"autumn's glow", "blood of amber", "dawnstone", "facet of eternity", "golden draenite", "kharmaa's grace", "king's amber", "lionseye", "stone of blades", "sublime mystic dawnstone", "sun crystal"},
+        "prefix": {"brilliant", "gleaming", "great", "mystic", "quick", "rigid", "smooth", "thick"}
+    },
+    "blue": {
+        "socket": (0, 0, 1),
+        "color_hex": "4444ff",
+        "unique": {"azure moonstone", "chalcedony", "charmed amani jewel", "empyrean sapphire", "eye of the sea", "falling star", "majestic zircon", "sky sapphire", "star of elune"},
+        "prefix": {"lustrous", "solid", "sparkling", "stormy"}
+    },
+    "orange": {
+        "socket": (1, 1, 0),
+        "color_hex": "ff8800",
+        "unique": {"ametrine", "assassin's fire opal", "beaming fire opal", "enscribed fire opal", "flame spessarite", "glistening fire opal", "huge citrine", "infused fire opal", "iridescent fire opal", "monarch topaz", "mysterious fire opal", "nimble fire opal", "noble topaz", "pyrestone", "shining fire opal", "splendid fire opal"},
+        "prefix": {"accurate", "champion's", "deadly", "deft", "durable", "empowered", "etched", "fierce", "glimmering", "glinting", "inscribed", "lucent", "luminous", "potent", "pristine", "reckless", "resolute", "resplendent", "stalwart", "stark", "unstable", "veiled", "wicked"}
+    },
+    "green": {
+        "socket": (0, 1, 1),
+        "color_hex": "00aa55",
+        "unique": {"dark jade", "deep peridot", "effulgent chrysoprase", "eye of zul", "forest emerald", "polished chrysoprase", "rune covered chrysoprase", "seaspray emerald", "talasite", "test dazzling talasite", "unstable talasite"},
+        "prefix": {"barbed", "dazzling", "enduring", "energized", "forceful", "intricate", "jagged", "lambent", "misty", "notched", "opaque", "radiant", "seer's", "shattered", "shining", "steady", "sundered", "tense", "timeless", "turbid", "vivid"}
+    },
+    "purple": {
+        "socket": (1, 0, 1),
+        "color_hex": "6600bb",
+        "unique": {"blessed tanzanite", "brutal tanzanite", "dreadstone", "fluorescent tanzanite", "imperial tanzanite", "nightseye", "pulsing amethyst", "qa test blank purple gem", "shadowsong amethyst", "soothing amethyst", "twilight opal"},
+        "prefix": {"balanced", "defender's", "glowing", "guardian's", "infused", "mysterious", "puissant", "purified", "regal", "royal", "shadow", "shifting", "sovereign", "tenuous"}
+    },
+    "prismatic": {
+        "socket": (1, 1, 1),
+        "color_hex": "a335ee",
+        "unique": {"chromatic sphere", "enchanted pearl", "enchanted tear", "infinite sphere", "nightmare tear", "prismatic sphere", "soulbound test gem", "void sphere"},
+        "prefix": {}
+    },
+    "meta": {
+        "socket": (0, 0, 0),
+        "color_hex": "6666ff",
+        "unique": {"austere earthsiege diamond", "beaming earthsiege diamond", "brutal earthstorm diamond", "earthsiege diamond", "earthstorm diamond", "effulgent skyflare diamond", "imbued unstable diamond", "invigorating earthsiege diamond", "mystical skyfire diamond", "potent unstable diamond", "revitalizing skyflare diamond", "skyfire diamond", "skyflare diamond", "tenacious earthstorm diamond"},
+        "prefix": {"bracing", "chaotic", "destructive", "ember", "enigmatic", "eternal", "forlorn", "impassive", "insightful", "persistent", "powerful", "relentless", "swift", "thundering", "tireless", "trenchant"}
+    }
+}
 
 STATS_DICT = {
     0: "armor",

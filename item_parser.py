@@ -1,19 +1,26 @@
 import json
 import os
 import re
+from urllib import response
 
 from PyQt5 import QtCore, QtGui
 
 import ench_parser
-from constants import (BASE_STATS, GEMS, ICON_CACHE_DIR, ICON_URL,
-                       ITEM_CACHE_DIR, LOGGER, SETS_DATA, STATS_DICT,
-                       UNIQUE_GEMS, json_read, json_write, requests_get)
+from constants import (
+    BASE_STATS, GEMS, ICON_CACHE_DIR, ITEM_CACHE_DIR, LOGGER, SETS_DATA, STATS_DICT,
+    json_read, json_write, requests_get)
 
+ICON_URL = "https://wotlk.evowow.com/static/images/wow/icons/large"
+HEADERS = {"User-Agent": "WarmaneProfileParser item_parser/1.0"}
+DEFAULT_GEM_DATA = {"socket": (0, 0, 0), 'color_hex': "ffffff"}
 QUALITY_COLOR = ["FFFFFF", "FFFFFF", "1EFF0B", "0560DD", "A32AB9", "FF8011", "FFFFFF",  "ACBD80"]
 ENCHANTABLE = {"Head", "Shoulder", "Chest", "Legs", "Hands", "Feet", "Wrist", "Back", "Main Hand", "Off Hand", "One-Hand", "Two-Hand"}
-HEADERS = {"User-Agent": "WarmaneProfileParser item_parser/1.0"}
 ICONS: dict[str, QtGui.QPixmap] = {}
 TOOLTIPS = {}
+
+SETS_ITEMS_IDS = set()
+for x in SETS_DATA.get('items', {}).values():
+    SETS_ITEMS_IDS.update(x)
 
 def get_raw_stats(q: str):
     raw_stats = q[q.index("tooltip_enus"):]
@@ -97,36 +104,13 @@ def get_missing_item_info(item_ID):
         item['add_text'] = additional_text
     return item
 
-def get_item(item_ID: str) -> dict:
+def get_item(item_ID: str):
     item_path = os.path.join(ITEM_CACHE_DIR, f"{item_ID}.json")
     item = json_read(item_path)
     if not item:
         item = get_missing_item_info(item_ID)
         json_write(item_path, item)
     return item
-
-def gem_color(gem_name: tuple[str, str]):
-    hex: str
-    name, type_ = gem_name
-    
-    if 'diamond' in type_:
-        return '6666FF'
-    
-    if type_ in ['tear', 'sphere', 'pearl']:
-        return 'A335EE'
-    
-    if type_ in UNIQUE_GEMS:
-        hex = UNIQUE_GEMS[type_]['color_hex']
-        return hex
-    
-    for g in GEMS.values():
-        if name in g['names']:
-            hex = g['color_hex']
-            return hex
-
-    #shouldnt reach here
-    LOGGER.info(f'Missing gem info: f"{name}--{type_}')
-    return 'FFFFFF'
 
 def save_icon(icon_path, icon_data):
     if len(icon_data) > 50:
@@ -143,7 +127,6 @@ def get_icon(icon_name):
         with open(icon_path, 'rb') as img:
             icon = img.read()
     except FileNotFoundError:
-        # icon_url = f'https://wotlk.evowow.com/static/images/wow/icons/large/{icon_name}.jpg'
         icon_url = f"{ICON_URL}/{icon_name}.jpg"
         icon = requests_get(icon_url, HEADERS).content
         save_icon(icon_path, icon)
@@ -162,29 +145,57 @@ def format_line(body: str, color='', size=''):
         return f'<font{size}{color}>{body}</font>'
     return body
 
+def get_gem_data(gem_name: str):
+    for gem_data in GEMS.values():
+        if gem_name in gem_data['unique']:
+            return gem_data
+    prefix = gem_name.split(' ', 1)[0]
+    for gem_data in GEMS.values():
+        if prefix in gem_data['prefix']:
+            return gem_data
+    LOGGER.info(f'Missing gem info: {gem_name}')
+    return DEFAULT_GEM_DATA
+
+def gem_color(gem_name: str):
+    return get_gem_data(gem_name)['color_hex']
+
 def socket_bonus_matched(item_gems, item_sockets):
-    for name, type_ in item_gems:
-        if type_ in ['tear', 'sphere', 'pearl']:
-            item_sockets = [x-1 for x in item_sockets]
-        elif type_ in UNIQUE_GEMS:
-            socket_matches = UNIQUE_GEMS[type_]['socket']
-            item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
-        elif type_ != 'diamond':
-            for color in GEMS:
-                if name in GEMS[color]['names']:
-                    socket_matches = GEMS[color]['socket']
-                    item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
-                    break
+    for gem_name in item_gems:
+        gem_data = get_gem_data(gem_name)
+        socket_matches = gem_data['socket']
+        item_sockets = [x-y for x, y in zip(item_sockets, socket_matches)]
     return all(x <= 0 for x in item_sockets)
+
+def check_item_set(item_ID: str, player_class: str):
+    item_set: dict[str, dict[str, list]]
+    item_set = SETS_DATA[player_class]
+    if item_ID in SETS_ITEMS_IDS:
+        item_set = SETS_DATA["items"]
+    
+    for name, sets in item_set.items():
+        if item_ID in sets['items']:
+            return name, sets
+    return None
 
 
 class Item(QtCore.QThread):
+    item_error = QtCore.pyqtSignal()
     item_loaded = QtCore.pyqtSignal(list)
-    
-    def __init__(self, item_data: dict[str, str], item_icon, is_enchanter: bool):
+    item_set_loaded = QtCore.pyqtSignal(dict)
+
+    def __init__(
+        self,
+        item_data: dict[str, str],
+        item_icon,
+        gear_ids: set[str],
+        player_class: str,
+        is_enchanter: bool
+    ):
         super().__init__()
         self.tool_tip_width = 0
         self.item_icon = item_icon
+        self.gear_ids = gear_ids
+        self.player_class = player_class
         self.is_enchanter = is_enchanter
         self.item_ID = item_data['item']
         self.GEMS = item_data.get('gems')
@@ -196,69 +207,100 @@ class Item(QtCore.QThread):
             self.get_self_enchant,
             self.get_self_sockets,
             self.get_self_add)
-
-    def set_item_set(self, gear_ids: set[str], set_name: str, set_data: dict[str, list]):
-        _set_ids = set(set_data["items"])
-        max_c = len(set_data['sets'][0]['pieces'])
-        c = len(gear_ids & _set_ids)
-        set_name_with_c = f"{set_name} ({c}/{max_c})"
-        self.SET_BONUSES.append(format_line(set_name_with_c, 'DBB402'))
-        for pieces, set_bonus in set_data['set_bonus']:
-            if pieces > c:
-                _color = '777777'
-            else:
-                _color = '11DD11'
-            
-            if type(set_bonus) == tuple:
-                value, stat = set_bonus
-                line = f'+{value:>3} {stat}'.title()
-                self.TOTAL_STATS.append((stat, value))
-            else:
-                line = set_bonus
-            line = f"{pieces}: {line}"
-            self.SET_BONUSES.append(format_line(line, _color))
-            
+    
     def run(self):
-        self.ITEM = get_item(self.item_ID)
-        
         try:
+            self.ITEM = get_item(self.item_ID)
             icon_name = self.ITEM['icon']
-            self.item_icon.setPixmap(get_icon(icon_name))
+            pixmap = get_icon(icon_name)
+            self.item_icon.setPixmap(pixmap)
+        except AttributeError:
+            self.item_error.emit()
+            LOGGER.error('ItemParser run - item is None')
+            return
         except RuntimeError:
             LOGGER.exception('ItemParser run')
             return
         
+        self.get_item_set()
         slot = self.ITEM["slot"]
         self.ENCHANTABLE = slot in ENCHANTABLE or slot == 'Finger' and self.is_enchanter
         self.TOTAL_STATS.extend(self.ITEM['stats'])
-        self.item_loaded.emit(self.TOTAL_STATS)
         TOOLTIPS[self.item_icon] = self.make_tool_tip()
+        self.item_loaded.emit(self.TOTAL_STATS)
 
-    def gem_data(self, socket_amount: int):
+    def check_item_set(self):
+        item_set: dict[str, dict[str, list]]
+        item_set = SETS_DATA[self.player_class]
+        if self.item_ID in SETS_ITEMS_IDS:
+            item_set = SETS_DATA["items"]
+        
+        for name, sets in item_set.items():
+            if self.item_ID in sets['items']:
+                return name, sets
+        return None
+
+    def get_item_set(self):
+        _set = self.check_item_set()
+        if _set is None:
+            return
+
+        set_name, set_data = _set
+        only_stats = []
+        _data = {'name': set_name, 'stats': only_stats}
+
+        _set_ids = set(set_data["items"])
+        equipped_set_pieces = len(self.gear_ids & _set_ids)
+        max_set_pieces = len(set_data['sets'][0]['pieces'])
+        set_name_with_pieces = f"{set_name} ({equipped_set_pieces}/{max_set_pieces})"
+        self.SET_BONUSES.append(format_line(set_name_with_pieces, 'DBB402'))
+        
+        for pieces, set_bonus in set_data['set_bonus']:
+            set_bonus_reached = pieces <= equipped_set_pieces
+            if set_bonus_reached:
+                _color = '11DD11'
+            else:
+                _color = '777777'
+            
+            if type(set_bonus) == list:
+                stat, value = set_bonus
+                line = f'+{value:>3} {stat}'.title()
+                if set_bonus_reached:
+                    only_stats.append(set_bonus)
+            else:
+                line = set_bonus
+
+            line = f"- {pieces}: {line}"
+            self.SET_BONUSES.append(format_line(line, _color))
+
+        self.item_set_loaded.emit(_data)
+
+    def get_gem_colors(self):
+        item_sockets = self.ITEM.get("sockets", [])
+        socket_amount = sum(item_sockets)
+        if not socket_amount:
+            return
+        
         if self.ITEM["slot"] == 'Waist' or self.ITEM["slot"] == 'Head' and self.ITEM['meta']:
             socket_amount += 1
+        
         item_gems = []
-        no_missing_gems = True
-
         for n in range(socket_amount):
             gem_ID = self.GEMS[n]
             if gem_ID == '0':
                 yield 'Missing gem', 'FF0000'
-                no_missing_gems = False
                 continue
-            gem = ench_parser.main(gem_ID)
-            self.TOTAL_STATS.extend(gem['stats'])
-            gem_stat, gem_name = gem['names']
+            gem_data = ench_parser.main(gem_ID)
+            self.TOTAL_STATS.extend(gem_data['stats'])
+            gem_stat, gem_name = gem_data['names']
             gem_name = gem_name.lower().replace('perfect ', '')
-            gem_name = gem_name.split(' ', 1)
             item_gems.append(gem_name)
             _color = gem_color(gem_name)
             yield gem_stat, _color
 
         _color = '777777'
         stat, value = self.ITEM["socket bonus"]
-        item_sockets = self.ITEM.get("sockets")
-        if no_missing_gems and socket_bonus_matched(item_gems, item_sockets):
+        if len(item_gems) == socket_amount and socket_bonus_matched(item_gems, item_sockets):
             self.TOTAL_STATS.append((stat.lower(), value))
             _color = '11DD11'
         yield f'+{value} {stat}', _color
@@ -305,13 +347,9 @@ class Item(QtCore.QThread):
             return None
 
     def get_self_sockets(self):
-        socket_amount = sum(self.ITEM.get("sockets", []))
-        if not socket_amount:
-            return
-
         return [
             self.format_enchant(gem_name, color)
-            for gem_name, color in self.gem_data(socket_amount)
+            for gem_name, color in self.get_gem_colors()
         ]
     
     def get_self_add(self):
